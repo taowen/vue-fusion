@@ -10,6 +10,7 @@ It features:
 * even dynamic page can be cached via CDN, data can be refreshed again in client side
 * same code for both client side rendering (CSR) and SSR
 * with polyglot GraalVM, eliminates extra backend for frontend (BFF) service
-* headless and backendless, not opinionated, work seamlessly along with existing ui library, backend languages and infrastructure
-* data security is not an option, enforced hardened authorization solution
 * miniprogram silent OTA with [taro](https://github.com/NervJS/taro), [quickjs](https://bellard.org/quickjs/), [emscripten](https://emscripten.org/)
+* headless and backendless, not opinionated, work seamlessly along with existing vue components, backend languages and infrastructure
+* data security is not an option, enforced hardened authorization solution
+* turn existing RESTful data access code into secured GraphQL for 3rd party access
