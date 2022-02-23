@@ -1,0 +1,25 @@
+{
+    "name": "vue-fusion",
+    "version": "0.0.1",
+    "description": "combine vue SSR with Java (Python, Go) in same server for extreme user experience",
+    "main": "dist/cjs/index.js",
+    "module": "src/index.ts",
+    "types": "src/index.ts",
+    "dependencies": {
+      "vue-db": "^1.0.0"
+    },
+    "devDependencies": {
+      "typescript": "^4.5.5"
+    },
+    "files": ["cjs/*.js", "esm/*.js", "esm/*.d.ts", "README.md", "LICENSE"],
+    "publishConfig": {
+      "directory": "dist",
+      "main": "cjs/index.js",
+      "module": "esm/index.js",
+      "types": "esm/index.d.ts"
+    },
+    "scripts": {
+      "build": "tsc",
+      "dist": "tsc && tsc -p tsconfig-esm.json && cp ../../README.md dist && cp ../../LICENSE dist && cp package.json dist"
+    }
+  }
