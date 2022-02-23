@@ -11,3 +11,4 @@ It features:
 * with polyglot GraalVM, eliminates extra backend for frontend (BFF) service
 * work seamlessly along with existing backend languages and infrastructure
 * data security is not an option, enforced hardened authorization solution
+* miniprogram silent OTA with [taro](https://github.com/NervJS/taro), [quickjs](https://bellard.org/quickjs/), [emscripten](https://emscripten.org/)
