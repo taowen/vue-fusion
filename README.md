@@ -9,6 +9,7 @@ It features:
 * page loads instantly because it is just html served via CDN cache
 * even dynamic page can be cached via CDN, data can be refreshed again in client side
 * same code for both client side rendering (CSR) and SSR
+* selective hydration to reduce bundle size and initial rendering time
 * with polyglot GraalVM, eliminates extra backend for frontend (BFF) service
 * miniprogram silent OTA with [taro](https://github.com/NervJS/taro), [quickjs](https://bellard.org/quickjs/), [emscripten](https://emscripten.org/)
 * headless and backendless, not opinionated, work seamlessly along with existing vue components, backend languages and infrastructure
