@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 importers:
 
-  packages/ssr-vue:
+  packages/demo-ts:
     specifiers:
       '@vitejs/plugin-vue': ^2.2.2
       '@vitejs/plugin-vue-jsx': ^1.3.7
@@ -14,11 +14,13 @@ importers:
       serve-static: ^1.14.1
       vite: ^2.8.4
       vue: ^3.2.25
+      vue-fusion: workspace:*
       vue-router: ^4.0.0
       vuex: ^4.0.2
     dependencies:
       example-external-component: link:example-external-component
       vue: 3.2.31
+      vue-fusion: link:../vue-fusion
       vue-router: 4.0.12_vue@3.2.31
       vuex: 4.0.2_vue@3.2.31
     devDependencies:
@@ -34,9 +36,11 @@ importers:
   packages/vue-fusion:
     specifiers:
       typescript: ^4.5.5
-      vue-db: ^1.0.0
+      vue: ^3.2.31
+      vue-db: ^1.0.1
     dependencies:
-      vue-db: 1.0.0
+      vue: 3.2.31
+      vue-db: 1.0.1
     devDependencies:
       typescript: 4.5.5
 
@@ -1398,8 +1402,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vue-db/1.0.0:
-    resolution: {integrity: sha512-aa29tIbloOyyW5WZiGU2Xmoqajr0EjLVBjzTXBAxq4/mVkl7NMBh8FZ5NnXDGwS+7QccKVxb+o+g7JUpO8t1ww==}
+  /vue-db/1.0.1:
+    resolution: {integrity: sha512-K+FxuLyDf3NDFe7zYyftxtsbaoXm1PvFFQVZj3TnD0fTStnA4/Pll9o0QvvDivOu4bFxD/lCvgZbERuK3BYMZg==}
     dependencies:
       vue: 3.2.31
     dev: false

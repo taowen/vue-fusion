@@ -26,6 +26,9 @@ export async function render(url, manifest) {
 function renderPreloadLinks(modules, manifest) {
   let links = ''
   const seen = new Set()
+  if (!modules) {
+    return links;
+  }
   modules.forEach((id) => {
     const files = manifest[id]
     if (files) {

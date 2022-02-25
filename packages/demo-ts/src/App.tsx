@@ -1,13 +1,20 @@
-import { defineComponent } from "vue"
+import * as fusion from 'vue-fusion';
 
-// index.tsx
-export default defineComponent({
-    data() {
-        return {
-            msg: 'hello'
-        }
+export default fusion.defineComponent(class {
+    // props
+    readonly prop1?: string;
+    // data
+    msg = 'hello';
+    // methods
+    onClick() {
+
+    }
+}, {
+    props: ['prop1'],
+    onMounted() {
+        console.log('onMounted', this.msg);
     },
     render() {
-        return <div> {this.msg} </div>
+        return <div>{this.msg}</div>
     }
 })

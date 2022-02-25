@@ -17,7 +17,8 @@
     "example-external-component": "file:example-external-component",
     "vue": "^3.2.25",
     "vue-router": "^4.0.0",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "vue-fusion": "workspace:*"
   },
   "devDependencies": {
     "vite": "^2.8.4",
