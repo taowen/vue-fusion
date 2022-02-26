@@ -1,11 +1,8 @@
 import { defineComponent } from "vue";
+import { msg } from '@motherboard';
+
 export default defineComponent({
-    data() {
-        return {
-            msg: 'hello'
-        }
-    },
     render() {
-        return <div>{this.msg}</div>
+        return <div>{msg}</div>
     }
 })

@@ -8,6 +8,14 @@ module.exports = {
   plugins: [
     vuePlugin(),
     vueJsx(),
+    {
+      name: 'virtual',
+      resolveId(id) {
+        if (id === '@motherboard') {
+          return 'demo-motherboard'
+        }
+      },
+    }
   ],
   build: {
     minify: false
