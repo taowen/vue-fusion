@@ -36,9 +36,14 @@ importers:
 
   packages/demo-weapp:
     specifiers:
+      typescript: ^4.6.2
+      vite: ^2.8.4
       vue: ^3.2.31
     dependencies:
       vue: 3.2.31
+    devDependencies:
+      typescript: 4.6.2
+      vite: 2.8.4
 
   packages/vue-fusion:
     specifiers:
@@ -1366,6 +1371,12 @@ packages:
 
   /typescript/4.5.5:
     resolution: {integrity: sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
+
+  /typescript/4.6.2:
+    resolution: {integrity: sha512-HM/hFigTBHZhLXshn9sN37H085+hQGeJHJ/X7LpBWLID/fbc2acUMfU+lGD98X81sKP+pFa9f0DZmCwB9GnbAg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true

@@ -5,7 +5,11 @@
     "dependencies": {
         "vue": "^3.2.31"
     },
+    "devDependencies": {
+        "typescript": "^4.6.2",
+        "vite": "^2.8.4"
+    },
     "scripts": {
-        "build": "cp -r weapp/* build"
+        "build": "exec ./build.sh"
     }
 }
