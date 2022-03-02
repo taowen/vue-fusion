@@ -1,0 +1,11 @@
+{
+    "name": "demo-weapp",
+    "private": true,
+    "version": "0.0.0",
+    "dependencies": {
+        "vue": "^3.2.31"
+    },
+    "scripts": {
+        "build": "cp -r weapp/* build"
+    }
+}
