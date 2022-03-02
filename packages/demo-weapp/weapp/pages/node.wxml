@@ -1,0 +1,4 @@
+<template name="image">
+    <image src="{{src}}"/>
+</template>
+<template is="{{type}}" data="{{ ...props, children: children  }}" wx:if="{{ type }}"/>
