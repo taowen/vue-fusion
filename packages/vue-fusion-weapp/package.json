@@ -1,15 +1,13 @@
 {
-    "name": "demo-weapp",
-    "private": true,
-    "version": "0.0.0",
+    "name": "vue-fusion-weapp",
+    "version": "1.0.0",
     "dependencies": {
         "vue": "^3.2.31"
     },
     "devDependencies": {
         "typescript": "^4.6.2",
-        "vite": "^2.8.4"
+        "miniprogram-api-typings": "^2.8.3-1"
     },
     "scripts": {
-        "build": "exec ./build.sh"
     }
 }
