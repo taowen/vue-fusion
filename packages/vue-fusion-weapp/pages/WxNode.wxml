@@ -1,4 +1,25 @@
+<template name="level1">
+    <view wx:if="{{item.type === 'view'}}" style="{{item.style}}"><template is="level2" data="{{ nodes: item.children }}" /></view>
+    <swiper wx:elif="{{item.type === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}"><template is="level2" data="{{ nodes: item.children }}" /></swiper>
+    <template wx:elif="{{item.type}}" is="{{item.type}}" data="{{...item}}" />
+</template>
+<template name="level2">
+    <block wx:for="{{nodes}}" wx:key="id">
+        <view wx:if="{{item.type === 'view'}}" style="{{item.style}}"><template is="level3" data="{{ nodes: item.children }}" /></view>
+        <swiper wx:elif="{{item.type === 'swiper'}}" indicator-dots="{{indicator-dots}}"><template is="level3" data="{{ nodes: item.children }}" /></swiper>
+        <swiper-item wx:elif="{{item.type === 'swiper-item'}}"><template is="level3" data="{{ nodes: item.children }}" /></swiper-item>
+        <template wx:elif="{{item.type}}" is="{{item.type}}" data="{{...item}}" />
+    </block>
+</template>
+<template name="level3">
+    <block wx:for="{{nodes}}" wx:key="id">
+        <view wx:if="{{item.type === 'view'}}" style="{{item.style}}"><template is="level4" data="{{ nodes: item.children }}" /></view>
+        <swiper wx:elif="{{item.type === 'swiper'}}" indicator-dots="{{indicator-dots}}"><template is="level4" data="{{ nodes: item.children }}" /></swiper>
+        <swiper-item wx:elif="{{item.type === 'swiper-item'}}"><template is="level4" data="{{ nodes: item.children }}" /></swiper-item>
+        <template wx:elif="{{item.type}}" is="{{item.type}}" data="{{...item}}" />
+    </block>
+</template>
 <template name="image">
     <image src="{{src}}"/>
 </template>
-<template is="{{type}}" data="{{ ...props, children: children  }}" wx:if="{{ type }}"/>
+<template is="level1" data="{{ item: node }}"/>

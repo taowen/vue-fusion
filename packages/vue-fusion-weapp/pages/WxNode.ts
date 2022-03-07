@@ -1,7 +1,6 @@
+// render multiple layers of DOM Nodes in single WxNode
 Component({
     properties: {
-        type: null,
-        props: null,
-        children: null,
+        node: null,
     }
 })
