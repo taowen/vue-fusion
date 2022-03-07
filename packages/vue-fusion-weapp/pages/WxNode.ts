@@ -2,5 +2,10 @@
 Component({
     properties: {
         node: null,
+    },
+    methods: {
+        ev() {
+            console.log(arguments);
+        }
     }
 })

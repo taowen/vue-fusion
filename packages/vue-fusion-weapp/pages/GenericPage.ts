@@ -8,6 +8,7 @@ Page({
       rootNode: {
         type: 'swiper',
         ['indicator-dots']: true,
+        ['indicator-color']: 'red',
         children: [{
           type: 'swiper-item',
           children: [{
