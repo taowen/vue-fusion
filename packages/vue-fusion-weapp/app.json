@@ -1,6 +1,6 @@
 {
   "pages":[
-    "pages/index"
+    "pages/GenericPage"
   ],
   "window":{
     "backgroundTextStyle":"light",
