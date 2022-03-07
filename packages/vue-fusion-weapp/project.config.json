@@ -39,10 +39,15 @@
     "disableUseStrict": false,
     "minifyWXML": true,
     "showES6CompileOption": false,
-    "ignoreUploadUnusedFiles": true,
-    "useCompilerPlugins": ["typescript"]
+    "useCompilerPlugins": [
+      "typescript"
+    ],
+    "ignoreUploadUnusedFiles": true
   },
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
+  "scripts": {
+    "beforeCompile": "build.cmd"
+  },
   "condition": {}
 }
