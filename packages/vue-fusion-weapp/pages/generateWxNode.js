@@ -67,7 +67,7 @@ function containerTemplate(compName, comp, nextLevel) {
 
 function containerTemplates(nextLevel) {
   lines = [];
-  lines.push(`\t<block wx:if="{{item.type === 'wx-node'}}"><WxNode node="{{item.children[0]}}"/></block>`);
+  lines.push(`\t<block wx:if="{{item.type === 'WxNode'}}"><WxNode node="{{item.children[0]}}"/></block>`);
   for (const [compName, comp] of Object.entries(containers)) {
     lines.push(containerTemplate(compName, comp, nextLevel));
   }
