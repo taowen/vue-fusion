@@ -1,5 +1,4 @@
 import { markRaw } from '@vue/reactivity'
-import { App, VNode } from '@vue/runtime-core'
 
 export const enum NodeTypes {
   TEXT = 'text',
@@ -16,40 +15,40 @@ export const enum NodeOpTypes {
   PATCH = 'patch'
 }
 
-export interface TestElement {
+export interface HElement {
   id: number
   type: NodeTypes.ELEMENT
-  parentNode: TestElement | null
+  parentNode: HElement | null
   tag: string
-  children: TestNode[]
+  children: HNode[]
   props: Record<string, any>
   eventListeners: Record<string, Function | Function[]> | null
 }
 
-export interface TestText {
+export interface HText {
   id: number
   type: NodeTypes.TEXT
-  parentNode: TestElement | null
+  parentNode: HElement | null
   text: string
 }
 
-export interface TestComment {
+export interface HComment {
   id: number
   type: NodeTypes.COMMENT
-  parentNode: TestElement | null
+  parentNode: HElement | null
   text: string
 }
 
-export type TestNode = TestElement | TestText | TestComment
+export type HNode = HElement | HText | HComment
 
 export interface NodeOp {
   type: NodeOpTypes
   nodeType?: NodeTypes
   tag?: string
   text?: string
-  targetNode?: TestNode
-  parentNode?: TestElement
-  refNode?: TestNode | null
+  targetNode?: HNode
+  parentNode?: HElement
+  refNode?: HNode | null
   propKey?: string
   propPrevValue?: any
   propNextValue?: any
@@ -72,42 +71,16 @@ export function dumpOps(): NodeOp[] {
   return ops
 }
 
-function createElement(tag: string): TestElement {
-  let vnode: VNode;
-  let vueApp: App;
-  let parentNode: TestElement;
-  const node: TestElement = {
+function createElement(tag: string): HElement {
+  const node: HElement = {
     id: nodeId++,
     type: NodeTypes.ELEMENT,
     tag,
     children: [],
     props: {},
-    eventListeners: null,
-  } as any
-  Object.defineProperty(node, 'parentNode', {
-    get() {
-      return parentNode;
-    },
-    set(val: TestElement) {
-      parentNode = val;
-    }
-  })
-  Object.defineProperty(node, '_vnode', {
-    get() {
-      return vnode;
-    },
-    set(val: VNode) {
-      vnode = val;
-    }
-  })
-  Object.defineProperty(node, '__vue_app__', {
-    get() {
-      return vueApp;
-    },
-    set(val: App) {
-      vueApp = val;
-    }
-  })
+    parentNode: null,
+    eventListeners: null
+  }
   logNodeOp({
     type: NodeOpTypes.CREATE,
     nodeType: NodeTypes.ELEMENT,
@@ -119,21 +92,13 @@ function createElement(tag: string): TestElement {
   return node
 }
 
-function createText(text: string): TestText {
-  let parentNode: TestElement;
-  const node: TestText = {
+function createText(text: string): HText {
+  const node: HText = {
     id: nodeId++,
     type: NodeTypes.TEXT,
-    text
-  } as any
-  Object.defineProperty(node, 'parentNode', {
-    get() {
-      return parentNode
-    },
-    set(val: TestElement) {
-      parentNode = val;
-    }
-  })
+    text,
+    parentNode: null
+  }
   logNodeOp({
     type: NodeOpTypes.CREATE,
     nodeType: NodeTypes.TEXT,
@@ -145,8 +110,8 @@ function createText(text: string): TestText {
   return node
 }
 
-function createComment(text: string): TestComment {
-  const node: TestComment = {
+function createComment(text: string): HComment {
+  const node: HComment = {
     id: nodeId++,
     type: NodeTypes.COMMENT,
     text,
@@ -163,7 +128,7 @@ function createComment(text: string): TestComment {
   return node
 }
 
-function setText(node: TestText, text: string) {
+function setText(node: HText, text: string) {
   logNodeOp({
     type: NodeOpTypes.SET_TEXT,
     targetNode: node,
@@ -172,7 +137,7 @@ function setText(node: TestText, text: string) {
   node.text = text
 }
 
-function insert(child: TestNode, parent: TestElement, ref?: TestNode | null) {
+function insert(child: HNode, parent: HElement, ref?: HNode | null) {
   let refIndex
   if (ref) {
     refIndex = parent.children.indexOf(ref)
@@ -201,7 +166,7 @@ function insert(child: TestNode, parent: TestElement, ref?: TestNode | null) {
   }
 }
 
-function remove(child: TestNode, logOp = true) {
+function remove(child: HNode, logOp = true) {
   const parent = child.parentNode
   if (parent) {
     if (logOp) {
@@ -223,7 +188,7 @@ function remove(child: TestNode, logOp = true) {
   }
 }
 
-function setElementText(el: TestElement, text: string) {
+function setElementText(el: HElement, text: string) {
   logNodeOp({
     type: NodeOpTypes.SET_ELEMENT_TEXT,
     targetNode: el,
@@ -246,11 +211,11 @@ function setElementText(el: TestElement, text: string) {
   }
 }
 
-function parentNode(node: TestNode): TestElement | null {
+function parentNode(node: HNode): HElement | null {
   return node.parentNode
 }
 
-function nextSibling(node: TestNode): TestNode | null {
+function nextSibling(node: HNode): HNode | null {
   const parent = node.parentNode
   if (!parent) {
     return null
@@ -263,7 +228,7 @@ function querySelector(): never {
   throw new Error('querySelector not supported in test renderer.')
 }
 
-function setScopeId(el: TestElement, id: string) {
+function setScopeId(el: HElement, id: string) {
   el.props[id] = ''
 }
 
@@ -278,5 +243,5 @@ export const nodeOps = {
   parentNode,
   nextSibling,
   querySelector,
-  setScopeId
+  setScopeId,
 }

@@ -1,8 +1,8 @@
 import { isArray } from '@vue/shared'
-import { TestElement } from './nodeOps'
+import { HElement } from './nodeOps'
 
 export function triggerEvent(
-  el: TestElement,
+  el: HElement,
   event: string,
   payload: any[] = []
 ) {
