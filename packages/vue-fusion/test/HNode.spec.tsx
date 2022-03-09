@@ -1,5 +1,5 @@
 import * as vue from '@vue/runtime-core';
-import * as renderer from '../src/renderer';
+import * as renderer from '../src';
 
 test('single child', () => {
     const app = renderer.createApp(vue.defineComponent({
