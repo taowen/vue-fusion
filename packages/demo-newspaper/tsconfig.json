@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+      "target": "esnext",
+      "declaration": true,
+      "useDefineForClassFields": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "incremental": true,
+      "strict": true,
+      "noImplicitThis": true,
+      "jsx": "react",
+      "jsxFactory": "vue.h",
+      "jsxFragmentFactory": "vue.Fragment",
+      "sourceMap": true,
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
+      "outDir": "dist",
+      "lib": [
+          "esnext",
+          "dom"
+      ]
+  },
+  "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "src/**/*.d.ts",
+      "test/**/*.ts",
+      "test/**/*.tsx"
+  ]
+}

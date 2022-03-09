@@ -5,7 +5,10 @@
 		},
 		{
 			"path": "packages/vue-fusion"
-		}
+		},
+                {
+                        "path": "packages/demo-newspaper"
+                },
 	],
 	"settings": {}
 }
