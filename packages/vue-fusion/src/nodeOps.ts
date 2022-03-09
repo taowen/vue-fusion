@@ -15,12 +15,19 @@ export const enum NodeOpTypes {
   PATCH = 'patch'
 }
 
+export interface HFragment {
+  id: number
+  parentNode: HElement | null
+  children: HNode[]
+}
+
 export interface HElement {
   id: number
   type: NodeTypes.ELEMENT
   parentNode: HElement | null
   tag: string
   children: HNode[]
+  fragments: HFragment[] | null
   props: Record<string, any>
   eventListeners: Record<string, Function | Function[]> | null
 }
@@ -77,6 +84,7 @@ function createElement(tag: string): HElement {
     type: NodeTypes.ELEMENT,
     tag,
     children: [],
+    fragments: null,
     props: {},
     parentNode: null,
     eventListeners: null
