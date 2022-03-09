@@ -1,4 +1,5 @@
 import { markRaw } from '@vue/reactivity'
+import { App, VNode } from '@vue/runtime-core'
 
 export const enum NodeTypes {
   TEXT = 'text',
@@ -72,15 +73,41 @@ export function dumpOps(): NodeOp[] {
 }
 
 function createElement(tag: string): TestElement {
+  let vnode: VNode;
+  let vueApp: App;
+  let parentNode: TestElement;
   const node: TestElement = {
     id: nodeId++,
     type: NodeTypes.ELEMENT,
     tag,
     children: [],
     props: {},
-    parentNode: null,
-    eventListeners: null
-  }
+    eventListeners: null,
+  } as any
+  Object.defineProperty(node, 'parentNode', {
+    get() {
+      return parentNode;
+    },
+    set(val: TestElement) {
+      parentNode = val;
+    }
+  })
+  Object.defineProperty(node, '_vnode', {
+    get() {
+      return vnode;
+    },
+    set(val: VNode) {
+      vnode = val;
+    }
+  })
+  Object.defineProperty(node, '__vue_app__', {
+    get() {
+      return vueApp;
+    },
+    set(val: App) {
+      vueApp = val;
+    }
+  })
   logNodeOp({
     type: NodeOpTypes.CREATE,
     nodeType: NodeTypes.ELEMENT,
@@ -93,12 +120,20 @@ function createElement(tag: string): TestElement {
 }
 
 function createText(text: string): TestText {
+  let parentNode: TestElement;
   const node: TestText = {
     id: nodeId++,
     type: NodeTypes.TEXT,
-    text,
-    parentNode: null
-  }
+    text
+  } as any
+  Object.defineProperty(node, 'parentNode', {
+    get() {
+      return parentNode
+    },
+    set(val: TestElement) {
+      parentNode = val;
+    }
+  })
   logNodeOp({
     type: NodeOpTypes.CREATE,
     nodeType: NodeTypes.TEXT,
