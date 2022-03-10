@@ -24,11 +24,13 @@ importers:
       jest: 27.5.1
       sax: ^1.2.4
       typescript: ^4.5.5
+      vue: ^3.2.31
     dependencies:
       '@vue/reactivity': 3.2.31
       '@vue/runtime-core': 3.2.31
       '@vue/shared': 3.2.31
       sax: 1.2.4
+      vue: 3.2.31
     devDependencies:
       '@types/jest': 27.4.1
       '@types/sax': 1.2.4

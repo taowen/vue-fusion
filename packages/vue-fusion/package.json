@@ -9,6 +9,7 @@
       "@vue/runtime-core": "^3.2.31",
       "@vue/shared": "^3.2.31",
       "@vue/reactivity": "^3.2.31",
+      "vue": "^3.2.31",
       "sax": "^1.2.4"
     },
     "devDependencies": {
