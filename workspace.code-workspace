@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "packages/vue-fusion-weapp"
+		},
+		{
+			"path": "packages/vue-fusion"
+		},
+                {
+                        "path": "packages/demo-newspaper"
+                },
+	],
+	"settings": {}
+}

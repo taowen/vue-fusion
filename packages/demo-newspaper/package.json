@@ -1,0 +1,14 @@
+{
+    "name": "demo-newspaper",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "vue-fusion": "workspace:*",
+        "vue": "^3.2.31",
+        "express": "^4.17.1",
+        "vite": "^2.8.6"
+    },
+    "scripts": {
+        "dev": "node server"
+    }
+}
