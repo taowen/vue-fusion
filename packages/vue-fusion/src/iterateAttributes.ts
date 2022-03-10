@@ -1,10 +1,13 @@
 // simplified from https://github.com/developit/htmlParser/blob/master/src/htmlParser.js
 const attrTokenizer = /([a-zA-Z0-9_\:\-]*)\s*=\s*"(.*?)"\s*/gm;
 
-export function iterateAttributes(html: string, callbacks: {
+export function iterateAttributes(html: string | undefined, callbacks: {
     onAttribute(name: string, value: string): void;
     onAttributeEnabled(name: string): void;
 }) {
+    if (!html) {
+        return;
+    }
     attrTokenizer.lastIndex = 0;
     let token: RegExpExecArray | null = null;
     let lastIndex = 0;

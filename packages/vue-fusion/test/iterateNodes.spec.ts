@@ -9,11 +9,11 @@ test('parse', () => {
         onComment(comment) {
             callbacked.push(['comment', comment]);
         },
-        onTagBegin(tag, attributes) {
-            callbacked.push(['tagBegin', { tag, attributes }])
+        onTagOpen(tag, attributes) {
+            callbacked.push(['tagOpen', { tag, attributes }])
         },
-        onTagEnd(tag) {
-            callbacked.push(['tagEnd', { tag }])
+        onTagClose(tag) {
+            callbacked.push(['tagClose', { tag }])
         },
         onText(text) {
             callbacked.push(['text', text])
@@ -21,13 +21,13 @@ test('parse', () => {
     });
     expect(callbacked).toEqual([
         ['text', '<!DOCTYPE html>'],
-        ['tagBegin', { tag: 'a', attributes: '    ' }],
+        ['tagOpen', { tag: 'a', attributes: '    ' }],
         ['text', '\n    '],
         ['comment', 'preload-links'],
         ['text', '\n    b'],
-        ['tagBegin', { tag: 'c', attributes: 'title="hello"' }],
-        ['tagEnd', { tag: 'c' }],
+        ['tagOpen', { tag: 'c', attributes: 'title="hello"' }],
+        ['tagClose', { tag: 'c' }],
         ['text', 'd'],
-        ['tagEnd', { tag: 'a' }]
+        ['tagClose', { tag: 'a' }]
     ])
 })
