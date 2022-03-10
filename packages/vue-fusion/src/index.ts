@@ -17,4 +17,5 @@ import {
   export * from './triggerEvent'
   export * from './serialize'
   export * from './nodeOps'
+  export * from './parseHtml';
   export * from '@vue/runtime-core'
