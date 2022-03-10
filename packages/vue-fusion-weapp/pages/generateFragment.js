@@ -67,7 +67,7 @@ function containerTemplate(compName, comp, nextLevel) {
 
 function containerTemplates(nextLevel) {
   lines = [];
-  lines.push(`\t<block wx:if="{{item.type === 'fragment'}}"><Fragment node="{{item.children[0]}}"/></block>`);
+  lines.push(`\t<block wx:if="{{item.type === 'fragment'}}"><Fragment nodes="{{item.children}}"/></block>`);
   for (const [compName, comp] of Object.entries(containers)) {
     lines.push(containerTemplate(compName, comp, nextLevel));
   }
@@ -76,7 +76,9 @@ function containerTemplates(nextLevel) {
 }
 
 console.log(`<template name="level1">
+<block wx:for="{{nodes}}" wx:key="id">
 ${containerTemplates('level2')}
+</block>
 </template>
 <template name="level2">
 <block wx:for="{{nodes}}" wx:key="id">
@@ -90,8 +92,11 @@ ${containerTemplates('level4')}
 </template>
 <template name="level4">
 <block wx:for="{{nodes}}" wx:key="id">
-\t<Fragment node="{{item}}"/>
+${containerTemplates('level5')}
 </block>
 </template>
+<template name="level5">
+\t<Fragment nodes="{{nodes}}"/>
+</template>
 ${leafTemplates()}
-<template is="level1" data="{{ item: node }}"/>`)
+<template is="level1" data="{{ nodes: nodes }}"/>`)

@@ -1,1 +1,2 @@
-<Fragment node="{{rootNode}}" />
+<include src="./Fragment" />
+<template is="level1" data="{{ nodes: nodes }}" wx:if="{{ nodes }}"/>

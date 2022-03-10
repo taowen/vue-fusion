@@ -5,7 +5,7 @@ const app = getApp()
 Page({
   onLoad() {
     this.setData({
-      rootNode: {
+      nodes: [{
         type: 'swiper',
         ['indicator-dots']: true,
         ['indicator-color']: 'red',
@@ -25,7 +25,7 @@ Page({
             src: 'https://www.baidu.com/img/pc_9c5c85e6b953f1d172e1ed6821618b91.png'
           }]
         }]
-      }
+      }]
     })
   }
 })
