@@ -1,1 +1,1 @@
-<WxNode node="{{rootNode}}" />
+<Fragment node="{{rootNode}}" />

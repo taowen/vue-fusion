@@ -1,4 +1,3 @@
-import "miniprogram-api-typings";
 // index.ts
 // 获取应用实例
 const app = getApp()
@@ -13,7 +12,7 @@ Page({
         children: [{
           type: 'swiper-item',
           children: [{
-            type: 'WxNode',
+            type: 'fragment',
             children: [{
               type: 'image',
               src: 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png'

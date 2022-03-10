@@ -67,7 +67,7 @@ function containerTemplate(compName, comp, nextLevel) {
 
 function containerTemplates(nextLevel) {
   lines = [];
-  lines.push(`\t<block wx:if="{{item.type === 'WxNode'}}"><WxNode node="{{item.children[0]}}"/></block>`);
+  lines.push(`\t<block wx:if="{{item.type === 'fragment'}}"><Fragment node="{{item.children[0]}}"/></block>`);
   for (const [compName, comp] of Object.entries(containers)) {
     lines.push(containerTemplate(compName, comp, nextLevel));
   }
@@ -90,7 +90,7 @@ ${containerTemplates('level4')}
 </template>
 <template name="level4">
 <block wx:for="{{nodes}}" wx:key="id">
-\t<WxNode node="{{item}}"/>
+\t<Fragment node="{{item}}"/>
 </block>
 </template>
 ${leafTemplates()}
