@@ -2,7 +2,7 @@
   "name": "vue-fusion",
   "version": "0.0.1",
   "description": "vue SSR/OTA/HMR",
-  "main": "src/index.ts",
+  "main": "dist/src/index.js",
   "module": "src/index.ts",
   "types": "src/index.ts",
   "dependencies": {

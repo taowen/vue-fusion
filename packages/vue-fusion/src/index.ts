@@ -18,4 +18,5 @@ import {
   export * from './serialize'
   export * from './nodeOps'
   export * from './renderToMpData'
+  export * from './servePage'
   export * from '@vue/runtime-core'

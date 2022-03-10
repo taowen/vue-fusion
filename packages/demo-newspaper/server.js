@@ -2,6 +2,7 @@
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
+const fusion = require('vue-fusion');
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
@@ -55,24 +56,18 @@ async function createServer(
     try {
       const url = req.originalUrl
 
-      let template, render
+      let render
       if (!isProd) {
         // always read fresh template in dev
-        template = fs.readFileSync(resolve('index.html'), 'utf-8')
-        template = await vite.transformIndexHtml(url, template)
         render = (await vite.ssrLoadModule('/src/entry-server.ts')).render
       } else {
-        template = indexProd
         render = require('./dist/server/entry-server.js').render
       }
 
-      const { mpData } = await render(url, manifest)
+      const renderResult = await render(url, manifest)
+      const page = fusion.servePage(renderResult, resolve('index.html'))
 
-      // const html = template
-      //   .replace(`<!--preload-links-->`, preloadLinks)
-      //   .replace(`<!--app-html-->`, appHtml)
-
-      res.status(200).set({ 'Content-Type': 'text/json' }).end(JSON.stringify(mpData))
+      res.status(200).set({ 'Content-Type': 'text/json' }).end(page)
     } catch (e) {
       vite && vite.ssrFixStacktrace(e)
       console.log(e.stack)
