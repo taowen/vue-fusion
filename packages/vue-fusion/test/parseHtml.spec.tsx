@@ -1,4 +1,4 @@
-import { parseHtml } from '../src';
+import { parseHtml } from '../src/parseHtml';
 
 test('text', () => {
     const fragments = parseHtml('<div>hello</div>');
