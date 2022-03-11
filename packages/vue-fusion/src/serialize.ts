@@ -1,10 +1,13 @@
 import {
   HElement,
   HNode,
+  nodeOps,
 } from './nodeOps';
 import { NodeTypes } from './nodeOps';
 
 let fragmentId = 1;
+
+declare let fwx: any;
 
 export function serialize(node: HNode): string {
   return JSON.stringify(toMpData(node));
@@ -60,4 +63,10 @@ function getLayerNumber(node: HElement): number {
     return 0;
   }
   return getLayerNumber(node.parentNode) + 1;
+}
+
+nodeOps.flushElements = (elements) => {
+  for (const element of elements) {
+    fwx.setMpData(element.pageId, serialize(element));
+  }
 }
