@@ -1,15 +1,14 @@
-import * as vue from '@vue/runtime-core';
-import * as renderer from '../src';
+import * as fusion from '../src';
 
 test('single child', () => {
-    const app = renderer.createApp(vue.defineComponent({
+    const app = fusion.createApp(fusion.defineComponent({
         render() {
             return 'hello'
         }
     }));
-    const root = renderer.nodeOps.createElement('div');
+    const root = fusion.nodeOps.createElement('div');
     app.mount(root);
-    expect(renderer.toMpData(root)).toEqual({
+    expect(fusion.toMpData(root)).toEqual({
         tag: 'div',
         children: [{
             tag: 'fragment',
@@ -19,14 +18,14 @@ test('single child', () => {
 })
 
 test('2 layers', () => {
-    const app = renderer.createApp(vue.defineComponent({
+    const app = fusion.createApp(fusion.defineComponent({
         render() {
             return <span>hello</span>
         }
     }));
-    const root = renderer.nodeOps.createElement('div');
+    const root = fusion.nodeOps.createElement('div');
     app.mount(root);
-    expect(renderer.toMpData(root)).toEqual({
+    expect(fusion.toMpData(root)).toEqual({
         tag: 'div',
         children: [{
             tag: 'fragment',
@@ -39,7 +38,7 @@ test('2 layers', () => {
 })
 
 test('9 layers', () => {
-    const app = renderer.createApp(vue.defineComponent({
+    const app = fusion.createApp(fusion.defineComponent({
         render() {
             return <div>
                 <div>
@@ -60,9 +59,9 @@ test('9 layers', () => {
             </div>
         }
     }));
-    const root = renderer.nodeOps.createElement('div');
+    const root = fusion.nodeOps.createElement('div');
     app.mount(root);
-    expect(renderer.toMpData(root)).toEqual({
+    expect(fusion.toMpData(root)).toEqual({
         tag: 'div',
         children: [{
             tag: 'fragment',
@@ -102,7 +101,7 @@ test('9 layers', () => {
 })
 
 test('9 children', () => {
-    const app = renderer.createApp(vue.defineComponent({
+    const app = fusion.createApp(fusion.defineComponent({
         render() {
             return <>
                 <span>1</span>
@@ -117,9 +116,9 @@ test('9 children', () => {
             </>
         }
     }));
-    const root = renderer.nodeOps.createElement('div');
+    const root = fusion.nodeOps.createElement('div');
     app.mount(root);
-    expect(renderer.toMpData(root)).toEqual({
+    expect(fusion.toMpData(root)).toEqual({
         tag: 'div',
         children: [{
             tag: 'fragment',

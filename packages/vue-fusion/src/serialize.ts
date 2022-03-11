@@ -1,8 +1,8 @@
 import {
   HElement,
   HNode,
-  NodeTypes
 } from './nodeOps';
+import { NodeTypes } from './nodeOps';
 
 let fragmentId = 1;
 
@@ -11,15 +11,15 @@ export function serialize(node: HNode): string {
 }
 
 export function toMpData(node: HNode): any {
-  if (node.type === NodeTypes.COMMENT) {
+  if (node.nodeType === NodeTypes.COMMENT) {
     return undefined;
-  } else if (node.type === NodeTypes.TEXT) {
-    return node.text;
+  } else if (node.nodeType === NodeTypes.TEXT) {
+    return node.textContent;
   }
   const layerNumber = getLayerNumber(node);
   if (layerNumber > 0 && layerNumber < 4) {
     return {
-      tag: node.tag,
+      tag: node.tagName,
       props: Object.keys(node.props).length === 0 ? undefined : node.props,
       children: node.children.map(n => toMpData(n))
     }
@@ -44,7 +44,7 @@ export function toMpData(node: HNode): any {
     fragment.children.push(child);
   }
   return {
-    tag: node.tag,
+    tag: node.tagName,
     props: Object.keys(node.props).length === 0 ? undefined : node.props,
     children: node.fragments.map(fragment => {
       return { tag: 'fragment', children: fragment.children.map(n => toMpData(n)) };

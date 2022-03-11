@@ -1,10 +1,10 @@
 import { markRaw } from '@vue/reactivity'
 
-export const enum NodeTypes {
-  TEXT = 'text',
-  ELEMENT = 'element',
-  COMMENT = 'comment'
-}
+export const enum NodeTypes{
+  ELEMENT = 1,
+  TEXT = 3,
+  COMMENT = 8
+};
 
 export const enum NodeOpTypes {
   CREATE = 'create',
@@ -21,29 +21,62 @@ export interface HFragment {
   children: HNode[]
 }
 
-export interface HElement {
-  id: number
-  type: NodeTypes.ELEMENT
-  parentNode: HElement | null
-  tag: string
-  children: HNode[]
-  fragments: HFragment[] | null
-  props: Record<string, any>
-  eventListeners: Record<string, Function | Function[]> | null
+export class HElement {
+  id: number = nodeId++;
+  parentNode: HElement | null = null;
+  tagName: string = '';
+  children: HNode[] = [];
+  fragments: HFragment[] | null = null;
+  props: Record<string, any> = {};
+  eventListeners: Record<string, Function | Function[]> | null = null
+
+  constructor(init?: Partial<HElement>) {
+    Object.assign(this, init);
+  }
+
+  get nodeType() {
+    return 1 as const;
+  }
+
+  hasChildNodes() {
+    return this.children.length > 0;
+  }
+
+  get firstChild() {
+    return this.children[0];
+  }
+
+  get textContent() {
+    return this.children.map(node => (node as any).textContent || '').join('');
+  }
 }
 
-export interface HText {
-  id: number
-  type: NodeTypes.TEXT
-  parentNode: HElement | null
-  text: string
+export class HText {
+  id: number = nodeId++;
+  parentNode: HElement | null = null;
+  textContent: string = '';
+
+  constructor(init?: Partial<HText>) {
+    Object.assign(this, init);
+  }
+
+  get nodeType() {
+    return 3 as const;
+  }
 }
 
-export interface HComment {
-  id: number
-  type: NodeTypes.COMMENT
-  parentNode: HElement | null
-  text: string
+export class HComment {
+  id: number = nodeId++;
+  parentNode: HElement | null = null;
+  text: string = '';
+
+  constructor(init?: Partial<HComment>) {
+    Object.assign(this, init);
+  }
+
+  get nodeType() {
+    return 8 as const;
+  }
 }
 
 export type HNode = HElement | HText | HComment
@@ -78,40 +111,26 @@ export function dumpOps(): NodeOp[] {
   return ops
 }
 
-function createElement(tag: string): HElement {
-  const node: HElement = {
-    id: nodeId++,
-    type: NodeTypes.ELEMENT,
-    tag,
-    children: [],
-    fragments: null,
-    props: {},
-    parentNode: null,
-    eventListeners: null
-  }
+function createElement(tagName: string): HElement {
+  const node = new HElement({ tagName });
   logNodeOp({
     type: NodeOpTypes.CREATE,
-    nodeType: NodeTypes.ELEMENT,
+    nodeType: node.nodeType,
     targetNode: node,
-    tag
+    tag: tagName
   })
   // avoid test nodes from being observed
   markRaw(node)
   return node
 }
 
-function createText(text: string): HText {
-  const node: HText = {
-    id: nodeId++,
-    type: NodeTypes.TEXT,
-    text,
-    parentNode: null
-  }
+function createText(textContent: string): HText {
+  const node = new HText({ textContent });
   logNodeOp({
     type: NodeOpTypes.CREATE,
-    nodeType: NodeTypes.TEXT,
+    nodeType: node.nodeType,
     targetNode: node,
-    text
+    text: textContent
   })
   // avoid test nodes from being observed
   markRaw(node)
@@ -119,15 +138,10 @@ function createText(text: string): HText {
 }
 
 function createComment(text: string): HComment {
-  const node: HComment = {
-    id: nodeId++,
-    type: NodeTypes.COMMENT,
-    text,
-    parentNode: null
-  }
+  const node = new HComment({ text });
   logNodeOp({
     type: NodeOpTypes.CREATE,
-    nodeType: NodeTypes.COMMENT,
+    nodeType: node.nodeType,
     targetNode: node,
     text
   })
@@ -142,7 +156,7 @@ function setText(node: HText, text: string) {
     targetNode: node,
     text
   })
-  node.text = text
+  node.textContent = text
 }
 
 function insert(child: HNode, parent: HElement, ref?: HNode | null) {
@@ -196,25 +210,20 @@ function remove(child: HNode, logOp = true) {
   }
 }
 
-function setElementText(el: HElement, text: string) {
+function setElementText(el: HElement, textContent: string) {
   logNodeOp({
     type: NodeOpTypes.SET_ELEMENT_TEXT,
     targetNode: el,
-    text
+    text: textContent
   })
   el.children.forEach(c => {
     c.parentNode = null
   })
-  if (!text) {
+  if (!textContent) {
     el.children = []
   } else {
     el.children = [
-      {
-        id: nodeId++,
-        type: NodeTypes.TEXT,
-        text,
-        parentNode: el
-      }
+      new HText({ textContent, parentNode: el })
     ]
   }
 }
