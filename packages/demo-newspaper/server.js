@@ -1,20 +1,15 @@
-// @ts-check
-const fs = require('fs')
 const path = require('path')
 const express = require('express')
 const fusion = require('vue-fusion');
+const vuePlugin = require('@vitejs/plugin-vue')
+const vueJsx = require('@vitejs/plugin-vue-jsx')
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
 async function createServer(
-  root = process.cwd(),
   isProd = process.env.NODE_ENV === 'production'
 ) {
   const resolve = (p) => path.resolve(__dirname, p)
-
-  const indexProd = isProd
-    ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8')
-    : ''
 
   const manifest = isProd
     ? // @ts-ignore
@@ -27,10 +22,16 @@ async function createServer(
    * @type {import('vite').ViteDevServer}
    */
   let vite
-  if (!isProd) {
     vite = await require('vite').createServer({
-      root,
+      root: __dirname,
       logLevel: isTest ? 'error' : 'info',
+      plugins: [
+        vuePlugin(),
+        vueJsx(),
+      ],
+      build: {
+        minify: false
+      },
       server: {
         middlewareMode: 'ssr',
         watch: {
@@ -43,31 +44,19 @@ async function createServer(
     })
     // use vite's connect instance as middleware
     app.use(vite.middlewares)
-  } else {
-    app.use(require('compression')())
-    app.use(
-      require('serve-static')(resolve('dist/client'), {
-        index: false
-      })
-    )
-  }
 
   app.use('*', async (req, res) => {
     try {
       const url = req.originalUrl
 
       let render
-      if (!isProd) {
         // always read fresh template in dev
         render = (await vite.ssrLoadModule('/src/entry-server.ts')).render
-      } else {
-        render = require('./dist/server/entry-server.js').render
-      }
 
       const renderResult = await render(url, manifest)
       const page = fusion.servePage(renderResult, resolve('index.html'))
 
-      res.status(200).set({ 'Content-Type': 'text/json' }).end(page)
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(page)
     } catch (e) {
       vite && vite.ssrFixStacktrace(e)
       console.log(e.stack)
@@ -78,13 +67,8 @@ async function createServer(
   return { app, vite }
 }
 
-if (!isTest) {
   createServer().then(({ app }) =>
     app.listen(3000, () => {
       console.log('http://localhost:3000')
     })
   )
-}
-
-// for test use
-exports.createServer = createServer

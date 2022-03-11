@@ -9,6 +9,9 @@
                 {
                         "path": "packages/demo-newspaper"
                 },
+                {
+                        "path": "packages/ssr-vue"
+                }
 	],
 	"settings": {}
 }
