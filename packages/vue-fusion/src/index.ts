@@ -1,22 +1,29 @@
 import {
-    createRenderer,
-    RootRenderFunction,
-    CreateAppFunction
-  } from '@vue/runtime-core'
-  import { nodeOps, HElement } from './nodeOps'
-  import { patchProp } from './patchProp'
-  import { extend } from '@vue/shared'
-  
-  const { render: baseRender, createApp: baseCreateApp } = createRenderer(
-    extend({ patchProp }, nodeOps)
-  )
-  
-  export const render = baseRender as RootRenderFunction<HElement>
-  export const createApp = baseCreateApp as CreateAppFunction<HElement>
-  
-  export * from './triggerEvent'
-  export * from './serialize'
-  export * from './nodeOps'
-  export * from './renderToMpData'
-  export * from './servePage'
-  export * from '@vue/runtime-core'
+  Component, CreateAppFunction, createHydrationRenderer,
+  RootRenderFunction
+} from '@vue/runtime-core'
+import { extend } from '@vue/shared'
+import { HElement, nodeOps } from './nodeOps'
+import { patchProp } from './patchProp'
+
+const { render: baseRender, createApp: baseCreateApp } = createHydrationRenderer(
+  extend({ patchProp }, nodeOps) as any
+)
+
+export const render = baseRender as any as RootRenderFunction<HElement>
+export const createApp: CreateAppFunction<HElement> = (rootComponent: Component, rootProps?: Record<string, unknown> | null) => {
+  const app = baseCreateApp(rootComponent, rootProps)
+  const { mount } = app;
+  app.mount = (rootContainer) => {
+    return mount(rootContainer, (rootContainer as any).hasChildNodes());
+  }
+  return app as any;
+}
+
+export * from '@vue/runtime-core'
+export * from './nodeOps'
+export * from './renderToMpData'
+export * from './serialize'
+export * from './servePage'
+export * from './triggerEvent'
+
