@@ -2,7 +2,7 @@
     "name": "vue-fusion-weapp",
     "version": "1.0.0",
     "dependencies": {
+        "es-module-lexer": "^0.10.0"
     },
-    "devDependencies": {
-    }
+    "devDependencies": {}
 }
