@@ -1,5 +1,5 @@
 {
     "usingComponents": {
-        "WxNode": "./WxNode"
+        "Fragment": "./Fragment"
     }
 }

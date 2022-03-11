@@ -1,5 +1,5 @@
 <template name="level1">
-	<block wx:if="{{item.type === 'wx-node'}}"><WxNode node="{{item.children[0]}}"/></block>
+	<block wx:if="{{item.type === 'fragment'}}"><Fragment node="{{item.children[0]}}"/></block>
 	<view wx:elif="{{item.type === 'view'}}" style="{{item['style']}}" catch:tap="eh"><template is="level2" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.type === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}"><template is="level2" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.type === 'swiper-item'}}" ><template is="level2" data="{{ nodes: item.children }}" /></swiper-item>
@@ -7,7 +7,7 @@
 </template>
 <template name="level2">
 <block wx:for="{{nodes}}" wx:key="id">
-	<block wx:if="{{item.type === 'wx-node'}}"><WxNode node="{{item.children[0]}}"/></block>
+	<block wx:if="{{item.type === 'fragment'}}"><Fragment node="{{item.children[0]}}"/></block>
 	<view wx:elif="{{item.type === 'view'}}" style="{{item['style']}}" catch:tap="eh"><template is="level3" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.type === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}"><template is="level3" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.type === 'swiper-item'}}" ><template is="level3" data="{{ nodes: item.children }}" /></swiper-item>
@@ -16,7 +16,7 @@
 </template>
 <template name="level3">
 <block wx:for="{{nodes}}" wx:key="id">
-	<block wx:if="{{item.type === 'wx-node'}}"><WxNode node="{{item.children[0]}}"/></block>
+	<block wx:if="{{item.type === 'fragment'}}"><Fragment node="{{item.children[0]}}"/></block>
 	<view wx:elif="{{item.type === 'view'}}" style="{{item['style']}}" catch:tap="eh"><template is="level4" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.type === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}"><template is="level4" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.type === 'swiper-item'}}" ><template is="level4" data="{{ nodes: item.children }}" /></swiper-item>
@@ -25,7 +25,7 @@
 </template>
 <template name="level4">
 <block wx:for="{{nodes}}" wx:key="id">
-	<WxNode node="{{item}}"/>
+	<Fragment node="{{item}}"/>
 </block>
 </template>
 <template name="image">
