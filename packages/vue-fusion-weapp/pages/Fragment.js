@@ -1,10 +1,10 @@
 // render multiple layers of DOM Nodes in single WxNode
 Component({
     properties: {
-        node: null,
+        nodes: null,
     },
     methods: {
-        ev() {
+        eh() {
             console.log(arguments);
         }
     }

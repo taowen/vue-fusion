@@ -5,7 +5,7 @@
   },
   "compileType": "miniprogram",
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": false,
     "enhance": true,
     "postcss": true,
@@ -46,8 +46,5 @@
   },
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
-  "scripts": {
-    "beforeCompile": "build.cmd"
-  },
   "condition": {}
 }

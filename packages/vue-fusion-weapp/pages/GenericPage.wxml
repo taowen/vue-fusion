@@ -1,1 +1,3 @@
-<Fragment node="{{rootNode}}" />
+<block wx:for="{{fragments}}" wx:key="id">
+<Fragment nodes="{{item.children}}" />
+</block>
