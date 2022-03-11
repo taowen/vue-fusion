@@ -62,20 +62,23 @@ function containerTemplate(compName, comp, nextLevel) {
   for (const e of comp.events || []) {
     attrs.push(`catch:${e}="eh"`);
   }
-  return `\t<${compName} wx:elif="{{item.type === '${compName}'}}" ${attrs.join(' ')}><template is="${nextLevel}" data="{{ nodes: item.children }}" /></${compName}>`
+  return `\t<${compName} wx:elif="{{item.tag === '${compName}'}}" ${attrs.join(' ')}><template is="${nextLevel}" data="{{ nodes: item.children }}" /></${compName}>`
 }
 
 function containerTemplates(nextLevel) {
   lines = [];
-  lines.push(`\t<block wx:if="{{item.type === 'fragment'}}"><Fragment nodes="{{item.children}}"/></block>`);
+  lines.push(`\t<block wx:if="{{item.tag === 'fragment'}}"><Fragment nodes="{{item.children}}"/></block>`);
   for (const [compName, comp] of Object.entries(containers)) {
     lines.push(containerTemplate(compName, comp, nextLevel));
   }
-  lines.push(`\t<template wx:elif="{{item.type}}" is="{{item.type}}" data="{{...item}}" />`)
+  lines.push(`\t<block wx:elif="{{helper.isString(item)}}">{{item}}</block>`)
+  lines.push(`\t<template wx:elif="{{item.tag}}" is="{{item.tag}}" data="{{...item}}" />`)
   return lines.join('\n');
 }
 
-console.log(`<template name="level1">
+console.log(`
+<wxs src="./Fragment.wxs" module="helper" />
+<template name="level1">
 <block wx:for="{{nodes}}" wx:key="id">
 ${containerTemplates('level2')}
 </block>

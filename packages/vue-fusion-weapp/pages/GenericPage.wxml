@@ -1,2 +1,3 @@
-<include src="./Fragment" />
-<template is="level1" data="{{ nodes: nodes }}" wx:if="{{ nodes }}"/>
+<block wx:for="{{fragments}}" wx:key="id">
+<Fragment nodes="{{item.children}}" />
+</block>
