@@ -6,13 +6,16 @@ const ctx = def.context({
   global: { console, fwx: {
     setMpData(pageId, node) {
       console.log(pageId, node, new Date().getTime());
-        }
+    }
   } },
   async dynamicImport(basename, filename) {
+    if (filename.startsWith('<')) {
+      return undefined;
+    }
     let { data } = await new Promise((resolve, reject) => wx.request({
       url: `http://localhost:3000${filename}`,
       success: resolve,
-      error: reject
+      fail: reject
     }))
     return data;
   }
@@ -26,33 +29,32 @@ async function loadScript(script) {
     success: resolve,
     error: reject
   }))
-  await ctx.load(data);  
+  return await ctx.load(data);  
+}
+
+async function initRender(mpComponent) {
+  let { data } = await new Promise((resolve, reject) => wx.request({
+    url: 'http://localhost:3000',
+    success: resolve, 
+    fail: reject
+  }))
+  const end = data.indexOf('</html>');
+  if (end !== -1) {
+    data = data.substring(end + '</html>'.length);
+  }
+  const { scripts, mpData } = JSON.parse(data);
+  mpComponent.setData({ fragments: mpData });
+  const client = await loadScript('/src/entry-client.ts');
+  client.renderPage('abc');
 }
 
 Page({
   async onLoad() {
-    let { data } = await new Promise((resolve, reject) => wx.request({
-      url: 'http://localhost:3000',
-      success: resolve,
-      error: reject
-    }))
-    const end = data.indexOf('</html>');
-    if (end !== -1) {
-      data = data.substring(end + '</html>'.length);
+    try {
+      await initRender(this);
+    } catch(e) {
+      console.error(e);
     }
-    const { scripts, mpData } = JSON.parse(data);
-    this.setData({ fragments: mpData });
-    for (const script of Object.keys(scripts)) {
-      await loadScript(script);
-    }
-    console.log('loaded', new Date().getTime());
-    const renderPage = await ctx.def(`
-return (async() => {
-  const client = await import('/src/entry-client.ts');
-  return client.renderPage(...arguments);
-})();
-`)
-await renderPage('page1');
     // this.setData({
     //   nodes: [{
     //     type: 'swiper',
