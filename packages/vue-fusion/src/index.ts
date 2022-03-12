@@ -26,4 +26,4 @@ export * from './renderToMpData'
 export * from './serialize'
 export * from './servePage'
 export * from './triggerEvent'
-
+export * from './onPageLoad'

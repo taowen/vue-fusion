@@ -10,9 +10,8 @@ test('callback flushElements', async () => {
     app.provide(fusion.nodeOps.flushElementsKey, (elements) => {
         toFlush = elements;
     })
-    const root = fusion.nodeOps.createElement('div');
-    app.mount(root);
-    fusion.nodeOps.attachToPage(root, 'abc');
+    const root = fusion.nodeOps.createElement('view');
+    fusion.onPageLoad(app, root, 'abc');
     await new Promise<void>(resolve => fusion.nextTick(resolve));
     expect(toFlush).toEqual([root]);
 })
