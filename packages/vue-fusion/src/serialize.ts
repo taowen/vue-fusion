@@ -65,8 +65,8 @@ function getLayerNumber(node: HElement): number {
   return getLayerNumber(node.parentNode) + 1;
 }
 
-nodeOps.flushElements = (elements) => {
-  for (const element of elements) {
-    fwx.setMpData(element.pageId, serialize(element));
-  }
-}
+// nodeOps.flushElements = (elements) => {
+//   for (const element of elements) {
+//     fwx.setMpData(element.pageId, serialize(element));
+//   }
+// }

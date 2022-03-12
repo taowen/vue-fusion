@@ -1,6 +1,6 @@
 import * as fusion from '../src';
 
-test('1 layer', () => {
+test('beforeMount can get the element', () => {
     const app = fusion.createApp(fusion.defineComponent({
         beforeMount() {
             expect(this.$el.props['hello']).toEqual('world');

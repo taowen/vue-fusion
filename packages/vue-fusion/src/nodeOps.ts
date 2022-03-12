@@ -1,5 +1,5 @@
 import { markRaw } from '@vue/reactivity'
-import { nextTick } from '@vue/runtime-core';
+import { nextTick, InjectionKey, App } from '@vue/runtime-core';
 
 const dirtyElements = new Set<HElement>();
 
@@ -32,7 +32,8 @@ export class HElement {
   fragments: HFragment[] | null = null;
   props: Record<string, any> = {};
   eventListeners: Record<string, Function | Function[]> | null = null
-  private _pageId?: string;
+  pageId?: string;
+  __vue_app__?: App<HElement>;
 
   constructor(init?: Partial<HElement>) {
     Object.assign(this, init);
@@ -54,27 +55,17 @@ export class HElement {
     return this.children.map(node => (node as any).textContent || '').join('');
   }
 
-  get pageId() {
-    if (this._pageId) {
-      return this._pageId;
-    }
-    if (this.parentNode) {
-      return this.parentNode.pageId;
-    }
-    return '';
-  }
-
-  set pageId(val: string) {
-    this._pageId = val;
-    this.markDirty();
-  }
-
   markDirty() {
     if (dirtyElements.size === 0) {
       nextTick(() => {
         const toFlush = Array.from(dirtyElements);
         dirtyElements.clear();
-        nodeOps.flushElements(toFlush);
+        if (this.__vue_app__) {
+          const flushElements = this.__vue_app__._context.provides[nodeOps.flushElementsKey as any];
+          if (flushElements) {
+            flushElements(toFlush);
+          }
+        }
       });
     }
     dirtyElements.add(this);
@@ -279,6 +270,11 @@ function setScopeId(el: HElement, id: string) {
   el.props[id] = ''
 }
 
+function attachToPage(el: HElement, pageId: string) {
+  el.pageId = pageId;
+  el.markDirty();
+}
+
 export const nodeOps = {
   insert,
   remove,
@@ -291,5 +287,6 @@ export const nodeOps = {
   nextSibling,
   querySelector,
   setScopeId,
-  flushElements: (elements: HElement[]) => {}
+  attachToPage,
+  flushElementsKey: Symbol() as InjectionKey<(elements: HElement[]) => void>,
 }
