@@ -95,13 +95,24 @@ export class HElement {
     }
   }
 
+  get app(): App<HElement> | null {
+    if (this.__vue_app__) {
+      return this.__vue_app__;
+    }
+    if (this.parentNode) {
+      return this.parentNode.app;
+    }
+    return null;
+  }
+
   markDirty() {
     if (dirtyElements.size === 0) {
       nextTick(() => {
         const toFlush = Array.from(dirtyElements);
         dirtyElements.clear();
-        if (this.__vue_app__) {
-          const flushElements = this.__vue_app__._context.provides[nodeOps.flushElementsKey as any];
+        const app = this.app;
+        if (app) {
+          const flushElements = app._context.provides[nodeOps.flushElementsKey as any];
           if (flushElements) {
             flushElements(toFlush);
           }
@@ -210,6 +221,7 @@ function createComment(text: string): HComment {
 }
 
 function setText(node: HText, text: string) {
+  console.log('setText', node, text);
   logNodeOp({
     type: NodeOpTypes.SET_TEXT,
     targetNode: node,
@@ -285,6 +297,7 @@ function setElementText(el: HElement, textContent: string) {
       new HText({ textContent, parentNode: el })
     ]
   }
+  el.markDirty();
 }
 
 function parentNode(node: HNode): HElement | null {

@@ -19,4 +19,5 @@ export function patchProp(
     const event = key.slice(2).toLowerCase()
     ;(el.eventListeners || (el.eventListeners = {}))[event] = nextValue
   }
+  el.markDirty();
 }
