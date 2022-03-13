@@ -12,6 +12,10 @@ export function onPageLoad(app: App, root: HElement, pageId: string) {
     nodeOps.attachToPage(root, pageId)
 }
 
+export function onPageUnload(pageId: string) {
+    delete pages[pageId];
+}
+
 export function triggerEvent(
     pageId: string, elementId: string, event: Event, options?: { bubbles?: boolean, capturePhase?: boolean }
 ) {

@@ -23,7 +23,7 @@ export function toMpData(node: HNode): any {
   if (layerNumber > 0 && layerNumber < 4) {
     return {
       tag: node.tagName,
-      props: Object.keys(node.props).length === 0 ? undefined : node.props,
+      props: { id: node.id, ... node.props },
       children: node.children.map(n => toMpData(n))
     }
   }
@@ -48,7 +48,7 @@ export function toMpData(node: HNode): any {
   }
   return {
     tag: node.tagName,
-    props: Object.keys(node.props).length === 0 ? undefined : node.props,
+    props: { id: node.id, ... node.props },
     children: node.fragments.map(fragment => {
       return { tag: 'fragment', children: fragment.children.map(n => toMpData(n)) };
     })

@@ -88,6 +88,9 @@ export class HElement {
             }
         }
     }
+    if (this.parentNode && options?.bubbles) {
+      this.parentNode.triggerEvent(event, options);
+    }
   }
 
   markDirty() {

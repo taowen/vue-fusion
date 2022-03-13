@@ -6,6 +6,7 @@ test('text', () => {
         tag: 'fragment',
         children: [{
             tag: 'div',
+            props: { id: 'elem1' },
             children: ['hello']
         }]
     }]);
@@ -17,9 +18,10 @@ test('attrs', () => {
         tag: 'fragment',
         children: [{
             tag: 'div',
+            props: { id: 'elem3' },
             children: [{
                 tag: 'span',
-                props: { title: "abc" },
+                props: { id: 'elem4', title: "abc" },
                 children: []
             }]
         }]

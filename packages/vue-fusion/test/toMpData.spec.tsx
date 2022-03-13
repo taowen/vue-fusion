@@ -10,6 +10,7 @@ test('single child', () => {
     app.mount(root);
     expect(fusion.toMpData(root)).toEqual({
         tag: 'div',
+        props: { id: 'elem0' },
         children: [{
             tag: 'fragment',
             children: ['hello']
@@ -27,10 +28,12 @@ test('2 layers', () => {
     app.mount(root);
     expect(fusion.toMpData(root)).toEqual({
         tag: 'div',
+        props: { id: 'elem1' },
         children: [{
             tag: 'fragment',
             children: [{
                 tag: 'span',
+                props: { id: 'elem2' },
                 children: ['hello']
             }]
         }]
@@ -63,26 +66,35 @@ test('9 layers', () => {
     app.mount(root);
     expect(fusion.toMpData(root)).toEqual({
         tag: 'div',
+        props: { id: 'elem3' },
         children: [{
             tag: 'fragment',
             children: [{
                 tag: 'div',
+                props: { id: 'elem4' },
                 children: [{
                     tag: 'div',
+                    props: { id: 'elem5' },
                     children: [{
                         tag: 'div',
+                        props: { id: 'elem6' },
                         children: [{
                             tag: 'div',
+                            props: { id: 'elem7' },
                             children: [{
                                 tag: 'fragment',
                                 children: [{
                                     tag: 'div',
+                                    props: { id: 'elem8' },
                                     children: [{
                                         tag: 'div',
+                                        props: { id: 'elem9' },
                                         children: [{
                                             tag: 'div',
+                                            props: { id: 'elem10' },
                                             children: [{
                                                 tag: 'div',
+                                                props: { id: 'elem11' },
                                                 children: [{
                                                     tag: 'fragment',
                                                     children: ['hello']
@@ -120,40 +132,49 @@ test('9 children', () => {
     app.mount(root);
     expect(fusion.toMpData(root)).toEqual({
         tag: 'div',
+        props: { id: 'elem12' },
         children: [{
             tag: 'fragment',
             children: [
                 '',
                 {
                     tag: 'span',
+                    props: { id: 'elem13' },
                     children: ['1']
                 },
                 {
                     tag: 'span',
+                    props: { id: 'elem14' },
                     children: ['2']
                 },
                 {
                     tag: 'span',
+                    props: { id: 'elem15' },
                     children: ['3']
                 },
                 {
                     tag: 'span',
+                    props: { id: 'elem16' },
                     children: ['4']
                 },
                 {
                     tag: 'span',
+                    props: { id: 'elem17' },
                     children: ['5']
                 },
                 {
                     tag: 'span',
+                    props: { id: 'elem18' },
                     children: ['6']
                 },
                 {
                     tag: 'span',
+                    props: { id: 'elem19' },
                     children: ['7']
                 },
                 {
                     tag: 'span',
+                    props: { id: 'elem20' },
                     children: ['8']
                 }],
         }, {
@@ -162,6 +183,7 @@ test('9 children', () => {
             children: [
                 {
                     tag: 'span',
+                    props: { id: 'elem21' },
                     children: ['9']
                 },
                 ''
