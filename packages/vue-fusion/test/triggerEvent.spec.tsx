@@ -35,3 +35,25 @@ test('bubbles', async () => {
     fusion.triggerEvent('abc', (root.children[0] as any).children[0].id, { type: 'click' }, { bubbles: true });
     expect(called).toBeTruthy()
 })
+
+test('stopPropagation', async () => {
+    let called = false;
+    const Comp = fusion.defineComponent({
+        render() {
+            return <span onClick={(e: fusion.Event) => {
+                e.stopPropagation();
+            }}>hello</span>
+        }
+    })
+    const app = fusion.createApp(fusion.defineComponent({
+        render() {
+            return <div onClick={() => {
+                called = true;
+            }}><Comp /></div>
+        }
+    }));
+    const root = fusion.nodeOps.createElement('view');
+    fusion.onPageLoad(app, root, 'abc');
+    fusion.triggerEvent('abc', (root.children[0] as any).children[0].id, { type: 'click' }, { bubbles: true });
+    expect(called).toBeFalsy()
+})

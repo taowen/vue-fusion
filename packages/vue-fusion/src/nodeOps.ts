@@ -5,7 +5,9 @@ import { isArray } from '@vue/shared';
 const dirtyElements = new Set<HElement>();
 
 export interface Event {
-  type: string
+  type: string,
+  bubbles?: boolean,
+  stopPropagation(): void;
 }
 
 export const enum NodeTypes{
@@ -61,7 +63,7 @@ export class HElement {
   }
 
   getElementById(id: string): HElement | null {
-    if (this.id === id) {
+    if (this.id === id || this.props?.id === id) {
       return this;
     }
     for (const child of this.children) {
@@ -75,7 +77,7 @@ export class HElement {
     return null;
   }
 
-  triggerEvent(event: Event, options?: { bubbles?: boolean, capturePhase?: boolean }) {
+  triggerEvent(event: Event) {
     if (this.eventListeners) {
         const listener = this.eventListeners[event.type]
         if (listener) {
@@ -88,8 +90,8 @@ export class HElement {
             }
         }
     }
-    if (this.parentNode && options?.bubbles) {
-      this.parentNode.triggerEvent(event, options);
+    if (this.parentNode && event.bubbles) {
+      this.parentNode.triggerEvent(event);
     }
   }
 

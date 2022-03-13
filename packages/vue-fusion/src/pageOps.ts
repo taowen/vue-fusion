@@ -17,7 +17,7 @@ export function onPageUnload(pageId: string) {
 }
 
 export function triggerEvent(
-    pageId: string, elementId: string, event: Event, options?: { bubbles?: boolean, capturePhase?: boolean }
+    pageId: string, elementId: string, event: Omit<Event, 'stopPropagation'>, options?: { bubbles?: boolean, capturePhase?: boolean }
 ) {
     const page = pages[pageId];
     if (!page) {
@@ -27,5 +27,7 @@ export function triggerEvent(
     if (!elem) {
         throw new Error(`element not found: ${elementId}`);
     }
-    elem.triggerEvent(event, options);
+    elem.triggerEvent({...event, bubbles: options?.bubbles, stopPropagation() {
+        (this as any).bubbles = false;
+    }});
 }
