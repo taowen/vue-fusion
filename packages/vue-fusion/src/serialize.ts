@@ -39,7 +39,7 @@ export function toMpData(node: HNode): any {
     if (!fragment) {
       node.fragments.length = j + 1;
       node.fragments[j] = fragment = {
-        id: fragmentId++,
+        id: `fragment${fragmentId++}`,
         parentNode: node,
         children: []
       };

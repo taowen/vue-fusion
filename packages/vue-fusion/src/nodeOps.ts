@@ -1,7 +1,12 @@
 import { markRaw } from '@vue/reactivity'
 import { nextTick, InjectionKey, App } from '@vue/runtime-core';
+import { isArray } from '@vue/shared';
 
 const dirtyElements = new Set<HElement>();
+
+export interface Event {
+  type: string
+}
 
 export const enum NodeTypes{
   ELEMENT = 1,
@@ -19,13 +24,13 @@ export const enum NodeOpTypes {
 }
 
 export interface HFragment {
-  id: number
+  id: string
   parentNode: HElement | null
   children: HNode[]
 }
 
 export class HElement {
-  id: number = nodeId++;
+  id = `elem${nodeId++}`;
   parentNode: HElement | null = null;
   tagName: string = '';
   children: HNode[] = [];
@@ -55,6 +60,36 @@ export class HElement {
     return this.children.map(node => (node as any).textContent || '').join('');
   }
 
+  getElementById(id: string): HElement | null {
+    if (this.id === id) {
+      return this;
+    }
+    for (const child of this.children) {
+      if (child.nodeType === NodeTypes.ELEMENT) {
+        const found = child.getElementById(id);
+        if (found) {
+          return found;
+        }
+      }
+    }
+    return null;
+  }
+
+  triggerEvent(event: Event, options?: { bubbles?: boolean, capturePhase?: boolean }) {
+    if (this.eventListeners) {
+        const listener = this.eventListeners[event.type]
+        if (listener) {
+            if (isArray(listener)) {
+                for (let i = 0; i < listener.length; i++) {
+                    listener[i](event)
+                }
+            } else {
+                listener(event)
+            }
+        }
+    }
+  }
+
   markDirty() {
     if (dirtyElements.size === 0) {
       nextTick(() => {
@@ -73,7 +108,6 @@ export class HElement {
 }
 
 export class HText {
-  id: number = nodeId++;
   parentNode: HElement | null = null;
   textContent: string = '';
 
@@ -87,7 +121,6 @@ export class HText {
 }
 
 export class HComment {
-  id: number = nodeId++;
   parentNode: HElement | null = null;
   text: string = '';
 
