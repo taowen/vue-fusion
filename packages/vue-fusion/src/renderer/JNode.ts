@@ -20,13 +20,7 @@ export function encodePageUpdates(dirtyElements: HElement[]) {
       throw new Error('can not encodePage before attachToPages');
     }
     if (root === elem) {
-      for (const fragment of encodeNode(elem).children) {
-        if(changedFragmentIds.has(fragment.props.id)) {
-          continue;
-        }
-        changedFragmentIds.add(fragment.props.id);
-        changes.push([pageId, fragment.props.id, fragment.children])
-      }
+      changes.push([pageId, '', encodeNode(elem).children])
     } else {
       const fragment = elem.ascendantFragment;
       if(changedFragmentIds.has(fragment.id)) {

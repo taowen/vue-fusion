@@ -10,7 +10,7 @@ test('whole page rerender', () => {
     const root = parseHtml('<div>hello</div>');
     root.pageId = 'abc';
     expect(encodePageUpdates([root])).toEqual([
-        ["abc", "fragment1", [{ "tag": "div", "props": { "id": "elem2" }, "children": ["hello"] }]
+        ["abc", '', [{ 'tag': 'fragment', props: { id: 'fragment1' }, children: [{ "tag": "div", "props": { "id": "elem2" }, "children": ["hello"] }] }]
         ]])
 })
 
