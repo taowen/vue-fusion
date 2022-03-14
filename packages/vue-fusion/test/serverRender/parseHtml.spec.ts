@@ -1,8 +1,9 @@
-import { parseHtml } from '../src/parseHtml';
+import { encodeNode } from '../../src/renderer';
+import { parseHtml } from '../../src/serverRender/parseHtml';
 
 test('text', () => {
-    const fragments = parseHtml('<div>hello</div>');
-    expect(fragments).toEqual([{
+    const root = parseHtml('<div>hello</div>');
+    expect(encodeNode(root).children).toEqual([{
         tag: 'fragment',
         children: [{
             tag: 'div',
@@ -13,8 +14,8 @@ test('text', () => {
 })
 
 test('attrs', () => {
-    const fragments = parseHtml('<div><span title="abc"/></div>');
-    expect(fragments).toEqual([{
+    const root = parseHtml('<div><span title="abc"/></div>');
+    expect(encodeNode(root).children).toEqual([{
         tag: 'fragment',
         children: [{
             tag: 'div',

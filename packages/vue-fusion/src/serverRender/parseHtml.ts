@@ -1,8 +1,8 @@
 import { iterateAttributes } from './iterateAttributes';
 import { iterateNodes } from './iterateNodes';
-import { nodeOps } from './nodeOps';
-import { toMpData } from './serialize';
+import { nodeOps } from '../renderer';
 
+// parse html to HNode
 export function parseHtml(html: string) {
     let parent = nodeOps.createElement('view');
     iterateNodes(html, {
@@ -27,5 +27,5 @@ export function parseHtml(html: string) {
             parent.children.push(nodeOps.createText(text));
         }
     })
-    return toMpData(parent).children;
+    return parent;
 }

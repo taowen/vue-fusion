@@ -1,6 +1,7 @@
 import { markRaw } from '@vue/reactivity'
 import { nextTick, InjectionKey, App } from '@vue/runtime-core';
 import { isArray } from '@vue/shared';
+import { isOn } from '@vue/shared'
 
 const dirtyElements = new Set<HElement>();
 
@@ -112,7 +113,7 @@ export class HElement {
         dirtyElements.clear();
         const app = this.app;
         if (app) {
-          const flushElements = app._context.provides[nodeOps.flushElementsKey as any];
+          const flushElements = app._context.provides[flushElementsKey as any];
           if (flushElements) {
             flushElements(toFlush);
           }
@@ -326,6 +327,29 @@ function attachToPage(el: HElement, pageId: string) {
   el.markDirty();
 }
 
+function patchProp(
+  el: HElement,
+  key: string,
+  prevValue: any,
+  nextValue: any
+) {
+  logNodeOp({
+    type: NodeOpTypes.PATCH,
+    targetNode: el,
+    propKey: key,
+    propPrevValue: prevValue,
+    propNextValue: nextValue
+  })
+  el.props[key] = nextValue
+  if (isOn(key)) {
+    const event = key.slice(2).toLowerCase()
+    ;(el.eventListeners || (el.eventListeners = {}))[event] = nextValue
+  }
+  el.markDirty();
+}
+
+export const flushElementsKey = Symbol() as InjectionKey<(elements: HElement[]) => void>;
+
 export const nodeOps = {
   insert,
   remove,
@@ -339,5 +363,5 @@ export const nodeOps = {
   querySelector,
   setScopeId,
   attachToPage,
-  flushElementsKey: Symbol() as InjectionKey<(elements: HElement[]) => void>,
+  patchProp,
 }

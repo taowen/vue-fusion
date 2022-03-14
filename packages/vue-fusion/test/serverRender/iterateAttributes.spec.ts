@@ -1,4 +1,4 @@
-import { iterateAttributes } from '../src/iterateAttributes';
+import { iterateAttributes } from '../../src/serverRender/iterateAttributes';
 
 
 test('parse', () => {

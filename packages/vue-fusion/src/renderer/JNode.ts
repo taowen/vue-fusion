@@ -1,19 +1,12 @@
 import {
   HElement,
   HNode,
-  nodeOps,
-} from './nodeOps';
-import { NodeTypes } from './nodeOps';
+} from './HNode';
+import { NodeTypes } from './HNode';
 
 let fragmentId = 1;
 
-declare let fwx: any;
-
-export function serialize(node: HNode): string {
-  return JSON.stringify(toMpData(node));
-}
-
-export function toMpData(node: HNode): any {
+export function encodeNode(node: HNode): any {
   if (node.nodeType === NodeTypes.COMMENT) {
     return undefined;
   } else if (node.nodeType === NodeTypes.TEXT) {
@@ -24,7 +17,7 @@ export function toMpData(node: HNode): any {
     return {
       tag: node.tagName,
       props: { id: node.id, ... node.props },
-      children: node.children.map(n => toMpData(n))
+      children: node.children.map(n => encodeNode(n))
     }
   }
   if (!node.fragments) {
@@ -50,7 +43,7 @@ export function toMpData(node: HNode): any {
     tag: node.tagName,
     props: { id: node.id, ... node.props },
     children: node.fragments.map(fragment => {
-      return { tag: 'fragment', children: fragment.children.map(n => toMpData(n)) };
+      return { tag: 'fragment', children: fragment.children.map(n => encodeNode(n)) };
     })
   }
 }
@@ -64,9 +57,3 @@ function getLayerNumber(node: HElement): number {
   }
   return getLayerNumber(node.parentNode) + 1;
 }
-
-// nodeOps.flushElements = (elements) => {
-//   for (const element of elements) {
-//     fwx.setMpData(element.pageId, serialize(element));
-//   }
-// }
