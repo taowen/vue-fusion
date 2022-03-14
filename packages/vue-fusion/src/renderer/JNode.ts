@@ -6,6 +6,29 @@ import { NodeTypes } from './HNode';
 
 let fragmentId = 1;
 
+export function resetFragmentId() {
+  fragmentId = 1;
+}
+
+export function encodePage(dirtyElements: HElement[]) {
+  const changes = [];
+  for (const elem of dirtyElements) {
+    const root = elem.root;
+    const pageId = root.pageId;
+    if (!pageId) {
+      throw new Error('can not encodePage before attachToPages');
+    }
+    if (root === elem) {
+      for (const fragment of encodeNode(elem).children) {
+        changes.push([pageId, fragment.props.id, fragment.children])
+      }
+    } else {
+      throw new Error('')
+    }
+  }
+  return changes;
+}
+
 export function encodeNode(node: HNode): any {
   if (node.nodeType === NodeTypes.COMMENT) {
     return undefined;
@@ -43,7 +66,7 @@ export function encodeNode(node: HNode): any {
     tag: node.tagName,
     props: { id: node.id, ... node.props },
     children: node.fragments.map(fragment => {
-      return { tag: 'fragment', children: fragment.children.map(n => encodeNode(n)) };
+      return { tag: 'fragment', props: { id: fragment.id }, children: fragment.children.map(n => encodeNode(n)) };
     })
   }
 }

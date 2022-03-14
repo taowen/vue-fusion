@@ -55,6 +55,13 @@ export class HElement {
     return this.children.length > 0;
   }
 
+  get root(): HElement {
+    if(this.parentNode) {
+      return this.parentNode.root;
+    }
+    return this;
+  }
+
   get firstChild() {
     return this.children[0];
   }
@@ -165,8 +172,12 @@ export interface NodeOp {
   propNextValue?: any
 }
 
-let nodeId: number = 0
+let nodeId: number = 1
 let recordedNodeOps: NodeOp[] = []
+
+export function resetNodeId() {
+  nodeId = 1;
+}
 
 export function logNodeOp(op: NodeOp) {
   recordedNodeOps.push(op)

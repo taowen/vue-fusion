@@ -72,11 +72,13 @@ test('trigger re-render', async () => {
         }
     }));
     const root = nodeOps.createElement('view');
+    let renderCount = 0;
     app.provide(flushElementsKey, (elements) => {
-        console.log(elements);
+        renderCount++;
     })
     client.onPageLoad(app, root, 'abc');
     await new Promise<void>(resolve => vue.nextTick(resolve));
     client.triggerEvent('abc', (root.children[0] as any).id, { type: 'click' });
     await new Promise<void>(resolve => vue.nextTick(resolve));
+    expect(renderCount).toBe(2);
 })

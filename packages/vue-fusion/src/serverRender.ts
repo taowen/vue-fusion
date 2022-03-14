@@ -10,7 +10,7 @@ import { parseHtml } from './serverRender/parseHtml';
 export async function serverRender(app: App<HElement>, indexHtml: string) {
     const renderedHtml = await renderToString(app);
     const node = parseHtml(renderedHtml);
-    const fragments = encodeNode(node);
+    const fragments = encodeNode(node).children;
     const scripts = extractScripts(indexHtml);
     return {
         fragments,
