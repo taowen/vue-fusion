@@ -34,9 +34,11 @@ function triggerEvent(
     if (!elem) {
         throw new Error(`element not found: ${elementId}`);
     }
-    elem.triggerEvent({...event, bubbles: options?.bubbles, stopPropagation() {
-        (this as any).bubbles = false;
-    }});
+    elem.triggerEvent({
+        ...event, bubbles: options?.bubbles, stopPropagation() {
+            (this as any).bubbles = false;
+        }
+    });
 }
 
 export const client = {

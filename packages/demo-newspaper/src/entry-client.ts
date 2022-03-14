@@ -1,15 +1,8 @@
 import * as fusion from 'vue-fusion';
+import createApp from './createApp';
 
-export function renderPage(pageId: string) {
-    console.log('before', new Date().getTime());
-    const app = fusion.createApp(fusion.defineComponent({
-        render() {
-            return 'hello';
-        }
-    }));
-    const root = fusion.nodeOps.createElement('view');
-    app.mount(root);
-    root.pageId = pageId;
-    console.log('after', new Date().getTime());
-    return pageId
-}
+export const onPageLoad = (pageId: string) => {
+    return fusion.client.onPageLoad(createApp(), fusion.nodeOps.createElement('view'), pageId);
+};
+export const onPageUnload = fusion.client.onPageUnload;
+export const triggerEvent = fusion.client.triggerEvent;
