@@ -10,8 +10,9 @@ export function resetFragmentId() {
   fragmentId = 1;
 }
 
-export function encodePage(dirtyElements: HElement[]) {
+export function encodePageUpdates(dirtyElements: HElement[]) {
   const changes = [];
+  const changedFragmentIds = new Set();
   for (const elem of dirtyElements) {
     const root = elem.root;
     const pageId = root.pageId;
@@ -20,10 +21,19 @@ export function encodePage(dirtyElements: HElement[]) {
     }
     if (root === elem) {
       for (const fragment of encodeNode(elem).children) {
+        if(changedFragmentIds.has(fragment.props.id)) {
+          continue;
+        }
+        changedFragmentIds.add(fragment.props.id);
         changes.push([pageId, fragment.props.id, fragment.children])
       }
     } else {
-      throw new Error('')
+      const fragment = elem.ascendantFragment;
+      if(changedFragmentIds.has(fragment.id)) {
+        continue;
+      }
+      changedFragmentIds.add(fragment.id);
+      changes.push([pageId, fragment.id, fragment.children.map(c => encodeNode(c))])
     }
   }
   return changes;
