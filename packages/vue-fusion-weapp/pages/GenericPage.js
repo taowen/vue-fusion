@@ -2,10 +2,34 @@
 // 获取应用实例
 const app = getApp()
 const { context } = require('define-function');
+
+function getPageById(pageId) {
+  const pages = getCurrentPages();
+  for (const page of pages) {
+    if (page.getPageId() === pageId) {
+      return page;
+    }
+  }
+  return undefined;
+}
+
 const ctx = context({
-  global: { console, fwx: {
-    setMpData(pageId, node) {
-      console.log(pageId, node, new Date().getTime());
+  global: { console, clientHost: {
+    updatePages(pageUpdates) {
+      for (const [pageId, fragmentId, mpData] of pageUpdates) {
+        const page = getPageById(pageId);
+        if (!page || !page.fragments) {
+          continue;
+        }
+        if (!fragmentId) {
+          page.setData({ fragments: mpData });
+        } else {
+          const fragment = page.fragments[fragmentId];
+          if (fragment) {
+            fragment.setData({ nodes: mpData });
+          }
+        }
+      }
     }
   } },
   async loadModuleContent(moduleName) {
@@ -20,7 +44,7 @@ const ctx = context({
 
 let client = undefined;
 
-async function initClient(mpComponent) {
+async function initClient(mpPage) {
   let { data } = await new Promise((resolve, reject) => wx.request({
     url: 'http://localhost:3000',
     success: resolve, 
@@ -31,9 +55,9 @@ async function initClient(mpComponent) {
     data = data.substring(end + '</html>'.length);
   }
   const { scripts, fragments } = JSON.parse(data);
-  mpComponent.setData({ fragments });
+  mpPage.setData({ fragments });
   client = await ctx.load(scripts.map(s => `export * from '${s}';`).join('\n'));
-  client.onPageLoad('abc');
+  client.onPageLoad(mpPage.getPageId());
 }
 
 Page({
