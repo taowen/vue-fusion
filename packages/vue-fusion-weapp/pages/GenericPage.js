@@ -1,19 +1,16 @@
 // index.ts
 // 获取应用实例
 const app = getApp()
-const def = require('define-function');
-const ctx = def.context({
+const { context } = require('define-function');
+const ctx = context({
   global: { console, fwx: {
     setMpData(pageId, node) {
       console.log(pageId, node, new Date().getTime());
     }
   } },
-  async dynamicImport(basename, filename) {
-    if (filename.startsWith('<')) {
-      return undefined;
-    }
+  async loadModuleContent(moduleName) {
     let { data } = await new Promise((resolve, reject) => wx.request({
-      url: `http://localhost:3000${filename}`,
+      url: `http://localhost:3000${moduleName}`,
       success: resolve,
       fail: reject
     }))
@@ -21,18 +18,9 @@ const ctx = def.context({
   }
 });
 
+let client = undefined;
 
-
-async function loadScript(script) {
-  let { data } = await new Promise((resolve, reject) => wx.request({
-    url: `http://localhost:3000${script}`,
-    success: resolve,
-    error: reject
-  }))
-  return await ctx.load(data);  
-}
-
-async function initRender(mpComponent) {
+async function initClient(mpComponent) {
   let { data } = await new Promise((resolve, reject) => wx.request({
     url: 'http://localhost:3000',
     success: resolve, 
@@ -42,16 +30,16 @@ async function initRender(mpComponent) {
   if (end !== -1) {
     data = data.substring(end + '</html>'.length);
   }
-  const { scripts, mpData } = JSON.parse(data);
-  mpComponent.setData({ fragments: mpData });
-  const client = await loadScript('/src/entry-client.ts');
-  client.renderPage('abc');
+  const { scripts, fragments } = JSON.parse(data);
+  mpComponent.setData({ fragments });
+  client = await ctx.load(scripts.map(s => `export * from '${s}';`).join('\n'));
+  client.onPageLoad('abc');
 }
 
 Page({
   async onLoad() {
     try {
-      await initRender(this);
+      await initClient(this);
     } catch(e) {
       console.error(e);
     }
