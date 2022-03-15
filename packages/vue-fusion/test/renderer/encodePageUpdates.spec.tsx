@@ -1,5 +1,5 @@
+import * as fusion from '../../src';
 import { encodePageUpdates, HElement, nodeOps, resetFragmentId, resetNodeId } from "../../src";
-import { parseHtml } from "../../src/serverRender/parseHtml";
 
 beforeEach(() => {
     resetNodeId();
@@ -7,15 +7,38 @@ beforeEach(() => {
 })
 
 test('whole page rerender', () => {
-    const root = parseHtml('<div>hello</div>');
+    const app = fusion.createApp(fusion.defineComponent({
+        render() {
+            return <div>hello</div>
+        }
+    }));
+    const root = nodeOps.createElement('div');
+    app.mount(root);
     root.pageId = 'abc';
     expect(encodePageUpdates([root])).toEqual([
-        ["abc", '', [{ 'tag': 'fragment', props: { id: 'fragment1' }, children: [{ "tag": "div", "props": { "id": "elem2" }, "children": ["hello"] }] }]
+        ["abc", '', [{ tag: 'fragment', id: 'fragment1', children: [{ tag: "div", id: "elem2", children: ['hello'] }] }]
         ]])
 })
 
 test('rerender one fragment', () => {
-    const root = parseHtml('<span/><span/><span/><span/><span/><span/><span/><span/><span/><span/><span/>');
+    const app = fusion.createApp(fusion.defineComponent({
+        render() {
+            return <>
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+                <span>6</span>
+                <span>7</span>
+                <span>8</span>
+                <span>9</span>
+                <span>10</span>
+            </>
+        }
+    }));
+    const root = nodeOps.createElement('div');
+    app.mount(root);
     root.pageId = 'abc';
     encodePageUpdates([root]);
     expect(root.fragments!.length).toBe(2);
@@ -23,7 +46,9 @@ test('rerender one fragment', () => {
     nodeOps.setElementText(elem, 'hello');
     expect(encodePageUpdates([elem])).toEqual([
         ["abc", "fragment2", [
-            { "tag": "span", "props": { "id": "elem11" }, "children": ["hello"] },
-            { "tag": "span", "props": { "id": "elem12" }, "children": [] }]]
+            { tag: "span", id: "elem10", children: ["hello"] },
+            { tag: "span", id: "elem11", children: ["10"] },
+            ""
+        ]]
     ])
 })

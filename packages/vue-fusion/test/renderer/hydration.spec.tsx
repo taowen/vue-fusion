@@ -1,8 +1,8 @@
-import * as vue from '@vue/runtime-core';
+import * as fusion from '../../src';
 import { createApp, nodeOps } from '../../src/renderer';
 
 test('beforeMount can get the element', () => {
-    const app = createApp(vue.defineComponent({
+    const app = createApp(fusion.defineComponent({
         beforeMount() {
             expect(this.$el.props['hello']).toEqual('world');
         },

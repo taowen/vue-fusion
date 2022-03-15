@@ -1,8 +1,6 @@
 const path = require('path')
 const fs = require('fs');
 const express = require('express')
-const vuePlugin = require('@vitejs/plugin-vue')
-const vueJsx = require('@vitejs/plugin-vue-jsx')
 
 async function createServer(
 ) {
@@ -16,8 +14,6 @@ async function createServer(
     root: __dirname,
     logLevel: 'info',
     plugins: [
-      vuePlugin(),
-      vueJsx(),
     ],
     build: {
       minify: false
@@ -40,9 +36,9 @@ async function createServer(
       const url = req.originalUrl
 
       const createApp = (await vite.ssrLoadModule('/src/createApp.tsx')).default
-      const fusion = (await vite.ssrLoadModule('vue-fusion'));
+      const fusion = (await vite.ssrLoadModule('vue-fusion-vite'));
       const { fragments, scripts } = await fusion.serverRender(createApp(), fs.readFileSync(path.join(__dirname, 'index.html'), 'utf-8'));
-      const result = '<html>' + scripts.map(s => `<script src="${s}"/>`).join('') + '</html>' + JSON.stringify({ fragments, scripts })
+      const result = '<html>' + scripts.map(s => `<script src="${s}"/>`).join('') + '</html>' + JSON.stringify({ fragments: [], scripts })
       res.status(200).set({ 'Content-Type': 'text/html' }).end(result);
     } catch (e) {
       vite && vite.ssrFixStacktrace(e)

@@ -43,7 +43,8 @@ export function encodeNode(node: HNode): any {
   if (layerNumber > 0 && layerNumber < 4) {
     return {
       tag: node.tagName,
-      props: { id: node.id, ... node.props },
+      id: node.id,
+      ...node.props,
       children: node.children.map(n => encodeNode(n))
     }
   }
@@ -68,9 +69,10 @@ export function encodeNode(node: HNode): any {
   }
   return {
     tag: node.tagName,
-    props: { id: node.id, ... node.props },
+    id: node.id,
+    ...node.props,
     children: node.fragments.map(fragment => {
-      return { tag: 'fragment', props: { id: fragment.id }, children: fragment.children.map(n => encodeNode(n)) };
+      return { tag: 'fragment', id: fragment.id, children: fragment.children.map(n => encodeNode(n)) };
     })
   }
 }

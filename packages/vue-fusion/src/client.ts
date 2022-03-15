@@ -1,5 +1,5 @@
 import { App } from "@vue/runtime-core";
-import { Event, HElement, nodeOps } from "./renderer";
+import { encodePageUpdates, Event, HElement, nodeOps } from "./renderer";
 
 /**
  * client has 3 API:
@@ -16,7 +16,7 @@ const pages: Record<string, {
 function onPageLoad(app: App, root: HElement, pageId: string) {
     pages[pageId] = { app, root }
     app.mount(root);
-    nodeOps.attachToPage(root, pageId)
+    nodeOps.attachToPage(root, pageId);
 }
 
 function onPageUnload(pageId: string) {

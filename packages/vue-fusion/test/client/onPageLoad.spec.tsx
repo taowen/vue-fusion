@@ -1,8 +1,8 @@
 import { nodeOps, flushElementsKey, createApp, client } from '../../src';
-import * as vue from '@vue/runtime-core';
+import * as fusion from '../../src';
 
 test('callback flushElements', async () => {
-    const app = createApp(vue.defineComponent({
+    const app = createApp(fusion.defineComponent({
         render() {
             return 'hello'
         }
@@ -13,6 +13,6 @@ test('callback flushElements', async () => {
     })
     const root = nodeOps.createElement('view');
     client.onPageLoad(app, root, 'abc');
-    await new Promise<void>(resolve => vue.nextTick(resolve));
+    await new Promise<void>(resolve => fusion.nextTick(resolve));
     expect(toFlush).toEqual([root]);
 })

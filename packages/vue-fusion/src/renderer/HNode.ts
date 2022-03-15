@@ -129,20 +129,26 @@ export class HElement {
   }
 
   markDirty() {
-    if (dirtyElements.size === 0) {
-      nextTick(() => {
-        const toFlush = Array.from(dirtyElements);
-        dirtyElements.clear();
-        const app = this.app;
-        if (app) {
-          const flushElements = app._context.provides[flushElementsKey as any];
-          if (flushElements) {
+    const shouldFlush = dirtyElements.size === 0;
+    dirtyElements.add(this);
+    if (!shouldFlush) {
+      return;
+    }
+    nextTick(() => {
+      const toFlush = Array.from(dirtyElements);
+      dirtyElements.clear();
+      const app = this.app;
+      if (app) {
+        const flushElements = app._context.provides[flushElementsKey as any];
+        if (flushElements) {
+          try {
             flushElements(toFlush);
+          } catch(e) {
+            console.error(`failed to flushElements: ${e}`);
           }
         }
-      });
-    }
-    dirtyElements.add(this);
+      }
+    });
   }
 }
 
@@ -248,7 +254,6 @@ function createComment(text: string): HComment {
 }
 
 function setText(node: HText, text: string) {
-  console.log('setText', node, text);
   logNodeOp({
     type: NodeOpTypes.SET_TEXT,
     targetNode: node,
@@ -368,8 +373,8 @@ function patchProp(
   })
   el.props[key] = nextValue
   if (isOn(key)) {
-    const event = key.slice(2).toLowerCase()
-    ;(el.eventListeners || (el.eventListeners = {}))[event] = nextValue
+    const event = key.slice(2).toLowerCase();
+    (el.eventListeners || (el.eventListeners = {}))[event] = nextValue;
   }
   el.markDirty();
 }

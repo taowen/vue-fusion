@@ -1,3 +1,3 @@
 export * from './renderer';
 export * from './client';
-export * from './serverRender';
+export * from '@vue/runtime-core';

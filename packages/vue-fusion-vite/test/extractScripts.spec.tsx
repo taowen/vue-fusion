@@ -1,4 +1,4 @@
-import { extractScripts } from '../../src/serverRender/extractScripts';
+import { extractScripts } from '../src/serverRender/extractScripts';
 
 test('extractScripts', () => {
     const scripts = extractScripts(`

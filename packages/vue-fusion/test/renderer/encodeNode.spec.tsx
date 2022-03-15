@@ -1,4 +1,4 @@
-import * as vue from '@vue/runtime-core';
+import * as fusion from '../../src';
 import { createApp, encodeNode, nodeOps, resetFragmentId, resetNodeId } from '../../src/renderer';
 
 beforeEach(() => {
@@ -7,7 +7,7 @@ beforeEach(() => {
 })
 
 test('single child', () => {
-    const app = createApp(vue.defineComponent({
+    const app = createApp(fusion.defineComponent({
         render() {
             return 'hello'
         }
@@ -16,17 +16,17 @@ test('single child', () => {
     app.mount(root);
     expect(encodeNode(root)).toEqual({
         tag: 'div',
-        props: { id: 'elem1' },
+        id: 'elem1',
         children: [{
             tag: 'fragment',
-            props: { id: 'fragment1' },
+            id: 'fragment1',
             children: ['hello']
         }]
     })
 })
 
 test('2 layers', () => {
-    const app = createApp(vue.defineComponent({
+    const app = createApp(fusion.defineComponent({
         render() {
             return <span>hello</span>
         }
@@ -35,13 +35,13 @@ test('2 layers', () => {
     app.mount(root);
     expect(encodeNode(root)).toEqual({
         tag: 'div',
-        props: { id: 'elem1' },
+        id: 'elem1',
         children: [{
             tag: 'fragment',
-            props: { id: 'fragment1' },
+            id: 'fragment1',
             children: [{
                 tag: 'span',
-                props: { id: 'elem2' },
+                id: 'elem2',
                 children: ['hello']
             }]
         }]
@@ -49,7 +49,7 @@ test('2 layers', () => {
 })
 
 test('9 layers', () => {
-    const app = createApp(vue.defineComponent({
+    const app = createApp(fusion.defineComponent({
         render() {
             return <div>
                 <div>
@@ -74,40 +74,40 @@ test('9 layers', () => {
     app.mount(root);
     expect(encodeNode(root)).toEqual({
         tag: 'div',
-        props: { id: 'elem1' },
+        id: 'elem1',
         children: [{
             tag: 'fragment',
-            props: { id: 'fragment1' },
+            id: 'fragment1',
             children: [{
                 tag: 'div',
-                props: { id: 'elem2' },
+                id: 'elem2',
                 children: [{
                     tag: 'div',
-                    props: { id: 'elem3' },
+                    id: 'elem3',
                     children: [{
                         tag: 'div',
-                        props: { id: 'elem4' },
+                        id: 'elem4',
                         children: [{
                             tag: 'div',
-                            props: { id: 'elem5' },
+                            id: 'elem5',
                             children: [{
                                 tag: 'fragment',
-                                props: { id: 'fragment2' },
+                                id: 'fragment2',
                                 children: [{
                                     tag: 'div',
-                                    props: { id: 'elem6' },
+                                    id: 'elem6',
                                     children: [{
                                         tag: 'div',
-                                        props: { id: 'elem7' },
+                                        id: 'elem7',
                                         children: [{
                                             tag: 'div',
-                                            props: { id: 'elem8' },
+                                            id: 'elem8',
                                             children: [{
                                                 tag: 'div',
-                                                props: { id: 'elem9' },
+                                                id: 'elem9',
                                                 children: [{
                                                     tag: 'fragment',
-                                                    props: { id: 'fragment3' },
+                                                    id: 'fragment3',
                                                     children: ['hello']
                                                 }]
                                             }]
@@ -124,7 +124,7 @@ test('9 layers', () => {
 })
 
 test('9 children', () => {
-    const app = createApp(vue.defineComponent({
+    const app = createApp(fusion.defineComponent({
         render() {
             return <>
                 <span>1</span>
@@ -143,60 +143,60 @@ test('9 children', () => {
     app.mount(root);
     expect(encodeNode(root)).toEqual({
         tag: 'div',
-        props: { id: 'elem1' },
+        id: 'elem1',
         children: [{
             tag: 'fragment',
-            props: { id: 'fragment1' },
+            id: 'fragment1',
             children: [
                 '',
                 {
                     tag: 'span',
-                    props: { id: 'elem2' },
+                    id: 'elem2',
                     children: ['1']
                 },
                 {
                     tag: 'span',
-                    props: { id: 'elem3' },
+                    id: 'elem3',
                     children: ['2']
                 },
                 {
                     tag: 'span',
-                    props: { id: 'elem4' },
+                    id: 'elem4',
                     children: ['3']
                 },
                 {
                     tag: 'span',
-                    props: { id: 'elem5' },
+                    id: 'elem5',
                     children: ['4']
                 },
                 {
                     tag: 'span',
-                    props: { id: 'elem6' },
+                    id: 'elem6',
                     children: ['5']
                 },
                 {
                     tag: 'span',
-                    props: { id: 'elem7' },
+                    id: 'elem7',
                     children: ['6']
                 },
                 {
                     tag: 'span',
-                    props: { id: 'elem8' },
+                    id: 'elem8',
                     children: ['7']
                 },
                 {
                     tag: 'span',
-                    props: { id: 'elem9' },
+                    id: 'elem9',
                     children: ['8']
                 }],
         }, {
 
             tag: 'fragment',
-            props: { id: 'fragment2' },
+            id: 'fragment2',
             children: [
                 {
                     tag: 'span',
-                    props: { id: 'elem10' },
+                    id: 'elem10',
                     children: ['9']
                 },
                 ''

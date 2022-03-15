@@ -1,14 +1,15 @@
 {
-  "name": "vue-fusion",
+  "name": "vue-fusion-vite",
   "version": "0.0.1",
-  "description": "vue SSR/OTA/HMR",
   "main": "dist/src/index.js",
   "module": "src/index.ts",
   "types": "src/index.ts",
   "dependencies": {
     "@vue/runtime-core": "^3.2.31",
     "@vue/shared": "^3.2.31",
-    "@vue/reactivity": "^3.2.31"
+    "@vue/reactivity": "^3.2.31",
+    "vue": "^3.2.31",
+    "vue-fusion": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^4.5.5",

@@ -1,6 +1,6 @@
 import { iterateAttributes } from './iterateAttributes';
 import { iterateNodes } from './iterateNodes';
-import { nodeOps } from '../renderer';
+import { nodeOps } from 'vue-fusion';
 
 // parse html to HNode
 export function parseHtml(html: string) {

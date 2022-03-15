@@ -10,7 +10,8 @@ if (!clientHost) {
 export const onPageLoad = (pageId: string) => {
     const app = createApp();
     app.provide(fusion.flushElementsKey, (elements) => {
-        clientHost.updatePages(fusion.encodePageUpdates(elements));
+        const pageUpdates = fusion.encodePageUpdates(elements);
+        clientHost.updatePages(pageUpdates);
     })
     return fusion.client.onPageLoad(app, fusion.nodeOps.createElement('view'), pageId);
 };

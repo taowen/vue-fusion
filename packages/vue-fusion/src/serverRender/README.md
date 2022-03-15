@@ -1,1 +1,0 @@
-private implementation of renderToMpData

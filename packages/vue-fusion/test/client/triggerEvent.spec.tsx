@@ -1,9 +1,9 @@
 import { nodeOps, flushElementsKey, createApp, client, Event } from '../../src';
-import * as vue from '@vue/runtime-core';
+import * as fusion from '../../src';
 
 test('trigger direct element', async () => {
     let called = false;
-    const app = createApp(vue.defineComponent({
+    const app = createApp(fusion.defineComponent({
         render() {
             return <div onClick={() => {
                 called = true;
@@ -18,12 +18,12 @@ test('trigger direct element', async () => {
 
 test('bubbles', async () => {
     let called = false;
-    const Comp = vue.defineComponent({
+    const Comp = fusion.defineComponent({
         render() {
             return <span>hello</span>
         }
     })
-    const app = createApp(vue.defineComponent({
+    const app = createApp(fusion.defineComponent({
         render() {
             return <div onClick={() => {
                 called = true;
@@ -38,14 +38,14 @@ test('bubbles', async () => {
 
 test('stopPropagation', async () => {
     let called = false;
-    const Comp = vue.defineComponent({
+    const Comp = fusion.defineComponent({
         render() {
             return <span onClick={(e: Event) => {
                 e.stopPropagation();
             }}>hello</span>
         }
     })
-    const app = createApp(vue.defineComponent({
+    const app = createApp(fusion.defineComponent({
         render() {
             return <div onClick={() => {
                 called = true;
@@ -59,7 +59,7 @@ test('stopPropagation', async () => {
 })
 
 test('trigger re-render', async () => {
-    const app = createApp(vue.defineComponent({
+    const app = createApp(fusion.defineComponent({
         data() {
             return {
                 msg: 'hello'
@@ -77,8 +77,9 @@ test('trigger re-render', async () => {
         renderCount++;
     })
     client.onPageLoad(app, root, 'abc');
-    await new Promise<void>(resolve => vue.nextTick(resolve));
+    await new Promise<void>(resolve => fusion.nextTick(resolve));
+    expect(renderCount).toBe(1);
     client.triggerEvent('abc', (root.children[0] as any).id, { type: 'click' });
-    await new Promise<void>(resolve => vue.nextTick(resolve));
+    await new Promise<void>(resolve => fusion.nextTick(resolve));
     expect(renderCount).toBe(2);
 })
