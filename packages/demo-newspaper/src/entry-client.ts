@@ -1,4 +1,5 @@
 import * as fusion from 'vue-fusion';
+import { client } from 'vue-fusion/client';
 import createApp from './createApp';
 
 declare const clientHost: {
@@ -16,7 +17,7 @@ export const onPageLoad = async (pageId: string, url: string) => {
         clientHost.updatePages(pageUpdates);
     })
     await router.push(url);
-    return fusion.client.onPageLoad(app, fusion.nodeOps.createElement('view'), pageId);
+    return client.onPageLoad(app, fusion.nodeOps.createElement('view'), pageId);
 };
-export const onPageUnload = fusion.client.onPageUnload;
-export const triggerEvent = fusion.client.triggerEvent;
+export const onPageUnload = client.onPageUnload;
+export const triggerEvent = client.triggerEvent;

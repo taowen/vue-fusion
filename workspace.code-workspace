@@ -8,9 +8,6 @@
 		},
                 {
                         "path": "packages/demo-newspaper"
-                },
-                {
-                        "path": "packages/vue-fusion-vite"
                 }
 	],
 	"settings": {}

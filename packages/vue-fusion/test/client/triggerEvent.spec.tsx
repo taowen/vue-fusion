@@ -1,16 +1,16 @@
-import { nodeOps, flushElementsKey, createApp, client, Event } from '../../src';
+import { client } from '../../src/client';
 import * as fusion from '../../src';
 
 test('trigger direct element', async () => {
     let called = false;
-    const app = createApp(fusion.defineComponent({
+    const app = fusion.createApp(fusion.defineComponent({
         render() {
             return <div onClick={() => {
                 called = true;
             }}>hello</div>
         }
     }));
-    const root = nodeOps.createElement('view');
+    const root = fusion.nodeOps.createElement('view');
     client.onPageLoad(app, root, 'abc');
     client.triggerEvent('abc', (root.children[0] as any).id, { type: 'click' });
     expect(called).toBeTruthy()
@@ -23,14 +23,14 @@ test('bubbles', async () => {
             return <span>hello</span>
         }
     })
-    const app = createApp(fusion.defineComponent({
+    const app = fusion.createApp(fusion.defineComponent({
         render() {
             return <div onClick={() => {
                 called = true;
             }}><Comp /></div>
         }
     }));
-    const root = nodeOps.createElement('view');
+    const root = fusion.nodeOps.createElement('view');
     client.onPageLoad(app, root, 'abc');
     client.triggerEvent('abc', (root.children[0] as any).children[0].id, { type: 'click' }, { bubbles: true });
     expect(called).toBeTruthy()
@@ -45,21 +45,21 @@ test('stopPropagation', async () => {
             }}>hello</span>
         }
     })
-    const app = createApp(fusion.defineComponent({
+    const app = fusion.createApp(fusion.defineComponent({
         render() {
             return <div onClick={() => {
                 called = true;
             }}><Comp /></div>
         }
     }));
-    const root = nodeOps.createElement('view');
+    const root = fusion.nodeOps.createElement('view');
     client.onPageLoad(app, root, 'abc');
     client.triggerEvent('abc', (root.children[0] as any).children[0].id, { type: 'click' }, { bubbles: true });
     expect(called).toBeFalsy()
 })
 
 test('trigger re-render', async () => {
-    const app = createApp(fusion.defineComponent({
+    const app = fusion.createApp(fusion.defineComponent({
         data() {
             return {
                 msg: 'hello'
@@ -71,9 +71,9 @@ test('trigger re-render', async () => {
             }}>{ this.msg }</div>
         }
     }));
-    const root = nodeOps.createElement('view');
+    const root = fusion.nodeOps.createElement('view');
     let renderCount = 0;
-    app.provide(flushElementsKey, (elements) => {
+    app.provide(fusion.flushElementsKey, (elements) => {
         renderCount++;
     })
     client.onPageLoad(app, root, 'abc');

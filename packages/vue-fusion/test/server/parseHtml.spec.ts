@@ -1,5 +1,5 @@
-import { encodeNode, resetFragmentId, resetNodeId } from 'vue-fusion';
-import { parseHtml } from '../src/serverRender/parseHtml';
+import { encodeNode, resetFragmentId, resetNodeId } from '../../src';
+import { parseHtml } from '../../src/server/parseHtml';
 
 beforeEach(() => {
     resetNodeId();

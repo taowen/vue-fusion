@@ -1,5 +1,11 @@
 {
     "compilerOptions": {
+        "paths": {
+            "vue-fusion/server": ["./src/server"],
+            "vue-fusion/client": ["./src/client"],
+            "vue-fusion/dev": ["./src/dev"],
+            "vue-fusion/config": ["./src/config"]
+        },
         "target": "esnext",
         "declaration": true,
         "useDefineForClassFields": true,
@@ -14,7 +20,7 @@
         "sourceMap": true,
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "outDir": "dist",
+        "outDir": "publish/lib",
         "lib": [
             "esnext",
             "dom"

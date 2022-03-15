@@ -1,5 +1,4 @@
-import { App } from "@vue/runtime-core";
-import { Event, HElement, nodeOps } from "./renderer";
+import { App, Event, HElement, nodeOps } from "vue-fusion";
 
 /**
  * client has 3 API:
