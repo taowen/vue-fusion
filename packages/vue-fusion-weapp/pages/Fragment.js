@@ -20,7 +20,7 @@ Component({
     methods: {
         eh(e) {
             if (e.target.id) { 
-                const { client } = require('./GenericPage'); 
+                const { client } = require('./GenericPage');
                 client.triggerEvent(this.getPageId(), e.target.id, e, { bubbles: true });
             }
         }

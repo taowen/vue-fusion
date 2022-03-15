@@ -53,8 +53,9 @@ const ctx = context({
 module.exports.client = undefined;
 
 async function initClient(mpPage) {
+  const url = decodeURIComponent(mpPage.options.url || '/');
   let { data } = await new Promise((resolve, reject) => wx.request({
-    url: 'http://localhost:3000',
+    url: 'http://localhost:3000' + url,
     success: resolve, 
     fail: reject
   }))
@@ -65,7 +66,7 @@ async function initClient(mpPage) {
   const { scripts, fragments } = JSON.parse(data);
   mpPage.setData({ fragments });
   module.exports.client = await ctx.load(scripts.map(s => `export * from '${s}';`).join('\n'));
-  module.exports.client.onPageLoad(mpPage.getPageId(), decodeURIComponent(mpPage.options.url) || '/');
+  module.exports.client.onPageLoad(mpPage.getPageId(), url);
 }
 
 Page({
