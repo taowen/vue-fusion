@@ -1,6 +1,3 @@
-// index.ts
-// 获取应用实例
-const app = getApp()
 const { context } = require('define-function');
 
 function getPageById(pageId) {
@@ -77,5 +74,8 @@ Page({
       module.exports.client = initClient(this);
       await module.exports.client;
     }
+  },
+  onUnload() {
+    module.exports.client.onPageUnload(this.getPageId());
   }
 })
