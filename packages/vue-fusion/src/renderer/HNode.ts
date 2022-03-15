@@ -55,9 +55,9 @@ export class HElement {
     return this.children.length > 0;
   }
   
-  get ascendantFragment(): HFragment {
+  get ascendantFragment(): HFragment | null {
     if (!this.parentNode) {
-      throw new Error('HElement not in any fragment');
+      return null;
     }
     if (this.parentNode.fragments) {
       for (const fragment of this.parentNode.fragments) {
@@ -65,7 +65,7 @@ export class HElement {
           return fragment;
         }
       }
-      throw new Error('HElement not in any fragment of its parent')
+      return null;
     }
     return this.parentNode.ascendantFragment;
   }
