@@ -1,23 +1,22 @@
+/// <reference types="vite-plugin-pages/client" />
 import * as fusion from 'vue-fusion';
+import { createMemoryHistory, createRouter, RouterView } from 'vue-router';
+import routes from '~pages';
 
-const Comp = fusion.defineComponent({
-    data() {
-        return {
-            msg: 'hello world!!!'
-        }
-    },
-    render() {
-        return <view onTap={() => {
-            this.msg = 'updated~~~';
-        }}>{ this.msg }</view>
-    }
+const router = createRouter({
+    history: createMemoryHistory(),
+    routes,
 })
 
-export default () => fusion.createApp(fusion.defineComponent({
-    errorCaptured(err) {
-        console.log(`caught error: ${err}`);
-    },
-    render() {
-        return <Comp />
-    }
-}));
+export default () => {
+    const app = fusion.createApp(fusion.defineComponent({
+        errorCaptured(err) {
+            console.log(`caught error: ${err}`);
+        },
+        render() {
+            return <RouterView />
+        }
+    }));
+    app.use(router);
+    return { app, router };
+};
