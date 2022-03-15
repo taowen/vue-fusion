@@ -32,13 +32,12 @@ const ctx = context({
       }
     }
   } },
-  async loadModuleContent(moduleName, extra) {
+  async loadModuleContent(moduleName) {
     let { data } = await new Promise((resolve, reject) => wx.request({
       url: `http://localhost:3000${moduleName}`,
       success: resolve,
       fail: reject
     }))
-    console.log(moduleName, extra);
     return data;
   }
 });
