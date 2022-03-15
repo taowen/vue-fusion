@@ -1,5 +1,5 @@
 import { App } from "@vue/runtime-core";
-import { encodePageUpdates, Event, HElement, nodeOps } from "./renderer";
+import { Event, HElement, nodeOps } from "./renderer";
 
 /**
  * client has 3 API:

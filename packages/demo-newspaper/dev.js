@@ -41,10 +41,11 @@ async function createServer(
       const url = req.originalUrl
 
       const createApp = (await vite.ssrLoadModule('/src/createApp.tsx')).default
-      const app = createApp().app;
+      const { app, router } = createApp();
+      await router.push(url);
       const fusion = (await vite.ssrLoadModule('vue-fusion-vite'));
       const { fragments, scripts } = await fusion.serverRender(app, fs.readFileSync(path.join(__dirname, 'index.html'), 'utf-8'));
-      const result = '<html>' + scripts.map(s => `<script src="${s}"/>`).join('') + '</html>' + JSON.stringify({ fragments: [], scripts })
+      const result = '<html>' + scripts.map(s => `<script src="${s}"/>`).join('') + '</html>' + JSON.stringify({ fragments, scripts })
       res.status(200).set({ 'Content-Type': 'text/html' }).end(result);
     } catch (e) {
       vite && vite.ssrFixStacktrace(e)
