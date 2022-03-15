@@ -1,4 +1,4 @@
-import { client } from '../../src/client';
+import { _onPageLoad, triggerEvent } from '../../src/client';
 import * as fusion from '../../src';
 
 test('trigger direct element', async () => {
@@ -11,8 +11,8 @@ test('trigger direct element', async () => {
         }
     }));
     const root = fusion.nodeOps.createElement('view');
-    client.onPageLoad(app, root, 'abc');
-    client.triggerEvent('abc', (root.children[0] as any).id, { type: 'click' });
+    _onPageLoad(app, root, 'abc');
+    triggerEvent('abc', (root.children[0] as any).id, { type: 'click' });
     expect(called).toBeTruthy()
 })
 
@@ -31,8 +31,8 @@ test('bubbles', async () => {
         }
     }));
     const root = fusion.nodeOps.createElement('view');
-    client.onPageLoad(app, root, 'abc');
-    client.triggerEvent('abc', (root.children[0] as any).children[0].id, { type: 'click' }, { bubbles: true });
+    _onPageLoad(app, root, 'abc');
+    triggerEvent('abc', (root.children[0] as any).children[0].id, { type: 'click' }, { bubbles: true });
     expect(called).toBeTruthy()
 })
 
@@ -53,8 +53,8 @@ test('stopPropagation', async () => {
         }
     }));
     const root = fusion.nodeOps.createElement('view');
-    client.onPageLoad(app, root, 'abc');
-    client.triggerEvent('abc', (root.children[0] as any).children[0].id, { type: 'click' }, { bubbles: true });
+    _onPageLoad(app, root, 'abc');
+    triggerEvent('abc', (root.children[0] as any).children[0].id, { type: 'click' }, { bubbles: true });
     expect(called).toBeFalsy()
 })
 
@@ -76,10 +76,10 @@ test('trigger re-render', async () => {
     app.provide(fusion.flushElementsKey, (elements) => {
         renderCount++;
     })
-    client.onPageLoad(app, root, 'abc');
+    _onPageLoad(app, root, 'abc');
     await new Promise<void>(resolve => fusion.nextTick(resolve));
     expect(renderCount).toBe(1);
-    client.triggerEvent('abc', (root.children[0] as any).id, { type: 'click' });
+    triggerEvent('abc', (root.children[0] as any).id, { type: 'click' });
     await new Promise<void>(resolve => fusion.nextTick(resolve));
     expect(renderCount).toBe(2);
 })

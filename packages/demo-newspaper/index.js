@@ -1,3 +1,2 @@
-import { startServer } from 'vue-fusion/server';
-
-startServer();
+import './src/createApp'
+export * from 'vue-fusion/client';

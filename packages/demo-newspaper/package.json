@@ -2,17 +2,20 @@
     "name": "demo-newspaper",
     "version": "0.0.1",
     "private": true,
+    "main": "src/index.ts",
     "dependencies": {
+        "demo-newspaper": "workspace:*",
         "vue-fusion": "workspace:*",
         "vite-plugin-pages": "^0.21.4",
         "vue-router": "^4.0.14",
+        "@vue/runtime-core": "^3.2.31",
         "vue": "^3.2.31",
         "express": "^4.17.1",
         "vite": "^2.8.6",
         "miniprogram-api-typings": "^3.4.5"
     },
     "scripts": {
-        "dev": "node dev",
-        "build": "vite build --ssr index.js --outDir dist && vite build --outDir dist/client"
+        "dev": "node dev.js",
+        "build": "vite build --ssr server.js --outDir dist && vite build --outDir dist/client"
     }
 }

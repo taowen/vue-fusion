@@ -3,7 +3,7 @@ import * as fusion from 'vue-fusion';
 import { createMemoryHistory, createRouter, RouterView } from 'vue-router';
 import routes from '~pages';
 
-export default () => {
+fusion.$app.create = () => {
     const router = createRouter({
         history: createMemoryHistory(),
         routes,
@@ -13,7 +13,7 @@ export default () => {
             console.log(`caught error: ${err}`);
         },
         render() {
-            return <RouterView />
+            return <RouterView/>
         }
     }));
     app.use(router);

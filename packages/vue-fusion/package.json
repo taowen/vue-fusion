@@ -23,8 +23,5 @@
   },
   "scripts": {
     "build": "tsc && tsc --module esnext --outDir publish/esm"
-  },
-  "bin": {
-    "vue-fusion-dev": "bin/vue-fusion-dev.js"
   }
 }

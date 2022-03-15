@@ -1,1 +1,1 @@
-require('vue-fusion/dev').startDevServer(__dirname);
+require('vue-fusion/dev').startDevServer('src/createApp.tsx');

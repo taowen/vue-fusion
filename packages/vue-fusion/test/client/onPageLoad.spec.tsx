@@ -1,4 +1,4 @@
-import { client } from '../../src/client';
+import { _onPageLoad } from '../../src/client';
 import * as fusion from '../../src';
 
 test('callback flushElements', async () => {
@@ -12,7 +12,7 @@ test('callback flushElements', async () => {
         toFlush = elements;
     })
     const root = fusion.nodeOps.createElement('view');
-    client.onPageLoad(app, root, 'abc');
+    _onPageLoad(app, root, 'abc');
     await new Promise<void>(resolve => fusion.nextTick(resolve));
     expect(toFlush).toEqual([root]);
 })

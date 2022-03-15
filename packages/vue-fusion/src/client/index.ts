@@ -1,4 +1,8 @@
-import { App, Event, HElement, nodeOps } from "vue-fusion";
+import { $app, App, encodePageUpdates, Event, flushElementsKey, HElement, nodeOps } from "vue-fusion";
+
+declare const clientHost: {
+    updatePages(pageUpdates: any[]): void;
+};
 
 /**
  * client has 3 API:
@@ -12,17 +16,30 @@ const pages: Record<string, {
     root: HElement
 }> = {};
 
-function onPageLoad(app: App, root: HElement, pageId: string) {
+export async function onPageLoad(pageId: string, url: string) {
+    if (typeof clientHost === 'undefined') {
+        throw new Error('missing clientHost from global');
+    }
+    const { app, router } = $app.create();
+    app.provide(flushElementsKey, (elements) => {
+        const pageUpdates = encodePageUpdates(elements);
+        clientHost.updatePages(pageUpdates);
+    })
+    await router.push(url);
+    return _onPageLoad(app, nodeOps.createElement('view'), pageId);
+}
+
+export function _onPageLoad(app: App, root: HElement, pageId: string) {
     pages[pageId] = { app, root }
     app.mount(root);
     nodeOps.attachToPage(root, pageId);
 }
 
-function onPageUnload(pageId: string) {
+export function onPageUnload(pageId: string) {
     delete pages[pageId];
 }
 
-function triggerEvent(
+export function triggerEvent(
     pageId: string, elementId: string, event: Omit<Event, 'stopPropagation'>, options?: { bubbles?: boolean, capturePhase?: boolean }
 ) {
     const page = pages[pageId];
@@ -38,10 +55,4 @@ function triggerEvent(
             (this as any).bubbles = false;
         }
     });
-}
-
-export const client = {
-    onPageLoad,
-    onPageUnload,
-    triggerEvent
 }

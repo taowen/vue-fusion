@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import PagesPlugin from 'vite-plugin-pages';
 
-export default Object.assign(defineConfig({
+export default defineConfig({
   logLevel: 'info',
   define: {
     __VUE_OPTIONS_API__: false,
@@ -15,8 +15,4 @@ export default Object.assign(defineConfig({
   build: {
     minify: false
   },
-}), {
-  ssr: {
-    noExternal: /./
-  }
 })

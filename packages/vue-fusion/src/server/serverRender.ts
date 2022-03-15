@@ -1,16 +1,11 @@
-import { App } from '@vue/runtime-core';
-import { encodeNode, HElement } from 'vue-fusion';
-import { extractScripts } from './extractScripts';
+import { $app, encodeNode } from 'vue-fusion';
 import { parseHtml } from './parseHtml';
 import { renderToString } from 'vue/server-renderer';
 
-export async function serverRender(app: App<HElement>, indexHtml: string) {
+export async function serverRender(url: string) {
+    const { app, router } = $app.create();
+    await router.push(url);
     const renderedHtml = await renderToString(app);
     const node = parseHtml(renderedHtml);
-    const fragments = encodeNode(node).children;
-    const scripts = extractScripts(indexHtml);
-    return {
-        fragments,
-        scripts
-    };
+    return encodeNode(node).children;
 }
