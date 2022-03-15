@@ -2,8 +2,8 @@
 <wxs src="./Fragment.wxs" module="helper" />
 <template name="level1">
 <block wx:for="{{nodes}}" wx:key="id">
-	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.props.id}}" nodes="{{item.children}}"/></block>
-	<view wx:elif="{{item.tag === 'view'}}" style="{{item['style']}}" catch:tap="eh"><template is="level2" data="{{ nodes: item.children }}" /></view>
+	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.id}}" nodes="{{item.children}}"/></block>
+	<view wx:elif="{{item.tag === 'view'}}" id="{{item['id']}}" style="{{item['style']}}" catch:tap="eh"><template is="level2" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}"><template is="level2" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" ><template is="level2" data="{{ nodes: item.children }}" /></swiper-item>
 	<block wx:elif="{{helper.isString(item)}}">{{item}}</block>
@@ -12,8 +12,8 @@
 </template>
 <template name="level2">
 <block wx:for="{{nodes}}" wx:key="id">
-	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.props.id}}" nodes="{{item.children}}"/></block>
-	<view wx:elif="{{item.tag === 'view'}}" style="{{item['style']}}" catch:tap="eh"><template is="level3" data="{{ nodes: item.children }}" /></view>
+	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.id}}" nodes="{{item.children}}"/></block>
+	<view wx:elif="{{item.tag === 'view'}}" id="{{item['id']}}" style="{{item['style']}}" catch:tap="eh"><template is="level3" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}"><template is="level3" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" ><template is="level3" data="{{ nodes: item.children }}" /></swiper-item>
 	<block wx:elif="{{helper.isString(item)}}">{{item}}</block>
@@ -22,8 +22,8 @@
 </template>
 <template name="level3">
 <block wx:for="{{nodes}}" wx:key="id">
-	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.props.id}}" nodes="{{item.children}}"/></block>
-	<view wx:elif="{{item.tag === 'view'}}" style="{{item['style']}}" catch:tap="eh"><template is="level4" data="{{ nodes: item.children }}" /></view>
+	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.id}}" nodes="{{item.children}}"/></block>
+	<view wx:elif="{{item.tag === 'view'}}" id="{{item['id']}}" style="{{item['style']}}" catch:tap="eh"><template is="level4" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}"><template is="level4" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" ><template is="level4" data="{{ nodes: item.children }}" /></swiper-item>
 	<block wx:elif="{{helper.isString(item)}}">{{item}}</block>
@@ -32,8 +32,8 @@
 </template>
 <template name="level4">
 <block wx:for="{{nodes}}" wx:key="id">
-	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.props.id}}" nodes="{{item.children}}"/></block>
-	<view wx:elif="{{item.tag === 'view'}}" style="{{item['style']}}" catch:tap="eh"><template is="level5" data="{{ nodes: item.children }}" /></view>
+	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.id}}" nodes="{{item.children}}"/></block>
+	<view wx:elif="{{item.tag === 'view'}}" id="{{item['id']}}" style="{{item['style']}}" catch:tap="eh"><template is="level5" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}"><template is="level5" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" ><template is="level5" data="{{ nodes: item.children }}" /></swiper-item>
 	<block wx:elif="{{helper.isString(item)}}">{{item}}</block>

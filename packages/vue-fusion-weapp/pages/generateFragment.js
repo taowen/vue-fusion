@@ -10,6 +10,7 @@ leafs = {
 containers = {
   view: {
     props: {
+      id: undefined,
       style: undefined
     },
     events: ['tap']
@@ -67,7 +68,7 @@ function containerTemplate(compName, comp, nextLevel) {
 
 function containerTemplates(nextLevel) {
   lines = [];
-  lines.push(`\t<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.props.id}}" nodes="{{item.children}}"/></block>`);
+  lines.push(`\t<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.id}}" nodes="{{item.children}}"/></block>`);
   for (const [compName, comp] of Object.entries(containers)) {
     lines.push(containerTemplate(compName, comp, nextLevel));
   }

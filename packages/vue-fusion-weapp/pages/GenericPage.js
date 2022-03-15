@@ -18,12 +18,12 @@ const ctx = context({
     updatePages(pageUpdates) {
       for (const [pageId, fragmentId, mpData] of pageUpdates) {
         const page = getPageById(pageId);
-        if (!page || !page.fragments) {
+        if (!page) {
           continue;
         }
         if (!fragmentId) {
           page.setData({ fragments: mpData });
-        } else {
+        } else if(page.fragments) {
           const fragment = page.fragments[fragmentId];
           if (fragment) {
             fragment.setData({ nodes: mpData });
@@ -32,17 +32,18 @@ const ctx = context({
       }
     }
   } },
-  async loadModuleContent(moduleName) {
+  async loadModuleContent(moduleName, extra) {
     let { data } = await new Promise((resolve, reject) => wx.request({
       url: `http://localhost:3000${moduleName}`,
       success: resolve,
       fail: reject
     }))
+    console.log(moduleName, extra);
     return data;
   }
 });
 
-let client = undefined;
+module.exports.client = undefined;
 
 async function initClient(mpPage) {
   let { data } = await new Promise((resolve, reject) => wx.request({
@@ -56,8 +57,8 @@ async function initClient(mpPage) {
   }
   const { scripts, fragments } = JSON.parse(data);
   mpPage.setData({ fragments });
-  client = await ctx.load(scripts.map(s => `export * from '${s}';`).join('\n'));
-  client.onPageLoad(mpPage.getPageId());
+  module.exports.client = await ctx.load(scripts.map(s => `export * from '${s}';`).join('\n'));
+  module.exports.client.onPageLoad(mpPage.getPageId());
 }
 
 Page({

@@ -18,8 +18,11 @@ Component({
         }
     },
     methods: {
-        eh() {
-            console.log(arguments);
+        eh(e) {
+            if (e.target.id) { 
+                const { client } = require('./GenericPage'); 
+                client.triggerEvent(this.getPageId(), e.target.id, e, { bubbles: true });
+            }
         }
     }
 })
