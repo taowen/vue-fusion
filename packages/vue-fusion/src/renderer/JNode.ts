@@ -13,16 +13,24 @@ export function resetFragmentId() {
 export function encodePageUpdates(dirtyElements: HElement[]) {
   const changes = [];
   const changedFragmentIds = new Set();
+  const changedPageIds = new Set();
   for (const elem of dirtyElements) {
     const root = elem.root;
     const pageId = root.pageId;
     if (!pageId) {
       throw new Error('can not encodePage before attachToPages');
     }
+    if (changedPageIds.has(pageId)) {
+      continue;
+    }
     if (root === elem) {
-      changes.push([pageId, '', encodeNode(elem).children])
+      changes.push([pageId, '', encodeNode(elem).children]);
+      changedPageIds.add(pageId);
     } else {
       const fragment = elem.ascendantFragment;
+      if (!fragment) {
+        continue;
+      }
       if(changedFragmentIds.has(fragment.id)) {
         continue;
       }

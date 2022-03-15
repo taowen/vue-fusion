@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs');
 const express = require('express')
+const PagesPlugin = require('vite-plugin-pages').default
 
 async function createServer(
 ) {
@@ -14,6 +15,9 @@ async function createServer(
     root: __dirname,
     logLevel: 'info',
     plugins: [
+      PagesPlugin({
+        extensions: ['tsx']
+      })
     ],
     build: {
       minify: false
@@ -28,6 +32,7 @@ async function createServer(
       }
     }
   })
+  await vite.restart(true);
   // use vite's connect instance as middleware
   app.use(vite.middlewares)
 
@@ -36,8 +41,9 @@ async function createServer(
       const url = req.originalUrl
 
       const createApp = (await vite.ssrLoadModule('/src/createApp.tsx')).default
+      const app = createApp().app;
       const fusion = (await vite.ssrLoadModule('vue-fusion-vite'));
-      const { fragments, scripts } = await fusion.serverRender(createApp(), fs.readFileSync(path.join(__dirname, 'index.html'), 'utf-8'));
+      const { fragments, scripts } = await fusion.serverRender(app, fs.readFileSync(path.join(__dirname, 'index.html'), 'utf-8'));
       const result = '<html>' + scripts.map(s => `<script src="${s}"/>`).join('') + '</html>' + JSON.stringify({ fragments: [], scripts })
       res.status(200).set({ 'Content-Type': 'text/html' }).end(result);
     } catch (e) {
