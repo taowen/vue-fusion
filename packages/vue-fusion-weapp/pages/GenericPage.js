@@ -14,7 +14,15 @@ function getPageById(pageId) {
 }
 
 const ctx = context({
-  global: { console, clientHost: {
+  global: { 
+    console, 
+    wx: {
+      ...wx,
+      navigateTo({ url }) {
+        return wx.navigateTo({ url: '/pages/GenericPage?url=' + encodeURIComponent(url) })
+      },
+    },
+    clientHost: {
     updatePages(pageUpdates) {
       for (const [pageId, fragmentId, mpData] of pageUpdates) {
         const page = getPageById(pageId);
@@ -57,38 +65,16 @@ async function initClient(mpPage) {
   const { scripts, fragments } = JSON.parse(data);
   mpPage.setData({ fragments });
   module.exports.client = await ctx.load(scripts.map(s => `export * from '${s}';`).join('\n'));
-  module.exports.client.onPageLoad(mpPage.getPageId());
+  module.exports.client.onPageLoad(mpPage.getPageId(), decodeURIComponent(mpPage.options.url) || '/');
 }
 
 Page({
-  async onLoad() {
-    try {
-      await initClient(this);
-    } catch(e) {
-      console.error(e);
+  async onLoad(options) {
+    if (module.exports.client) {
+      module.exports.client.onPageLoad(this.getPageId(), decodeURIComponent(options.url) || '/');
+    } else {
+      module.exports.client = initClient(this);
+      await module.exports.client;
     }
-    // this.setData({
-    //   nodes: [{
-    //     type: 'swiper',
-    //     ['indicator-dots']: true,
-    //     ['indicator-color']: 'red',
-    //     children: [{
-    //       type: 'swiper-item',
-    //       children: [{
-    //         type: 'fragment',
-    //         children: [{
-    //           type: 'image',
-    //           src: 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png'
-    //         }]
-    //       }]
-    //     }, {
-    //       type: 'swiper-item',
-    //       children: [{
-    //         type: 'image',
-    //         src: 'https://www.baidu.com/img/pc_9c5c85e6b953f1d172e1ed6821618b91.png'
-    //       }]
-    //     }]
-    //   }]
-    // })
   }
 })
