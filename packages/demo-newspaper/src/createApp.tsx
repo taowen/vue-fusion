@@ -18,5 +18,5 @@ export default () => {
         }
     }));
     app.use(router);
-    return { app, router };
+    return { app, router } as const;
 };

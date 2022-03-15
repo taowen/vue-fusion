@@ -1,3 +1,4 @@
+/// <reference types="miniprogram-api-typings/index" />
 import * as fusion from 'vue-fusion';
 
 export default fusion.defineComponent({
@@ -8,7 +9,7 @@ export default fusion.defineComponent({
     },
     render() {
         return <view onTap={() => {
-            this.msg = 'updated~~~';
+            wx.navigateTo({ url: '/About' });
         }}>{ this.msg }</view>
     }
 })
