@@ -76,7 +76,14 @@ cli.command('build-server', 'build production server').action(async () => {
                 formats: ['es'],
                 fileName: () => 'client.js'
             },
-            outDir: path.resolve(root, 'dist/client')
+            outDir: path.resolve(root, 'dist/client'),
+            rollupOptions: {
+                output: {
+                    chunkFileNames: (chunk) => {
+                        return `${chunk.name.replace(/\./g, '_')}.js`;
+                    }
+                }
+            }
         },
     })
     const preloaded: Record<string, string> = {};
