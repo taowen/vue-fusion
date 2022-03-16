@@ -80,7 +80,7 @@ cli.command('build-server', 'build production server').action(async () => {
             rollupOptions: {
                 output: {
                     chunkFileNames: (chunk) => {
-                        return `${chunk.name.replace(/\./g, '_')}.js`;
+                        return `${chunk.name.replace(/\./g, '').replace(/_/g, '')}.js`;
                     }
                 }
             }
