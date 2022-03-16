@@ -1,5 +1,5 @@
-import { markRaw } from '@vue/reactivity'
-import { nextTick, InjectionKey, App } from '@vue/runtime-core';
+import { markRaw } from 'vue'
+import { nextTick, InjectionKey, App } from 'vue';
 import { isArray } from '@vue/shared';
 import { isOn } from '@vue/shared'
 

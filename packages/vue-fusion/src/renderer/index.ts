@@ -1,7 +1,7 @@
 import {
   Component, CreateAppFunction, createHydrationRenderer,
   RootRenderFunction
-} from '@vue/runtime-core'
+} from 'vue'
 import { HElement, nodeOps } from './HNode'
 
 const { render: baseRender, createApp: baseCreateApp } = createHydrationRenderer(

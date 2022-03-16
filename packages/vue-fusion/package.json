@@ -7,9 +7,7 @@
   "types": "src/index.ts",
   "dependencies": {
     "vue-fusion": "workspace:*",
-    "@vue/runtime-core": "^3.2.31",
     "@vue/shared": "^3.2.31",
-    "@vue/reactivity": "^3.2.31",
     "vue": "^3.2.31",
     "express": "^4.17.1",
     "vite": "^2.8.6",
