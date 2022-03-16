@@ -37,7 +37,10 @@ const ctx = context({
       }
     }
   } },
-  async loadModuleContent(moduleName) {
+  async loadModuleContent(moduleName, extra) {
+    if (!moduleName.startsWith('/')) {
+      moduleName = '/' + moduleName;
+    }
     let { data } = await new Promise((resolve, reject) => wx.request({
       url: `http://localhost:3000${moduleName}`,
       success: resolve,
