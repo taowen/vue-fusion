@@ -1,5 +1,5 @@
 import { _onPageLoad } from '../../src/client';
-import * as fusion from '../../src';
+import * as fusion from '../../src/renderer';
 
 test('callback flushElements', async () => {
     const app = fusion.createApp(fusion.defineComponent({

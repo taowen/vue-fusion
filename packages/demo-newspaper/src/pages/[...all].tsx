@@ -4,7 +4,7 @@ import * as fusion from 'vue-fusion';
 export default fusion.defineComponent({
     data() {
         return {
-            msg: 'hello world!!!'
+            msg: 'hello world~~~'
         }
     },
     render() {

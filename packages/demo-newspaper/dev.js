@@ -1,1 +1,0 @@
-require('vue-fusion/dev').startDevServer('src/createApp.tsx');

@@ -1,5 +1,5 @@
-import * as fusion from '../../src';
-import { encodePageUpdates, HElement, nodeOps, resetFragmentId, resetNodeId } from "../../src";
+import * as fusion from '../../src/renderer';
+import { encodePageUpdates, HElement, nodeOps, resetFragmentId, resetNodeId } from "../../src/renderer";
 
 beforeEach(() => {
     resetNodeId();

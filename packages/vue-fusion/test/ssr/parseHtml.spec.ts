@@ -1,5 +1,5 @@
-import { encodeNode, resetFragmentId, resetNodeId } from '../../src';
-import { parseHtml } from '../../src/server/parseHtml';
+import { encodeNode, resetFragmentId, resetNodeId } from '../../src/renderer';
+import { parseHtml } from '../../src/ssr/parseHtml';
 
 beforeEach(() => {
     resetNodeId();

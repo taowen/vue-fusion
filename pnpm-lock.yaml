@@ -27,6 +27,7 @@ importers:
       '@types/express': ^4.17.13
       '@types/jest': 27.4.1
       '@vue/shared': ^3.2.31
+      cac: ^6.7.12
       express: ^4.17.1
       jest: 27.5.1
       npm-run-all: ^4.1.5
@@ -37,6 +38,7 @@ importers:
       vue-router: ^4.0.14
     dependencies:
       '@vue/shared': 3.2.31
+      cac: 6.7.12
       express: 4.17.3
       vite: 2.8.6
       vue: 3.2.31
@@ -1101,6 +1103,11 @@ packages:
   /bytes/3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
+    dev: false
+
+  /cac/6.7.12:
+    resolution: {integrity: sha512-rM7E2ygtMkJqD9c7WnFU6fruFcN3xe4FM5yUmgxhZzIKJk4uHl9U/fhwdajGFQbQuv43FAUo1Fe8gX/oIKDeSA==}
+    engines: {node: '>=8'}
     dev: false
 
   /call-bind/1.0.2:

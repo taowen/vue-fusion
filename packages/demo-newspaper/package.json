@@ -14,7 +14,7 @@
         "miniprogram-api-typings": "^3.4.5"
     },
     "scripts": {
-        "dev": "node dev.js",
-        "build": "vite build --ssr server.js --outDir dist && vite build --outDir dist/client"
+        "dev": "fusion dev",
+        "build-server": "fusion build-server"
     }
 }

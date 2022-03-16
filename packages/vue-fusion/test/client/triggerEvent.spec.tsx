@@ -1,5 +1,5 @@
 import { _onPageLoad, triggerEvent } from '../../src/client';
-import * as fusion from '../../src';
+import * as fusion from '../../src/renderer';
 
 test('trigger direct element', async () => {
     let called = false;

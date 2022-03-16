@@ -1,4 +1,4 @@
-import * as fusion from '../../src';
+import * as fusion from '../../src/renderer';
 import { createApp, encodeNode, nodeOps, resetFragmentId, resetNodeId } from '../../src/renderer';
 
 beforeEach(() => {

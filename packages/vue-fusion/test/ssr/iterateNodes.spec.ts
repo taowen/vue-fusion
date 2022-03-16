@@ -1,4 +1,4 @@
-import { iterateNodes } from '../../src/server/iterateNodes';
+import { iterateNodes } from '../../src/ssr/iterateNodes';
 
 test('parse', () => {
     const callbacked: any = [];

@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
         "paths": {
-            "vue-fusion": ["./src/"],
+            "vue-fusion": ["./src/renderer"],
+            "vue-fusion/ssr": ["./src/ssr"],
             "vue-fusion/server": ["./src/server"],
             "vue-fusion/client": ["./src/client"],
             "vue-fusion/dev": ["./src/dev"],

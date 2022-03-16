@@ -1,1 +1,5 @@
 .gitignore
+esm/test
+esm/tsconfig.tsbuildinfo
+lib/test
+lib/tsconfig.tsbuildinfo
