@@ -3,6 +3,7 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { build as viteBuild, createServer as createViteServer } from 'vite';
+import { packDir } from './packDir';
 
 const root = process.cwd();
 if (!fs.existsSync(path.join(root, 'vite.config.ts'))) {
@@ -96,6 +97,7 @@ cli.command('build-server', 'build production server').action(async () => {
 });
 
 cli.command('build-weapp', 'build production wechat miniprogram').action(async () => {
+    packDir(path.resolve(root, 'dist/client'));
 })
 
 cli.help();
