@@ -2,7 +2,7 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 
-async function main() {
+export async function startDevServer(entry: string) {
     const root = process.cwd();
     const app = express()
     const vite = await require('vite').createServer({
@@ -21,6 +21,7 @@ async function main() {
     app.use('*', async (req, res) => {
         try {
             const url = req.originalUrl
+            await vite.ssrLoadModule(entry);
             const { serverRender, extractScripts } = (await vite.ssrLoadModule('vue-fusion/server'))
             const scripts = extractScripts(fs.readFileSync(path.resolve(root, 'index.html'), 'utf-8'));
             const fragments = await serverRender(url);
@@ -36,5 +37,3 @@ async function main() {
         console.log('http://localhost:3000')
     });
 }
-
-main();
