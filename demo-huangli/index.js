@@ -5968,7 +5968,7 @@ function extractChangingRecords(to, from) {
   }
   return [leavingRecords, updatingRecords, enteringRecords];
 }
-const routes = [{ "name": "About", "path": "/about", "component": () => import("./About.js"), "props": true }, { "name": "all", "path": "/:all(.*)*", "component": () => import("./____all_.js"), "props": true }];
+const routes = [{ "name": "About", "path": "/about", "component": () => import("./About.js"), "props": true }, { "name": "all", "path": "/:all(.*)*", "component": () => import("./all.js"), "props": true }];
 $app.create = () => {
   const router = createRouter({
     history: createMemoryHistory(),
