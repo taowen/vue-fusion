@@ -1,5 +1,8 @@
 const { context } = require('define-function');
 
+// const baseUrl = 'http://localhost:3000'; 
+const baseUrl = 'https://taowen.github.io/vue-fusion/demo-huangli';
+
 function getPageById(pageId) {
   const pages = getCurrentPages();
   for (const page of pages) {
@@ -42,7 +45,7 @@ module.exports.client = undefined;
 async function initClient(mpPage) {
   const url = decodeURIComponent(mpPage.options.url || '/');
   let { data } = await new Promise((resolve, reject) => wx.request({
-    url: 'http://localhost:3000' + url,
+    url: baseUrl + url,
     success: resolve, 
     fail: reject
   }))
@@ -54,7 +57,9 @@ async function initClient(mpPage) {
     data = JSON.parse(data);
   }
   let { scripts, fragments, preloaded } = data;
-  mpPage.setData({ fragments });
+  if (fragments) {
+    mpPage.setData({ fragments });
+  }
   if (!scripts) {
     scripts = [];
   }
@@ -71,7 +76,7 @@ async function initClient(mpPage) {
         moduleName = '/' + moduleName;
       }
       let { data } = await new Promise((resolve, reject) => wx.request({
-        url: `http://localhost:3000${moduleName}`,
+        url: baseUrl + moduleName,
         success: resolve,
         fail: reject
       }))
