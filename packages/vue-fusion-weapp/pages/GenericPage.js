@@ -10,45 +10,32 @@ function getPageById(pageId) {
   return undefined;
 }
 
-const ctx = context({
-  global: { 
-    console, 
-    wx: {
-      ...wx,
-      navigateTo({ url }) {
-        return wx.navigateTo({ url: '/pages/GenericPage?url=' + encodeURIComponent(url) })
-      },
+const global = {
+  console, 
+  wx: {
+    ...wx,
+    navigateTo({ url }) {
+      return wx.navigateTo({ url: '/pages/GenericPage?url=' + encodeURIComponent(url) })
     },
-    clientHost: {
-    updatePages(pageUpdates) {
-      for (const [pageId, fragmentId, mpData] of pageUpdates) {
-        const page = getPageById(pageId);
-        if (!page) {
-          continue;
-        }
-        if (!fragmentId) {
-          page.setData({ fragments: mpData });
-        } else if(page.fragments) {
-          const fragment = page.fragments[fragmentId];
-          if (fragment) {
-            fragment.setData({ nodes: mpData });
-          }
+  },
+  clientHost: {
+  updatePages(pageUpdates) {
+    for (const [pageId, fragmentId, mpData] of pageUpdates) {
+      const page = getPageById(pageId);
+      if (!page) {
+        continue;
+      }
+      if (!fragmentId) {
+        page.setData({ fragments: mpData });
+      } else if(page.fragments) {
+        const fragment = page.fragments[fragmentId];
+        if (fragment) {
+          fragment.setData({ nodes: mpData });
         }
       }
     }
-  } },
-  async loadModuleContent(moduleName, extra) {
-    if (!moduleName.startsWith('/')) {
-      moduleName = '/' + moduleName;
-    }
-    let { data } = await new Promise((resolve, reject) => wx.request({
-      url: `http://localhost:3000${moduleName}`,
-      success: resolve,
-      fail: reject
-    }))
-    return data;
   }
-});
+}}
 
 module.exports.client = undefined;
 
@@ -59,12 +46,38 @@ async function initClient(mpPage) {
     success: resolve, 
     fail: reject
   }))
-  const end = data.indexOf('</html>');
-  if (end !== -1) {
-    data = data.substring(end + '</html>'.length);
+  if (typeof data === 'string') {
+    const end = data.indexOf('</html>');
+    if (end !== -1) {
+      data = data.substring(end + '</html>'.length);
+    }
+    data = JSON.parse(data);
   }
-  const { scripts, fragments } = JSON.parse(data);
+  let { scripts, fragments, preloaded } = data;
   mpPage.setData({ fragments });
+  if (!scripts) {
+    scripts = [];
+  }
+  if (preloaded) {
+    scripts = [...scripts, ...Object.keys(preloaded)];
+  }
+  const ctx = context({
+    global,
+    async loadModuleContent(moduleName) {
+      if (preloaded && preloaded[moduleName]) {
+        return preloaded[moduleName];
+      }
+      if (!moduleName.startsWith('/')) {
+        moduleName = '/' + moduleName;
+      }
+      let { data } = await new Promise((resolve, reject) => wx.request({
+        url: `http://localhost:3000${moduleName}`,
+        success: resolve,
+        fail: reject
+      }))
+      return data;
+    }
+  });
   module.exports.client = await ctx.load(scripts.map(s => `export * from '${s}';`).join('\n'));
   module.exports.client.onPageLoad(mpPage.getPageId(), url);
 }
