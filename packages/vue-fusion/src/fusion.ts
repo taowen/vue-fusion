@@ -76,9 +76,23 @@ cli.command('build-server', 'build production server').action(async () => {
                 formats: ['es'],
                 fileName: () => 'client.js'
             },
-            outDir: path.resolve(root, 'dist/client')
+            outDir: path.resolve(root, 'dist/client'),
+            rollupOptions: {
+                output: {
+                    chunkFileNames: (chunk) => {
+                        return `${chunk.name.replace(/\./g, '').replace(/_/g, '')}.js`;
+                    }
+                }
+            }
         },
     })
+    const preloaded: Record<string, string> = {};
+    for (let script of ['client.js', 'index.js']) {
+        preloaded[script] = fs.readFileSync(path.resolve(root, 'dist/client', script), 'utf-8')
+    }
+    fs.writeFileSync(path.join(root, 'dist/client/index.html'), JSON.stringify({
+        preloaded
+    }))
 });
 
 cli.command('build-weapp', 'build production wechat miniprogram').action(async () => {

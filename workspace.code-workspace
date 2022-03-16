@@ -7,7 +7,7 @@
 			"path": "packages/vue-fusion"
 		},
                 {
-                        "path": "packages/demo-newspaper"
+                        "path": "packages/demo-huangli"
                 }
 	],
 	"settings": {}
