@@ -79,6 +79,13 @@ cli.command('build-server', 'build production server').action(async () => {
             outDir: path.resolve(root, 'dist/client')
         },
     })
+    const preloaded: Record<string, string> = {};
+    for (let script of ['client.js', 'index.js']) {
+        preloaded[script] = fs.readFileSync(path.resolve(root, 'dist/client', script), 'utf-8')
+    }
+    fs.writeFileSync(path.join(root, 'dist/client/index.html'), JSON.stringify({
+        preloaded
+    }))
 });
 
 cli.command('build-weapp', 'build production wechat miniprogram').action(async () => {

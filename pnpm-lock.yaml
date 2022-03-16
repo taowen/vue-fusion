@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 importers:
 
-  packages/demo-newspaper:
+  packages/demo-huangli:
     specifiers:
       demo-newspaper: workspace:*
       express: ^4.17.1
