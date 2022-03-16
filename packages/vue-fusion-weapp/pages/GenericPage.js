@@ -3,6 +3,65 @@ const { context } = require('define-function');
 // const baseUrl = 'http://localhost:3000'; 
 const baseUrl = 'https://taowen.github.io/vue-fusion/demo-huangli';
 
+const otherModules = {};
+
+async function loadFromPack(packedFile) {
+  const preloaded = {};
+  const { instance } = await WXWebAssembly.instantiate(packedFile);
+  const buffer = new Uint8Array(instance.exports.packed.buffer);
+  let begin = 0;
+  let isFilename = true;
+  let filename = '';
+  for(let i = 0; i < buffer.byteLength; i++) {
+    if (buffer[i] === 0) {
+      if (begin === i) {
+        break;
+      }
+      if (isFilename) {
+        filename = UTF8ArrayToString(buffer, begin, i);
+      } else {
+        if (filename === 'index.js' || filename === 'client.js') {
+          preloaded[filename] = UTF8ArrayToString(buffer, begin, i);
+        } else {
+          otherModules[filename] = UTF8ArrayToString(buffer, begin, i);
+        }
+      }
+      isFilename = !isFilename;
+      begin = i + 1;
+    }
+  }
+  return { preloaded };
+}
+
+function UTF8ArrayToString(heap, idx, endPtr) {
+  var str = "";
+  while (idx < endPtr) {
+   var u0 = heap[idx++];
+   if (!(u0 & 128)) {
+    str += String.fromCharCode(u0);
+    continue;
+   }
+   var u1 = heap[idx++] & 63;
+   if ((u0 & 224) == 192) {
+    str += String.fromCharCode((u0 & 31) << 6 | u1);
+    continue;
+   }
+   var u2 = heap[idx++] & 63;
+   if ((u0 & 240) == 224) {
+    u0 = (u0 & 15) << 12 | u1 << 6 | u2;
+   } else {
+    u0 = (u0 & 7) << 18 | u1 << 12 | u2 << 6 | heap[idx++] & 63;
+   }
+   if (u0 < 65536) {
+    str += String.fromCharCode(u0);
+   } else {
+    var ch = u0 - 65536;
+    str += String.fromCharCode(55296 | ch >> 10, 56320 | ch & 1023);
+   }
+  }
+  return str;
+ }
+
 function getPageById(pageId) {
   const pages = getCurrentPages();
   for (const page of pages) {
@@ -42,8 +101,7 @@ const global = {
 
 module.exports.client = undefined;
 
-async function initClient(mpPage) {
-  const url = decodeURIComponent(mpPage.options.url || '/');
+async function loadFromServer(url) {
   let { data } = await new Promise((resolve, reject) => wx.request({
     url: baseUrl + url,
     success: resolve, 
@@ -56,7 +114,13 @@ async function initClient(mpPage) {
     }
     data = JSON.parse(data);
   }
-  let { scripts, fragments, preloaded } = data;
+  return data;
+}
+
+async function initClient(mpPage) {
+  const url = decodeURIComponent(mpPage.options.url || '/');
+  // let { scripts, fragments, preloaded } = await loadFromServer(url);
+  let { scripts, fragments, preloaded } = await loadFromPack('/packed.wasm.br');
   if (fragments) {
     mpPage.setData({ fragments });
   }
@@ -69,6 +133,9 @@ async function initClient(mpPage) {
   const ctx = context({
     global,
     async loadModuleContent(moduleName) {
+      if (otherModules && otherModules[moduleName]) {
+        return otherModules[moduleName];
+      }
       if (preloaded && preloaded[moduleName]) {
         return preloaded[moduleName];
       }
