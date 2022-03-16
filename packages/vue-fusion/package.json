@@ -1,13 +1,16 @@
 {
   "name": "vue-fusion",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "vue SSR/OTA/HMR",
   "main": "publish/lib/src/index.js",
   "module": "publish/esm/src/index.js",
   "types": "publish/esm/src/index.d.ts",
   "files": [
     "publish/lib/src/*",
-    "publish/esm/src/*"
+    "publish/esm/src/*",
+    "server",
+    "client",
+    "dev"
   ],
   "dependencies": {
     "vue-fusion": "workspace:*",
