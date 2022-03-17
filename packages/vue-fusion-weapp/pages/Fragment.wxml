@@ -7,6 +7,7 @@
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level2" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level2" data="{{ nodes: item.children }}" /></swiper-item>
 	<block wx:elif="{{helper.isString(item)}}">{{item}}</block>
+	<block wx:elif="{{item.tag === 'page-meta'}}" />
 	<template wx:elif="{{item.tag}}" is="{{item.tag}}" data="{{...item}}" />
 </block>
 </template>
@@ -17,6 +18,7 @@
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level3" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level3" data="{{ nodes: item.children }}" /></swiper-item>
 	<block wx:elif="{{helper.isString(item)}}">{{item}}</block>
+	<block wx:elif="{{item.tag === 'page-meta'}}" />
 	<template wx:elif="{{item.tag}}" is="{{item.tag}}" data="{{...item}}" />
 </block>
 </template>
@@ -27,6 +29,7 @@
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level4" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level4" data="{{ nodes: item.children }}" /></swiper-item>
 	<block wx:elif="{{helper.isString(item)}}">{{item}}</block>
+	<block wx:elif="{{item.tag === 'page-meta'}}" />
 	<template wx:elif="{{item.tag}}" is="{{item.tag}}" data="{{...item}}" />
 </block>
 </template>
@@ -37,6 +40,7 @@
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level5" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level5" data="{{ nodes: item.children }}" /></swiper-item>
 	<block wx:elif="{{helper.isString(item)}}">{{item}}</block>
+	<block wx:elif="{{item.tag === 'page-meta'}}" />
 	<template wx:elif="{{item.tag}}" is="{{item.tag}}" data="{{...item}}" />
 </block>
 </template>

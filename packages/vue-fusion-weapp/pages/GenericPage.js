@@ -88,8 +88,7 @@ const global = {
         continue;
       }
       if (!fragmentId) {
-        console.log(mpData);
-        page.setData({ fragments: mpData });
+        page.setData(processPageFragments(mpData));
       } else if(page.fragments) {
         const fragment = page.fragments[fragmentId];
         if (fragment) {
@@ -99,6 +98,24 @@ const global = {
     }
   }
 }}
+
+function processPageFragments(fragments) {
+  let pageMeta = {};
+  let navigationBar = {};
+  for (const fragment of fragments) {
+    for (const child of fragment.children) {
+      if (child.tag === 'page-meta') {
+        pageMeta = child;
+        for (const grandChild of child.children) {
+          if (grandChild.tag === 'navigation-bar') {
+            navigationBar = grandChild;
+          }
+        }
+      }
+    }
+  }
+  return { fragments, pageMeta, navigationBar };
+}
 
 module.exports.client = undefined;
 
@@ -123,7 +140,7 @@ async function initClient(mpPage) {
   let { scripts, fragments, preloaded } = await loadFromServer(url);
   // let { scripts, fragments, preloaded } = await loadFromPack('/packed.wasm.br');
   if (fragments) {
-    mpPage.setData({ fragments });
+    mpPage.setData(processPageFragments(fragments));
   }
   if (!scripts) {
     scripts = [];

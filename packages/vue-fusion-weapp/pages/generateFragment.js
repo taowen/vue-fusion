@@ -89,6 +89,7 @@ function containerTemplates(nextLevel) {
     lines.push(containerTemplate(compName, comp, nextLevel));
   }
   lines.push(`\t<block wx:elif="{{helper.isString(item)}}">{{item}}</block>`)
+  lines.push(`\t<block wx:elif="{{item.tag === 'page-meta'}}" />`)
   lines.push(`\t<template wx:elif="{{item.tag}}" is="{{item.tag}}" data="{{...item}}" />`)
   return lines.join('\n');
 }
