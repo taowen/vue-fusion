@@ -1,5 +1,8 @@
 declare namespace JSX {
     interface IntrinsicElements {
-        view: any;
+        view: {
+            class?: string
+            onTap?: Function
+        };
     }
 }
