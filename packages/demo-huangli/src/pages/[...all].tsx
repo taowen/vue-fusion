@@ -8,7 +8,7 @@ export default fusion.defineComponent({
         }
     },
     render() {
-        return <view onTap={() => {
+        return <view style={{ color: 'red' }} onTap={() => {
             wx.navigateTo({ url: '/About' });
         }}>{ this.msg }</view>
     }

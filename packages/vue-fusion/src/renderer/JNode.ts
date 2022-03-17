@@ -52,7 +52,7 @@ export function encodeNode(node: HNode): any {
     return {
       tag: node.tagName,
       id: node.id,
-      ...node.props,
+      ...translateProps(node.props),
       children: node.children.map(n => encodeNode(n))
     }
   }
@@ -78,11 +78,22 @@ export function encodeNode(node: HNode): any {
   return {
     tag: node.tagName,
     id: node.id,
-    ...node.props,
+    ...translateProps(node.props),
     children: node.fragments.map(fragment => {
       return { tag: 'fragment', id: fragment.id, children: fragment.children.map(n => encodeNode(n)) };
     })
   }
+}
+
+function translateProps(props: Record<string, any>) {
+  return {...props, style: translateStyle(props.style) };
+}
+
+function translateStyle(style: any) {
+  if (!style || typeof style !== 'object') {
+    return style;
+  }
+  return Object.entries(style).map(([k, v]) => `${k}:${v};`).join('');
 }
 
 function getLayerNumber(node: HElement): number {
