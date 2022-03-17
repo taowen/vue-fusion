@@ -1,6 +1,1 @@
-<page-meta page-style="{{ pageMeta['page-style'] }}">
-  <navigation-bar title="{{ navigationBar['title'] }}" />
-</page-meta>
-<block wx:for="{{fragments}}" wx:key="id">
-  <Fragment id="{{item.id}}" nodes="{{item.children}}" />
-</block>
+<page-meta page-style="{{ pageMeta['page-style'] }}" /><block wx:for="{{fragments}}" wx:key="id"><Fragment id="{{item.id}}" nodes="{{item.children}}" /></block>
