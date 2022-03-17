@@ -26,7 +26,7 @@ export * from './styled'
 export { defineComponent, nextTick, h, Fragment } from 'vue';
 export type { App } from 'vue'
 export const $app = {
-    create: (): { app: App, router: Router } => {
+    create: (): { app: App, router?: Router } => {
         throw new Error('$app not injected');
     }
 }

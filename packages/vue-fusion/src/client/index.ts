@@ -25,7 +25,9 @@ export async function onPageLoad(pageId: string, url: string) {
         const pageUpdates = encodePageUpdates(elements);
         clientHost.updatePages(pageUpdates);
     })
-    await router.push(url);
+    if (router) {
+        await router.push(url);
+    }
     return _onPageLoad(app, nodeOps.createElement('view'), pageId);
 }
 

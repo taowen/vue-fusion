@@ -8,27 +8,22 @@ const RoundBox = fusion.styled('view')`
 `
 
 export default fusion.defineComponent({
+    inheritAttrs: false,
     data() {
         return {
             msg: 'hello world~~~'
         }
     },
     render() {
-        if (typeof wx !== 'undefined') {
-            wx.setBackgroundColor({
-                backgroundColor: '#f7f7f7'
-            });
-            wx.setNavigationBarColor({
-                frontColor: '#000000',
-                backgroundColor: '#f7f7f7'
-            })
-        }
-        return <view style={{ 'min-height': '100vh', 'background-color': '#f7f7f7' }}>
+        return <>
+            <page-meta page-style="background-color: #f7f7f7">
+                <navigation-bar title="hello"/>
+            </page-meta>
             <view class="flex-row">
                 <spacer class="w-2" />
                 <RoundBox class="grow" onTap={() => { wx.navigateTo({ url: '/About' }); }}>{() => this.msg}</RoundBox>
                 <spacer class="w-2" />
             </view>
-        </view>
+        </>
     }
 })

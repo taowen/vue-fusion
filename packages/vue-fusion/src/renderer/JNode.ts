@@ -53,7 +53,7 @@ export function encodeNode(node: HNode): any {
       tag: node.tagName,
       id: node.id,
       ...translateProps(node.props),
-      children: node.children.map(n => encodeNode(n))
+      children: node.children.map(n => encodeNode(n)).filter(n => n !== '')
     }
   }
   if (!node.fragments) {
@@ -80,12 +80,15 @@ export function encodeNode(node: HNode): any {
     id: node.id,
     ...translateProps(node.props),
     children: node.fragments.map(fragment => {
-      return { tag: 'fragment', id: fragment.id, children: fragment.children.map(n => encodeNode(n)) };
+      return { tag: 'fragment', id: fragment.id, children: fragment.children.map(n => encodeNode(n)).filter(n => n !== '') };
     })
   }
 }
 
 function translateProps(props: Record<string, any>) {
+  if (!props.style) {
+    return props;
+  }
   return {...props, style: translateStyle(props.style) };
 }
 

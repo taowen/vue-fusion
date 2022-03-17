@@ -1,5 +1,5 @@
 // simplified from https://github.com/developit/htmlParser/blob/master/src/htmlParser.js
-const nodeTokenizer = /(?:<(\/?)([a-zA-Z][a-zA-Z0-9\:]*)(?:\s([^>]*?))?((?:\s*\/)?)>|(<\!\-\-)([\s\S]*?)(\-\->)|(<\!\[CDATA\[)([\s\S]*?)(\]\]>))/gm;
+const nodeTokenizer = /(?:<(\/?)([a-zA-Z][a-zA-Z0-9-\:]*)(?:\s([^>]*?))?((?:\s*\/)?)>|(<\!\-\-)([\s\S]*?)(\-\->)|(<\!\[CDATA\[)([\s\S]*?)(\]\]>))/gm;
 
 const NOOP = () => { };
 

@@ -1,5 +1,5 @@
 import * as fusion from '../../src/renderer';
-import { createApp, nodeOps } from '../../src/renderer';
+import { createApp, encodeNode, nodeOps } from '../../src/renderer';
 
 test('beforeMount can get the element', () => {
     const app = createApp(fusion.defineComponent({

@@ -148,7 +148,6 @@ test('9 children', () => {
             tag: 'fragment',
             id: 'fragment1',
             children: [
-                '',
                 {
                     tag: 'span',
                     id: 'elem2',
@@ -199,7 +198,6 @@ test('9 children', () => {
                     id: 'elem10',
                     children: ['9']
                 },
-                ''
             ]
         }]
     })
