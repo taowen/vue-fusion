@@ -1,7 +1,7 @@
 const { context } = require('define-function');
 
-// const baseUrl = 'http://localhost:3000'; 
-const baseUrl = 'https://taowen.github.io/vue-fusion/demo-huangli';
+const baseUrl = 'http://localhost:3000'; 
+// const baseUrl = 'https://taowen.github.io/vue-fusion/demo-huangli';
 
 const otherModules = {};
 
@@ -88,6 +88,7 @@ const global = {
         continue;
       }
       if (!fragmentId) {
+        console.log(mpData);
         page.setData({ fragments: mpData });
       } else if(page.fragments) {
         const fragment = page.fragments[fragmentId];
@@ -119,8 +120,8 @@ async function loadFromServer(url) {
 
 async function initClient(mpPage) {
   const url = decodeURIComponent(mpPage.options.url || '/');
-  // let { scripts, fragments, preloaded } = await loadFromServer(url);
-  let { scripts, fragments, preloaded } = await loadFromPack('/packed.wasm.br');
+  let { scripts, fragments, preloaded } = await loadFromServer(url);
+  // let { scripts, fragments, preloaded } = await loadFromPack('/packed.wasm.br');
   if (fragments) {
     mpPage.setData({ fragments });
   }

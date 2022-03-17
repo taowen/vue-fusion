@@ -1,5 +1,10 @@
 // render multiple layers of DOM Nodes in single WxNode
 Component({
+    options: {
+        virtualHost: true,
+        addGlobalClass: true,
+        multipleSlots: true
+    },
     properties: {
         id: null,
         nodes: null,

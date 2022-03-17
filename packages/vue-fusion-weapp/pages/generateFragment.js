@@ -2,8 +2,19 @@ leafs = {
   image: {
     events: ['load', 'tap'],
     props: {
-      src: undefined 
+      src: undefined,
+      style: undefined,
+      class: undefined
     }
+  },
+  spacer: {
+    component: 'view',
+    props: {
+      id: undefined,
+      style: undefined,
+      class: undefined
+    },
+    events: ['tap']
   }
 }
 
@@ -11,7 +22,8 @@ containers = {
   view: {
     props: {
       id: undefined,
-      style: undefined
+      style: undefined,
+      class: undefined
     },
     events: ['tap']
   },
@@ -45,7 +57,7 @@ function leafTemplates() {
   lines = [];
   for (const [compName, comp] of Object.entries(leafs)) {
     lines.push(`<template name="${compName}">`)
-    lines.push(leafTemplate(compName, comp));
+    lines.push(leafTemplate(comp.component || compName, comp));
     lines.push('</template>')
   }
   return lines.join('\n');
