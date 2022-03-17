@@ -3,16 +3,11 @@ leafs = {
     events: ['load', 'tap'],
     props: {
       src: undefined,
-      style: undefined,
-      class: undefined
     }
   },
   spacer: {
     component: 'view',
     props: {
-      id: undefined,
-      style: undefined,
-      class: undefined
     },
     events: ['tap']
   }
@@ -21,9 +16,6 @@ leafs = {
 containers = {
   view: {
     props: {
-      id: undefined,
-      style: undefined,
-      class: undefined
     },
     events: ['tap']
   },
@@ -40,6 +32,12 @@ containers = {
 
 function leafTemplate(compName, comp) {
   attrs = [];
+  Object.assign(comp.props, {
+    id: undefined,
+    class: undefined,
+    style: undefined,
+    hidden: undefined
+  })
   for (const [k, v] of Object.entries(comp.props)) {
     if (v === undefined) {
       attrs.push(`${k}="{{${k}}}"`)
@@ -65,6 +63,12 @@ function leafTemplates() {
 
 function containerTemplate(compName, comp, nextLevel) {
   attrs = [];
+  Object.assign(comp.props, {
+    id: undefined,
+    class: undefined,
+    style: undefined,
+    hidden: undefined
+  })
   for (const [k, v] of Object.entries(comp.props)) {
     if (v === undefined) {
       attrs.push(`${k}="{{item['${k}']}}"`)
