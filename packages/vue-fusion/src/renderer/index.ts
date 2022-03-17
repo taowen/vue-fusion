@@ -22,6 +22,7 @@ export const createApp: CreateAppFunction<HElement> = (rootComponent: Component,
 
 export * from './HNode'
 export * from './JNode'
+export * from './styled'
 export { defineComponent, nextTick, h, Fragment } from 'vue';
 export type { App } from 'vue'
 export const $app = {
