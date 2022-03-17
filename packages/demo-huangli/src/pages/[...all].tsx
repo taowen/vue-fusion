@@ -16,13 +16,15 @@ export default fusion.defineComponent({
     },
     render() {
         return <>
-            <page-meta page-style="background-color: #f7f7f7">
-                <navigation-bar title="hello"/>
-            </page-meta>
-            <view class="flex-row">
-                <spacer class="w-2" />
-                <RoundBox class="grow" onTap={() => { wx.navigateTo({ url: '/About' }); }}>{() => this.msg}</RoundBox>
-                <spacer class="w-2" />
+            <page-meta page-style="background-color: #f7f7f7" />
+            <view style="height: var(--navBarHeight)" />
+            <view class="flex-col">
+                <spacer class="h-2" />
+                <view class="flex-row">
+                    <spacer class="w-2" />
+                    <RoundBox class="grow" onTap={() => { wx.navigateTo({ url: '/About' }); }}>{() => this.msg}</RoundBox>
+                    <spacer class="w-2" />
+                </view>
             </view>
         </>
     }

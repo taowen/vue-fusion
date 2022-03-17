@@ -9,7 +9,7 @@ declare namespace JSX {
         view: {
             class?: string
             onTap?: Function,
-            style?: Record<string, string>
+            style?: Record<string, string> | string
         };
     }
 }
