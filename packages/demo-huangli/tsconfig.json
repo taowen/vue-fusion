@@ -14,11 +14,10 @@
       "sourceMap": true,
       "resolveJsonModule": true,
       "esModuleInterop": true,
-      "outDir": "dist",
-      "lib": [
-          "esnext",
-          "dom"
-      ]
+      "skipLibCheck": true,
+      "outDir": "lib",
+      "lib": ["esnext"],
+      "types": ["jest"]
   },
   "include": [
       "src/**/*.ts",
