@@ -3,18 +3,28 @@ import { COLOR3 } from '../../shared/colors';
 import { range } from '../../shared/range';
 import { solar2lunar } from './solar2lunar';
 import { useSelectedDate } from './CalendarMonth';
+import * as vdb from 'vue-db';
 
-
-export default fusion.defineComponent({
+const CalendarDay = fusion.defineComponent({
     props: {
         date: {
             default: new Date()
         }
     },
-    computed: {
-        selected() {
-            const selectedDate = useSelectedDate();
-            return selectedDate.selectedDate.getTime() === this.date.getTime();
+    data() {
+        return {
+            selected: useSelectedDate().selectedDate.getTime() === this.date.getTime()
+        }
+    },
+    methods: {
+        select() {
+            useSelectedDate().select(this.date);
+            for (const day of vdb.query(CalendarDay, { $root: vdb.pageOf(this)})) {
+                if (day.selected) {
+                    day.selected = false;
+                }
+            }
+            this.selected = true;
         }
     },
     render() {
@@ -26,7 +36,9 @@ export default fusion.defineComponent({
             ['border-radius']: '4px',
             ['background-color']: COLOR3
         } : undefined;
-        return <view class="grow flex-col" style={style} onTap={() => { wx.navigateTo({ url: '/About' }); }}>
+        return <view class="grow flex-col" style={style} onTap={() => { 
+            this.select();
+         }}>
             <spacer class="h-2"/>
             <view class="flex-row gap-1">
                 <spacer class="grow"/>
@@ -42,3 +54,5 @@ export default fusion.defineComponent({
         </view>
     }
 })
+
+export default CalendarDay;
