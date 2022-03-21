@@ -1,4 +1,4 @@
-import { getMonthCalendarStart } from '../src/pages/getMonthCalendarStart';
+import { getMonthCalendarStart } from '../src/pages/Calendar/CalendarMonth';
 
 test('2022', () => {
     expect(getMonthCalendarStart(2022, 0)).toEqual(new Date(2021, 11, 27));
