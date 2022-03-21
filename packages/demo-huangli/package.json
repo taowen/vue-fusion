@@ -5,6 +5,7 @@
     "main": "src/index.ts",
     "dependencies": {
         "vue-fusion": "workspace:*",
+        "pinia": "^2.0.12",
         "vite-plugin-pages": "^0.21.4",
         "vue-router": "^4.0.14",
         "express": "^4.17.1",

@@ -2,6 +2,7 @@
 import * as fusion from 'vue-fusion';
 import { createMemoryHistory, createRouter, RouterView } from 'vue-router';
 import routes from '~pages';
+import { createPinia } from 'pinia';
 
 fusion.$app.create = () => {
     const router = createRouter({
@@ -17,5 +18,6 @@ fusion.$app.create = () => {
         }
     }));
     app.use(router);
+    app.use(createPinia())
     return { app, router } as const;
 };
