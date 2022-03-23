@@ -1,6 +1,7 @@
 import {
   HElement,
   HNode,
+  nodeOps,
 } from './HNode';
 import { NodeTypes } from './HNode';
 
@@ -43,7 +44,7 @@ export function encodePageUpdates(dirtyElements: HElement[]) {
 
 export function encodeNode(node: HNode): any {
   if (node.nodeType === NodeTypes.COMMENT) {
-    return undefined;
+    return `<!--${node.data}-->`;
   } else if (node.nodeType === NodeTypes.TEXT) {
     return node.textContent;
   }
@@ -83,6 +84,45 @@ export function encodeNode(node: HNode): any {
       return { tag: 'fragment', id: fragment.id, children: fragment.children.map(n => encodeNode(n)).filter(n => n !== '') };
     })
   }
+}
+
+export function decodeNode(jnode: any): HNode {
+  if (typeof jnode === 'string') {
+    if (jnode.startsWith('<!--') && jnode.endsWith('-->')) {
+      return nodeOps.createComment(jnode.substring('<!--'.length, jnode.length - '-->'.length));
+    }
+    return nodeOps.createText(jnode);
+  }
+  const hnode = nodeOps.createElement(jnode.tag);
+  hnode.id = jnode.id
+  for (const [k, v] of Object.entries(jnode)) {
+    if (k === 'id' || k === 'tag' || k === 'children') {
+      continue;
+    }
+    hnode.props[k] = v;
+  }
+  if (!jnode.children || !jnode.children[0]) {
+    return hnode;
+  }
+  let children = [];
+  if (jnode.children[0].tag === 'fragment') {
+    for (const fragment of jnode.children) {
+      for (const child of fragment.children) {
+        children.push(child);
+      }
+    }
+  } else {
+    children = jnode.children;
+  }
+  for (const child of children) {
+    if (!child) {
+      continue;
+    }
+    const childHNode = decodeNode(child);
+    hnode.children.push(childHNode);
+    childHNode.parentNode = hnode;
+  }
+  return hnode;
 }
 
 function translateProps(props: Record<string, any>) {

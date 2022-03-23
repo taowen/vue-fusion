@@ -11,7 +11,7 @@ export function parseHtml(html: string) {
             child.parentNode = parent;
             iterateAttributes(attributes, {
                 onAttribute(name, value) {
-                    child.props[name] = value;
+                    child.props[name] = value.replace(/&quot;/g, '"');
                 },
                 onAttributeEnabled(name) {
                     child.props[name] = true;
@@ -24,7 +24,14 @@ export function parseHtml(html: string) {
             parent = parent.parentNode!;
         },
         onText(text) {
-            parent.children.push(nodeOps.createText(text));
+            const node = nodeOps.createText(text);
+            node.parentNode = parent;
+            parent.children.push(node);
+        },
+        onComment(text) {
+            const node = nodeOps.createComment(text);
+            node.parentNode = parent;
+            parent.children.push(node);
         }
     })
     return parent;

@@ -1,2 +1,3 @@
 packages:
   - 'packages/*'
+  - 'vue-db/packages/vue-db'

@@ -118,8 +118,6 @@ function processPageFragments(fragments) {
   const { statusBarHeight, navBarHeight } = systemInfo;
   pageMeta['page-style'] = pageMeta['page-style'] || '';
   pageMeta['page-style'] += `;--statusBarHeight: ${statusBarHeight}px;--navBarHeight: ${navBarHeight}px;`;
-  console.log(fragments);
-  fragments[0].children = fragments[0].children.slice(0, 5)
   return { fragments, pageMeta };
 }
 

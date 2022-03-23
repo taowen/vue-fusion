@@ -1,30 +1,24 @@
 /// <reference types="miniprogram-api-typings/index" />
 import * as fusion from 'vue-fusion';
-
-const RoundBox = fusion.styled('view')`
-    border: 1px solid #fff;
-    border-radius: 8px;
-    background-color: #fff;
-`
+import RoundBox from '../shared/RoundBox';
+import CalendarMonth from './Calendar/CalendarMonth';
+import Huangli from './Huangli/Huangli';
 
 export default fusion.defineComponent({
     inheritAttrs: false,
-    data() {
-        return {
-            msg: 'hello world~~~'
-        }
-    },
     render() {
         return <>
             <page-meta page-style="background-color: #f7f7f7" />
             <view style="height: var(--navBarHeight)" />
-            <view class="flex-col">
-                <spacer class="h-2" />
-                <view class="flex-row">
-                    <spacer class="w-2" />
-                    <RoundBox class="grow" onTap={() => { wx.navigateTo({ url: '/About' }); }}>{() => this.msg}</RoundBox>
-                    <spacer class="w-2" />
+            <view class="flex-row">
+                <spacer class="w-2" />
+                <view class="flex-col grow">
+                    <spacer class="h-2" />
+                    <CalendarMonth />
+                    <spacer class="h-2" />
+                    <Huangli />
                 </view>
+                <spacer class="w-2" />
             </view>
         </>
     }
