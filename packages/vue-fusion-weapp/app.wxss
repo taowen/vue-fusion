@@ -3,10 +3,31 @@
   flex-direction: row;
 }
 
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .grow {
   flex-grow: 1;
 }
 
 .w-2 {
   width: 0.5em;
+}
+
+.h-2 {
+  height: 0.5rem;
+}
+
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
 }

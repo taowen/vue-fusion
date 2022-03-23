@@ -1,5 +1,5 @@
 module.exports = {
   isString: function(str) {
-    return typeof str === 'string';
+    return typeof str === 'string' && !(str[0] === '<' && str[1] === '!' && str[2] === '-' && str[3] === '-');
   }
 }

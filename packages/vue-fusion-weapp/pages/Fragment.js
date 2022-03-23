@@ -12,6 +12,7 @@ Component({
     lifetimes: {
         attached() {
             if (!this.id) {
+                console.log('missing id', this);
                 return;
             }
             const pages = getCurrentPages();
