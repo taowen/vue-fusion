@@ -8,6 +8,9 @@
 		},
                 {
                         "path": "packages/demo-huangli"
+                },
+                {
+                        "path": "vue-db/packages/vue-db"
                 }
 	],
 	"settings": {}

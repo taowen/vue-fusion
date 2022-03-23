@@ -1,4 +1,4 @@
-import { $app, App, encodePageUpdates, Event, flushElementsKey, HElement, nodeOps } from "vue-fusion";
+import { $app, App, decodeNode, encodeNode, encodePageUpdates, Event, flushElementsKey, HElement, nodeOps } from "vue-fusion";
 
 declare const clientHost: {
     updatePages(pageUpdates: any[]): void;
@@ -16,7 +16,7 @@ const pages: Record<string, {
     root: HElement
 }> = {};
 
-export async function onPageLoad(pageId: string, url: string) {
+export async function onPageLoad(pageId: string, url: string, fragments: any) {
     if (typeof clientHost === 'undefined') {
         throw new Error('missing clientHost from global');
     }
@@ -28,7 +28,11 @@ export async function onPageLoad(pageId: string, url: string) {
     if (router) {
         await router.push(url);
     }
-    return _onPageLoad(app, nodeOps.createElement('view'), pageId);
+    let root = nodeOps.createElement('view');
+    if (fragments) {
+        root = decodeNode({ tag: 'view', children: fragments }) as HElement
+    }
+    return _onPageLoad(app, root, pageId);
 }
 
 export function _onPageLoad(app: App, root: HElement, pageId: string) {

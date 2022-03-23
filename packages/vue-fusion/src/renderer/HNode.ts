@@ -1,7 +1,7 @@
 import { markRaw } from 'vue'
 import { nextTick, InjectionKey, App } from 'vue';
 import { isArray } from '@vue/shared';
-import { isOn } from '@vue/shared'
+import { isOn, camelize } from '@vue/shared'
 
 const dirtyElements = new Set<HElement>();
 
@@ -47,8 +47,26 @@ export class HElement {
     Object.assign(this, init);
   }
 
+  get nextSibling() {
+    return nextSibling(this);
+  }
+
   get nodeType() {
     return 1 as const;
+  }
+
+  get dataset() {
+    let dataset: any;
+    for (const [k, v] of Object.entries(this.props)) {
+      if (!k.startsWith('data-')) {
+        continue;
+      }
+      if (!dataset) {
+        dataset = {};
+      }
+      dataset[camelize(k.substring('data-'.length))] = v;
+    }
+    return dataset;
   }
 
   hasChildNodes() {
@@ -163,11 +181,19 @@ export class HText {
   get nodeType() {
     return 3 as const;
   }
+
+  get nextSibling() {
+    return nextSibling(this);
+  }
+
+  get data() {
+    return this.textContent;
+  }
 }
 
 export class HComment {
   parentNode: HElement | null = null;
-  text: string = '';
+  data: string = '';
 
   constructor(init?: Partial<HComment>) {
     Object.assign(this, init);
@@ -175,6 +201,10 @@ export class HComment {
 
   get nodeType() {
     return 8 as const;
+  }
+
+  get nextSibling() {
+    return nextSibling(this);
   }
 }
 
@@ -240,13 +270,13 @@ function createText(textContent: string): HText {
   return node
 }
 
-function createComment(text: string): HComment {
-  const node = new HComment({ text });
+function createComment(data: string): HComment {
+  const node = new HComment({ data });
   logNodeOp({
     type: NodeOpTypes.CREATE,
     nodeType: node.nodeType,
     targetNode: node,
-    text
+    text: data
   })
   // avoid test nodes from being observed
   markRaw(node)

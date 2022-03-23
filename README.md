@@ -23,4 +23,4 @@
 # 实现原理
 
 * vue-fusion: 是一个 vue 3 的 [custom renderer](https://vuejs.org/api/custom-renderer.html)（与 kbone/taro 不同，它们是模拟 DOM），把 vue 组件渲染成 HNode
-* vue-fusion-weapp：通过 http 拉取 SSR 出来的 HNode，用 [quick.js](https://github.com/taowen/define-function) hydrate，遍历 HNode 把界面绘制到微信小程序上
+* vue-fusion-weapp：通过 http 拉取 SSR 出来的 HNode，遍历 HNode 把界面绘制到微信小程序上，然后用 [quick.js](https://github.com/taowen/define-function) hydrate

@@ -12,7 +12,7 @@ importers:
       typescript: ^4.5.5
       vite: ^2.8.6
       vite-plugin-pages: ^0.21.4
-      vue-db: ^1.0.1
+      vue-db: 'workspace: *'
       vue-fusion: workspace:*
       vue-router: ^4.0.14
     dependencies:
@@ -21,7 +21,7 @@ importers:
       pinia: 2.0.12_typescript@4.5.5
       vite: 2.8.6
       vite-plugin-pages: 0.21.4_vite@2.8.6
-      vue-db: 1.0.1
+      vue-db: link:../../vue-db/packages/vue-db
       vue-fusion: link:../vue-fusion
       vue-router: 4.0.14
     devDependencies:
@@ -65,6 +65,15 @@ importers:
       es-module-lexer: ^0.10.0
     dependencies:
       es-module-lexer: 0.10.0
+
+  vue-db/packages/vue-db:
+    specifiers:
+      typescript: ^4.5.5
+      vue: ^3.2.25
+    dependencies:
+      vue: 3.2.31
+    devDependencies:
+      typescript: 4.5.5
 
 packages:
 
@@ -3886,12 +3895,6 @@ packages:
       rollup: 2.70.0
     optionalDependencies:
       fsevents: 2.3.2
-    dev: false
-
-  /vue-db/1.0.1:
-    resolution: {integrity: sha512-K+FxuLyDf3NDFe7zYyftxtsbaoXm1PvFFQVZj3TnD0fTStnA4/Pll9o0QvvDivOu4bFxD/lCvgZbERuK3BYMZg==}
-    dependencies:
-      vue: 3.2.31
     dev: false
 
   /vue-demi/0.12.4:
