@@ -75,8 +75,15 @@ function getPageById(pageId) {
 const global = {
   console,
   setTimeout,
-  onError() {
-    debugger;
+  setImmediate(f) {
+    return setTimeout(f, 0);
+  },
+  setInterval,
+  clearTimeout,
+  performance: {
+    now() {
+      return new Date().getTime();
+    }
   },
   wx: {
     ...wx,
@@ -245,6 +252,9 @@ async function initClient(mpPage) {
   await ctx.load(`
     const consoleWarn = console.warn;
     function transformArg(arg) {
+      if (arg instanceof Error) {
+        return arg.message + ' ' + arg.stack;
+      }
       try {
         JSON.stringify(arg);
         return arg;
@@ -254,8 +264,66 @@ async function initClient(mpPage) {
       }
     }
     global.console.warn = (...args) => {
-        consoleWarn(new Error().stack, ...args.map(arg => transformArg(arg)));
+        consoleWarn(...args.map(arg => transformArg(arg)));
     }
+    const consoleError = console.error;
+    global.console.error = (...args) => {
+      consoleError(...args.map(arg => transformArg(arg)));
+    }
+    global.process = {
+      env: 'development'
+    }
+    global.WebSocket = class {
+      constructor(url) {
+        wx.connectSocket({
+          url,
+          fail: (e) => {
+            console.warn('failed to connect websocket', url, e);
+          }
+        })
+      }
+      set onopen(cb) {
+        wx.onSocketOpen(cb);
+      }
+      set onclose(cb) {
+        wx.onSocketClose(cb);
+      }
+      set onmessage(cb) {
+        wx.onSocketMessage(cb);
+      }
+      set onerror(cb) {
+        wx.onSocketError(cb);
+      }
+      send(data) {
+        wx.sendSocketMessage({
+          data,
+        })
+      }
+    }
+    global.XMLHttpRequest = class {
+      header = {}
+      open(method, url, async) {
+        Object.assign(this, { method, url, async });
+      }
+      setRequestHeader(k, v) {
+        this.header[k] = v;
+      }
+      send(data) {
+        wx.request({
+          method: this.method,
+          url: this.url,
+          header: this.header,
+          data,
+          dataType: 'text',
+          success: (resp) => {
+            this.responseText = resp.data;
+            this.readyState = 4;
+            this.status = 200;
+            this.onreadystatechange();
+          }
+        })
+      }
+    };
   `)
   module.exports.client = await ctx.load(scripts.map(s => `export * from '${s}';`).join('\n'));
   module.exports.client.onPageLoad(mpPage.getPageId(), url, fragments);
