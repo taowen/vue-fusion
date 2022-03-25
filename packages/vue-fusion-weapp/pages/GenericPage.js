@@ -79,6 +79,7 @@ const global = {
     return setTimeout(f, 0);
   },
   setInterval,
+  clearInterval,
   clearTimeout,
   performance: {
     now() {
@@ -270,9 +271,6 @@ async function initClient(mpPage) {
     global.console.error = (...args) => {
       consoleError(...args.map(arg => transformArg(arg)));
     }
-    global.process = {
-      env: 'development'
-    }
     global.WebSocket = class {
       constructor(url) {
         wx.connectSocket({
@@ -325,6 +323,18 @@ async function initClient(mpPage) {
       }
     };
   `)
+  const devtools = { host: 'http://10.68.1.158', port: 8098 };
+  await ctx.load(`
+  global.__VUE_DEVTOOLS_HOST__ = '${devtools.host}';
+  global.__VUE_DEVTOOLS_PORT__ = ${devtools.port};
+  global.__VUE_DEVTOOLS_TOAST__ = console.log;
+  `);
+  const { data } = await new Promise((resolve, reject) => wx.request({
+      url: `${devtools.host}:${devtools.port}`,
+      success: resolve,
+      fail: reject
+  }));
+  await ctx.load(data);
   module.exports.client = await ctx.load(scripts.map(s => `export * from '${s}';`).join('\n'));
   module.exports.client.onPageLoad(mpPage.getPageId(), url, fragments);
 }
