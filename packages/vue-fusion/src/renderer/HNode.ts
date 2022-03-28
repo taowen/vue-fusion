@@ -172,7 +172,7 @@ export class HElement {
 
 export class HText {
   parentNode: HElement | null = null;
-  textContent: string = '';
+  data: string = '';
 
   constructor(init?: Partial<HText>) {
     Object.assign(this, init);
@@ -186,8 +186,8 @@ export class HText {
     return nextSibling(this);
   }
 
-  get data() {
-    return this.textContent;
+  get textContent() {
+    return this.data;
   }
 }
 
@@ -257,13 +257,13 @@ function createElement(tagName: string): HElement {
   return node
 }
 
-function createText(textContent: string): HText {
-  const node = new HText({ textContent });
+function createText(data: string): HText {
+  const node = new HText({ data });
   logNodeOp({
     type: NodeOpTypes.CREATE,
     nodeType: node.nodeType,
     targetNode: node,
-    text: textContent
+    text: data
   })
   // avoid test nodes from being observed
   markRaw(node)
@@ -289,7 +289,7 @@ function setText(node: HText, text: string) {
     targetNode: node,
     text
   })
-  node.textContent = text
+  node.data = text
 }
 
 function insert(child: HNode, parent: HElement, ref?: HNode | null) {
@@ -343,20 +343,20 @@ function remove(child: HNode, logOp = true) {
   }
 }
 
-function setElementText(el: HElement, textContent: string) {
+function setElementText(el: HElement, data: string) {
   logNodeOp({
     type: NodeOpTypes.SET_ELEMENT_TEXT,
     targetNode: el,
-    text: textContent
+    text: data
   })
   el.children.forEach(c => {
     c.parentNode = null
   })
-  if (!textContent) {
+  if (!data) {
     el.children = []
   } else {
     el.children = [
-      new HText({ textContent, parentNode: el })
+      new HText({ data, parentNode: el })
     ]
   }
   el.markDirty();

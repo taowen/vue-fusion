@@ -16,13 +16,23 @@ export default fusion.defineComponent({
             const day = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
             return { day }
         });
-        return {
-            info
-        }
+        return { info }
     },
     render() {
+        console.log('!!! info', this.info.data?.suit);
+        if (this.info.loading) {
+            return <RoundBox>{() => '加载中...'}</RoundBox>
+        }
+        if (this.info.error) {
+            return <RoundBox>{() => this.info.error}</RoundBox>
+        }
         return <RoundBox>
-        {() => this.info.data?.suit}
-    </RoundBox>
+            {
+                () => <>
+                    <view>{`宜：${this.info.data?.suit}`}</view>
+                    <view>{`忌：${this.info.data?.avoid}`}</view>
+                </>
+            }
+        </RoundBox>
     }
 })
