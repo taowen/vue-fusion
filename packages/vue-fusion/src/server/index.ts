@@ -1,7 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-import { serverRender } from '../ssr/serverRender';
+import { serverRender } from '../renderer/serverRender';
 import '/index.js'
 
 export async function startServer() {

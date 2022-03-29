@@ -1,5 +1,5 @@
 import { onPageLoad } from 'vue-fusion/client';
-import { serverRender } from 'vue-fusion/ssr';
+import { serverRender } from 'vue-fusion';
 import * as fusion from '../../src/renderer';
 import { createApp, resetFragmentId, resetNodeId } from '../../src/renderer';
 

@@ -1,6 +1,6 @@
-import { createApp, defineComponent, nodeOps } from "../../src/renderer";
+import { createApp, defineComponent } from "../../src/renderer";
 import * as fusion from '../../src/renderer';
-import { serverRender } from "vue-fusion/ssr";
+import { serverRender } from "vue-fusion";
 import { $app } from "vue-fusion";
 
 test('tag with hyphen', async () => {

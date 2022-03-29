@@ -1,1 +1,0 @@
-module.exports = require('vue-fusion/publish/lib/src/ssr')

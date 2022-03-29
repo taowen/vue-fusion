@@ -1,5 +1,7 @@
 import { Fragment, isVNode } from 'vue';
-import { $app, encodeNode, nodeOps } from 'vue-fusion';
+import { $app } from './app';
+import { nodeOps } from './HNode';
+import { encodeNode } from './JNode';
 
 export async function serverRender(url: string) {
     const { app, router } = $app.create();
