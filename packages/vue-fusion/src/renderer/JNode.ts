@@ -125,7 +125,7 @@ export function decodeNode(jnode: any): HNode {
   return hnode;
 }
 
-function translateProps(props: Record<string, any>) {
+export function translateProps(props: Record<string, any>) {
   if (!props.style) {
     return props;
   }

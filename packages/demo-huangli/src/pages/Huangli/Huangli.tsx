@@ -19,7 +19,6 @@ export default fusion.defineComponent({
         return { info }
     },
     render() {
-        console.log('!!! info', this.info.data?.suit);
         if (this.info.loading) {
             return <RoundBox>{() => '加载中...'}</RoundBox>
         }
