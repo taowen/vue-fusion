@@ -126,6 +126,21 @@ ${containerTemplates('level5')}
 </block>
 </template>
 <template name="level5">
+<block wx:for="{{nodes}}" wx:key="id">
+${containerTemplates('level6')}
+</block>
+</template>
+<template name="level6">
+<block wx:for="{{nodes}}" wx:key="id">
+${containerTemplates('level7')}
+</block>
+</template>
+<template name="level7">
+<block wx:for="{{nodes}}" wx:key="id">
+${containerTemplates('level8')}
+</block>
+</template>
+<template name="level8">
 \t<Fragment nodes="{{nodes}}"/>
 </template>
 ${leafTemplates()}
