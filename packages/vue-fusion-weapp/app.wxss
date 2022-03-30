@@ -14,35 +14,41 @@
   display: inline-flex;
   flex-direction: column;
 }
-
+.justify-around {
+  justify-content: space-around;
+}
+.items-center {
+  align-items: center;
+}
 .grow {
   flex-grow: 1;
 }
 
+.m-2 {
+  margin: 0.5em;
+}
+
+.w-full {
+  width: 100%;
+}
 .w-2 {
   width: 0.5em;
 }
-
 .w-4 {
   width: 1em;
 }
-
 .h-2 {
   height: 0.5rem;
 }
-
 .gap-1 {
   gap: 0.25rem;
 }
-
 .gap-2 {
   gap: 0.5rem;
 }
-
 .gap-4 {
   gap: 1rem;
 }
-
 .no-scrollbar::-webkit-scrollbar {
   width: 0px;
   height: 0px;
