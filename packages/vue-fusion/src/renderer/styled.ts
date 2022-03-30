@@ -1,30 +1,35 @@
 import { h } from 'vue';
 
-export function styled<T extends keyof JSX.IntrinsicElements>(comp: T): ((style1: TemplateStringsArray, ...args: any[]) => (props: JSX.IntrinsicElements[T], ctx: any) => any);
-export function styled<T>(comp: T): ((style1: TemplateStringsArray, ...args: any[]) => T);
-export function styled(comp: any) {
-    return (style1: TemplateStringsArray, ...args: any[]) => {
-        return ((props: any, ctx: any) => {
-            const style2 = props.style;
-            const mergedStyle = Object.assign(parseStyle(style1), parseStyle(style2))
-            return h(comp, { ...props, style: mergedStyle }, ctx.slots)
-        }) as any;
-    }
-}
+type styleProvider<P> = (props: P) => any;
 
-function parseStyle(styleStr: string | object) {
-    if (!styleStr) {
-        return {};
-    }
-    if (typeof styleStr === 'object') {
-        return styleStr;
-    }
-    const style: Record<string, string> = {};
-    for (const line of styleStr.split(';')) {
-        if (line.includes(':')) {
-            const [k, v] = line.split(':', 2);
-            style[k] = v;
+type intrinsicElementWrapper<T extends keyof JSX.IntrinsicElements, P> = ((style1: TemplateStringsArray, ...args: styleProvider<JSX.IntrinsicElements[T] & P>[]) => (props: JSX.IntrinsicElements[T] & P, ctx: any) => any) & {
+    withProps<EP>(extraProps?: JSX.IntrinsicElements[T] & P): intrinsicElementWrapper<T, P & EP>;
+};
+
+export function styled<T extends keyof JSX.IntrinsicElements>(comp: T): intrinsicElementWrapper<T, {}>;
+export function styled<T>(comp: T): ((style1: TemplateStringsArray, ...args: styleProvider<Record<string, any>>[]) => T);
+export function styled(comp: any) {
+    const extraProps = {};
+    const f = (styleArr: TemplateStringsArray, ...styleProviders: any[]) => {
+        return ((props: any, ctx: any) => {
+            if (props.style) {
+                throw new Error('style can only be specified in styled component');
+            }
+            let style = styleArr.join('');
+            for (const styleProvider of styleProviders) {
+                const extraStyle = styleProvider(props);
+                if (extraStyle) {
+                    style += extraStyle;
+                }
+            }
+            return h(comp, { ...extraProps, ...props, style }, ctx.slots)
+        }) as any;
+    };
+    f.withProps = (props: any) => {
+        if(props) {
+            Object.assign(extraProps, props);
         }
-    }
-    return style;
+        return f
+    };
+    return f;
 }
