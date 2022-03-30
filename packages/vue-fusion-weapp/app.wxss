@@ -2,9 +2,16 @@
   display: flex;
   flex-direction: row;
 }
-
+.inline-flex-row {
+  display: inline-flex;
+  flex-direction: row;
+}
 .flex-col {
   display: flex;
+  flex-direction: column;
+}
+.inline-flex-col {
+  display: inline-flex;
   flex-direction: column;
 }
 
@@ -14,6 +21,10 @@
 
 .w-2 {
   width: 0.5em;
+}
+
+.w-4 {
+  width: 1em;
 }
 
 .h-2 {
@@ -30,4 +41,10 @@
 
 .gap-4 {
   gap: 1rem;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  color:#transparent;
 }

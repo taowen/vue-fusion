@@ -3,6 +3,7 @@
 <template name="level1">
 <block wx:for="{{nodes}}" wx:key="id">
 	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.id}}" nodes="{{item.children}}"/></block>
+	<scroll-view wx:elif="{{item.tag === 'scroll-view'}}" scroll-into-view="{{item['scroll-into-view']}}" enable-flex="{{item['enable-flex']}}" scroll-x="{{item['scroll-x']}}" enhanced="{{item['enhanced']}}" paging-enabled="{{item['paging-enabled']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level2" data="{{ nodes: item.children }}" /></scroll-view>
 	<view wx:elif="{{item.tag === 'view'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}" catch:tap="eh"><template is="level2" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level2" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level2" data="{{ nodes: item.children }}" /></swiper-item>
@@ -14,6 +15,7 @@
 <template name="level2">
 <block wx:for="{{nodes}}" wx:key="id">
 	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.id}}" nodes="{{item.children}}"/></block>
+	<scroll-view wx:elif="{{item.tag === 'scroll-view'}}" scroll-into-view="{{item['scroll-into-view']}}" enable-flex="{{item['enable-flex']}}" scroll-x="{{item['scroll-x']}}" enhanced="{{item['enhanced']}}" paging-enabled="{{item['paging-enabled']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level3" data="{{ nodes: item.children }}" /></scroll-view>
 	<view wx:elif="{{item.tag === 'view'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}" catch:tap="eh"><template is="level3" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level3" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level3" data="{{ nodes: item.children }}" /></swiper-item>
@@ -25,6 +27,7 @@
 <template name="level3">
 <block wx:for="{{nodes}}" wx:key="id">
 	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.id}}" nodes="{{item.children}}"/></block>
+	<scroll-view wx:elif="{{item.tag === 'scroll-view'}}" scroll-into-view="{{item['scroll-into-view']}}" enable-flex="{{item['enable-flex']}}" scroll-x="{{item['scroll-x']}}" enhanced="{{item['enhanced']}}" paging-enabled="{{item['paging-enabled']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level4" data="{{ nodes: item.children }}" /></scroll-view>
 	<view wx:elif="{{item.tag === 'view'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}" catch:tap="eh"><template is="level4" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level4" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level4" data="{{ nodes: item.children }}" /></swiper-item>
@@ -36,6 +39,7 @@
 <template name="level4">
 <block wx:for="{{nodes}}" wx:key="id">
 	<block wx:if="{{item.tag === 'fragment'}}"><Fragment id="{{item.id}}" nodes="{{item.children}}"/></block>
+	<scroll-view wx:elif="{{item.tag === 'scroll-view'}}" scroll-into-view="{{item['scroll-into-view']}}" enable-flex="{{item['enable-flex']}}" scroll-x="{{item['scroll-x']}}" enhanced="{{item['enhanced']}}" paging-enabled="{{item['paging-enabled']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level5" data="{{ nodes: item.children }}" /></scroll-view>
 	<view wx:elif="{{item.tag === 'view'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}" catch:tap="eh"><template is="level5" data="{{ nodes: item.children }}" /></view>
 	<swiper wx:elif="{{item.tag === 'swiper'}}" indicator-dots="{{item['indicator-dots']}}" indicator-color="{{item['indicator-color']}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level5" data="{{ nodes: item.children }}" /></swiper>
 	<swiper-item wx:elif="{{item.tag === 'swiper-item'}}" id="{{item['id']}}" class="{{item['class']}}" style="{{item['style']}}" hidden="{{item['hidden']}}"><template is="level5" data="{{ nodes: item.children }}" /></swiper-item>

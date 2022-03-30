@@ -14,6 +14,15 @@ leafs = {
 }
 
 containers = {
+  ['scroll-view']: {
+    props: {
+      'scroll-into-view': undefined,
+      'enable-flex': undefined,
+      'scroll-x': undefined,
+      enhanced: undefined,
+      'paging-enabled': undefined
+    },
+  },
   view: {
     props: {
     },

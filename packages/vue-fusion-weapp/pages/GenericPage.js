@@ -100,7 +100,7 @@ const global = {
           continue;
         }
         if (!fragmentId) {
-          page.setData(processPageFragments(mpData));
+          // page.setData(processPageFragments(mpData));
         } else if (page.fragments) {
           const fragment = page.fragments[fragmentId];
           if (fragment) {
@@ -329,12 +329,12 @@ async function initClient(mpPage) {
   global.__VUE_DEVTOOLS_PORT__ = ${devtools.port};
   global.__VUE_DEVTOOLS_TOAST__ = console.log;
   `);
-  const { data } = await new Promise((resolve, reject) => wx.request({
-      url: `${devtools.host}:${devtools.port}`,
-      success: resolve,
-      fail: reject
-  }));
-  await ctx.load(data);
+  // const { data } = await new Promise((resolve, reject) => wx.request({
+  //     url: `${devtools.host}:${devtools.port}`,
+  //     success: resolve,
+  //     fail: reject
+  // }));
+  // await ctx.load(data);
   module.exports.client = await ctx.load(scripts.map(s => `export * from '${s}';`).join('\n'));
   module.exports.client.onPageLoad(mpPage.getPageId(), url, fragments);
 }
