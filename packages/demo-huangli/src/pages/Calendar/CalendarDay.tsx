@@ -31,27 +31,20 @@ const CalendarDay = fusion.defineComponent({
         const date = this.date.getDate();
         const { lunarFestival, festival, IDayCn } = solar2lunar(this.date.getFullYear(), this.date.getMonth() + 1, this.date.getDate());
         const comment = lunarFestival || festival || IDayCn;
-        const style = this.selected ? {
+        const style: Record<string, string> = this.selected ? {
             border: '1px solid red',
             ['border-radius']: '4px',
+            padding: '0.5rem',
             ['background-color']: COLOR3
-        } : undefined;
-        return <view class="grow flex-col" style={style} onTap={() => { 
+        } : { padding: '0.5rem' };
+        return <view class="flex-row items-center" style={style} onTap={() => { 
             this.select();
          }}>
-            <spacer class="h-2"/>
-            <view class="flex-row">
-                <spacer class="grow"/>
                 <view style={{['font-weight']: 'bold'}}>{(date < 10 ? '0' : '') + date}</view>
                 <view class="flex-col">
-                    <spacer class="grow" />
                     {range(comment.length, i => <view style={{['font-weight']: '100', ['font-size']: comment.length === 2 ? '10px' : '8px'}}>{comment[i]}</view>)}
-                    <spacer class="grow" />
                 </view>
-                <spacer class="grow"/>
             </view>
-            <spacer class="h-2"/>
-        </view>
     }
 })
 

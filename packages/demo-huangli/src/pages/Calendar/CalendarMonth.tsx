@@ -40,47 +40,40 @@ export default fusion.defineComponent({
     },
     render() {
         const startDate = getMonthCalendarStart(this.year, this.month);
-        return <RoundBox class="grow">
+        return <RoundBox>
             {() =>
-                <view class="flex-col">
-                    <spacer class="h-2"/>
-                    <view class="flex-row">
-                        <spacer class="w-2" style="flex-shrink: 0"/>
-                        <view class="flex-col gap-2 grow">
-                            <view>{`${this.year}年${this.month+1}月`}</view>
-                            <view class="flex-row">
-                                {range(7, i => <view class="grow flex-row" style={{ color: i === 5 || i === 6 ? COLOR2 : COLOR1 }}>
-                                    <spacer class="grow" />{['一', '二', '三', '四', '五', '六', '日'][i]}<spacer class="grow" />
-                                </view>)}
-                            </view>
-                            <scroll-view scroll-x enhanced paging-enabled style="white-space: nowrap; overflow: hidden; min-width: 0;" scroll-into-view="middlePage">
-                                <view style="display: inline-flex; width: 100%;">上个月</view>
-                                <view class="inline-flex-col gap-2;" style="width: 100%;">
-                                    <view class="flex-row" style={{ color: COLOR1 }}>
-                                        {range(7, i => <CalendarDay date={addDays(startDate, i)} />)}
-                                    </view>
-                                    <view class="flex-row" style={{ color: COLOR1 }}>
-                                        {range(7, i => <CalendarDay date={addDays(startDate, 7 + i)} />)}
-                                    </view>
-                                    <view class="flex-row" style={{ color: COLOR1 }}>
-                                        {range(7, i => <CalendarDay date={addDays(startDate, 14 + i)} />)}
-                                    </view>
-                                    <view class="flex-row" style={{ color: COLOR1 }}>
-                                        {range(7, i => <CalendarDay date={addDays(startDate, 21 + i)} />)}
-                                    </view>
-                                    <view class="flex-row" style={{ color: COLOR1 }}>
-                                        {range(7, i => <CalendarDay date={addDays(startDate, 28 + i)} />)}
-                                    </view>
-                                    <view class="flex-row" style={{ color: COLOR1 }}>
-                                        {range(7, i => <CalendarDay date={addDays(startDate, 35 + i)} />)}
-                                    </view>
-                                </view>
-                                <view style="display: inline-flex; width: 100%;">下个月</view>
-                            </scroll-view>
-                        </view>
-                        <spacer class="w-2" style="flex-shrink: 0"/>
-                    </view>
+                <view class="flex-col gap-2">
+                <view>{`${this.year}年${this.month+1}月`}</view>
+                <view class="flex-row w-full justify-around">
+                    {range(7, i => <view style={{ color: i === 5 || i === 6 ? COLOR2 : COLOR1 }}>
+                    {['一', '二', '三', '四', '五', '六', '日'][i]}
+                    </view>)}
                 </view>
+                <scroll-view scroll-x enhanced paging-enabled style="white-space: nowrap;" scroll-into-view="middlePage">
+                    <view class="w-full" style="display: inline-flex;">上个月</view>
+                    <view class="inline-flex-col w-full">
+                        <view class="flex-row w-full justify-around" style={{ color: COLOR1 }}>
+                            {range(7, i => <CalendarDay date={addDays(startDate, i)} />)}
+                        </view>
+                        <view class="flex-row w-full justify-around" style={{ color: COLOR1 }}>
+                            {range(7, i => <CalendarDay date={addDays(startDate, 7 + i)} />)}
+                        </view>
+                        <view class="flex-row w-full justify-around" style={{ color: COLOR1 }}>
+                            {range(7, i => <CalendarDay date={addDays(startDate, 14 + i)} />)}
+                        </view>
+                        <view class="flex-row w-full justify-around" style={{ color: COLOR1 }}>
+                            {range(7, i => <CalendarDay date={addDays(startDate, 21 + i)} />)}
+                        </view>
+                        <view class="flex-row w-full justify-around" style={{ color: COLOR1 }}>
+                            {range(7, i => <CalendarDay date={addDays(startDate, 28 + i)} />)}
+                        </view>
+                        <view class="flex-row w-full justify-around" style={{ color: COLOR1 }}>
+                            {range(7, i => <CalendarDay date={addDays(startDate, 35 + i)} />)}
+                        </view>
+                    </view>
+                    <view style="display: inline-flex; width: 100%;">下个月</view>
+                </scroll-view>
+            </view>
             }
         </RoundBox>
     }
