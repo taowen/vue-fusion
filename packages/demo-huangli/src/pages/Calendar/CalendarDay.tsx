@@ -39,9 +39,9 @@ const CalendarDay = fusion.defineComponent({
         return <view class="flex-row items-center" style={style} onTap={() => { 
             this.select();
          }}>
-                <view style={{['font-weight']: 'bold'}}>{(date < 10 ? '0' : '') + date}</view>
+                <view class="font-bold">{(date < 10 ? '0' : '') + date}</view>
                 <view class="flex-col">
-                    {range(comment.length, i => <view style={{['font-weight']: '100', ['font-size']: comment.length === 2 ? '10px' : '8px'}}>{comment[i]}</view>)}
+                    {range(comment.length, i => <view class="font-thin" style={{ ['font-size']: comment.length === 2 ? '10px' : '8px'}}>{comment[i]}</view>)}
                 </view>
             </view>
     }
