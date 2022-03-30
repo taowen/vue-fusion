@@ -10,14 +10,14 @@ export default fusion.defineComponent({
             <page-meta page-style="background-color: #f7f7f7" />
             <view style="height: var(--navBarHeight)" />
             <view class="flex-row">
-                <spacer class="w-4" />
+                <spacer class="w-4" style="flex-shrink: 0" />
                 <view class="flex-col grow">
                     <spacer class="h-2" />
                     <CalendarMonth />
                     <spacer class="h-2" />
                     <Huangli />
                 </view>
-                <spacer class="w-4" />
+                <spacer class="w-4" style="flex-shrink: 0" />
             </view>
         </>
     }

@@ -38,7 +38,7 @@ cli.command('dev', 'start development server').action(async () => {
         try {
             const url = req.originalUrl
             await vite.ssrLoadModule('index.js');
-            const { serverRender } = (await vite.ssrLoadModule('vue-fusion/ssr'))
+            const { serverRender } = (await vite.ssrLoadModule('vue-fusion'))
             const fragments = await serverRender(url);
             const result = '<html><script src="index.js"/></html>' + JSON.stringify({ fragments, scripts: ['index.js'] })
             res.status(200).set({ 'Content-Type': 'text/html' }).end(result);

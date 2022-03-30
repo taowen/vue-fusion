@@ -40,7 +40,7 @@ const CalendarDay = fusion.defineComponent({
             this.select();
          }}>
             <spacer class="h-2"/>
-            <view class="flex-row gap-1">
+            <view class="flex-row">
                 <spacer class="grow"/>
                 <view style={{['font-weight']: 'bold'}}>{(date < 10 ? '0' : '') + date}</view>
                 <view class="flex-col">

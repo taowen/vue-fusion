@@ -45,7 +45,7 @@ export default fusion.defineComponent({
                 <view class="flex-col">
                     <spacer class="h-2"/>
                     <view class="flex-row">
-                        <spacer class="w-2"/>
+                        <spacer class="w-2" style="flex-shrink: 0"/>
                         <view class="flex-col gap-2 grow">
                             <view>{`${this.year}年${this.month+1}月`}</view>
                             <view class="flex-row">
@@ -53,11 +53,9 @@ export default fusion.defineComponent({
                                     <spacer class="grow" />{['一', '二', '三', '四', '五', '六', '日'][i]}<spacer class="grow" />
                                 </view>)}
                             </view>
-                            <scroll-view class="flex-row" scroll-x={false} enhanced={true} paging-enabled={true}>
-                                <view style="flex: 0 0 100%; width: 100%">
-                                上个月
-                                </view>
-                                <view class="flex-col gap-2" style="flex: 0 0 100%; width: 100%">
+                            <scroll-view scroll-x enhanced paging-enabled style="white-space: nowrap; overflow: hidden; min-width: 0;" scroll-into-view="middlePage">
+                                <view style="display: inline-flex; width: 100%;">上个月</view>
+                                <view class="inline-flex-col gap-2;" style="width: 100%;">
                                     <view class="flex-row" style={{ color: COLOR1 }}>
                                         {range(7, i => <CalendarDay date={addDays(startDate, i)} />)}
                                     </view>
@@ -77,12 +75,10 @@ export default fusion.defineComponent({
                                         {range(7, i => <CalendarDay date={addDays(startDate, 35 + i)} />)}
                                     </view>
                                 </view>
-                                <view style="flex: 0 0 100%; width: 100%">
-                                下个月
-                                </view>
+                                <view style="display: inline-flex; width: 100%;">下个月</view>
                             </scroll-view>
                         </view>
-                        <spacer class="w-2"/>
+                        <spacer class="w-2" style="flex-shrink: 0"/>
                     </view>
                 </view>
             }

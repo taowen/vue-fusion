@@ -2,11 +2,8 @@
     "compilerOptions": {
         "paths": {
             "vue-fusion": ["./src/renderer"],
-            "vue-fusion/ssr": ["./src/ssr"],
             "vue-fusion/server": ["./src/server"],
-            "vue-fusion/client": ["./src/client"],
-            "vue-fusion/dev": ["./src/dev"],
-            "vue-fusion/config": ["./src/config"]
+            "vue-fusion/client": ["./src/client"]
         },
         "target": "esnext",
         "declaration": true,

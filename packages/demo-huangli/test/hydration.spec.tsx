@@ -1,6 +1,6 @@
 import { resetFragmentId, resetNodeId, createApp } from 'vue-fusion';
 import * as fusion from 'vue-fusion';
-import { serverRender } from 'vue-fusion/ssr';
+import { serverRender } from 'vue-fusion';
 import { onPageLoad } from 'vue-fusion/client';
 import IndexPage from '../src/pages/[...all]';
 import { createPinia } from 'pinia';
