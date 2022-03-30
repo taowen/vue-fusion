@@ -1,5 +1,4 @@
 import * as fusion from 'vue-fusion';
-import { COLOR3 } from '../../shared/colors';
 import { range } from '../../shared/range';
 import { solar2lunar } from './solar2lunar';
 import { useSelectedDate } from './CalendarMonth';
@@ -35,7 +34,7 @@ const CalendarDay = fusion.defineComponent({
             border: '1px solid red',
             ['border-radius']: '4px',
             padding: '0.5rem',
-            ['background-color']: COLOR3
+            ['background-color']: 'var(--color-3)'
         } : { padding: '0.5rem' };
         return <view class="flex-row items-center" style={style} onTap={() => { 
             this.select();
