@@ -94,9 +94,8 @@ export function decodeNode(jnode: any): HNode {
     return nodeOps.createText(jnode);
   }
   const hnode = nodeOps.createElement(jnode.tag);
-  hnode.id = jnode.id
   for (const [k, v] of Object.entries(jnode)) {
-    if (k === 'id' || k === 'tag' || k === 'children') {
+    if (k === 'tag' || k === 'children') {
       continue;
     }
     hnode.props[k] = v;
@@ -145,6 +144,9 @@ function getLayerNumber(node: HElement): number {
   }
   if (node.fragments) {
     return 0;
+  }
+  if (node.tagName === 'scroll-view' || node.tagName === 'swiper') {
+    return getLayerNumber(node.parentNode);  
   }
   return getLayerNumber(node.parentNode) + 1;
 }

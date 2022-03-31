@@ -34,7 +34,7 @@ export default fusion.defineComponent({
         const today = new Date();
         return {
             year: today.getFullYear(),
-            month: today.getMonth()
+            month: today.getMonth(),
         }
     },
     render() {
@@ -50,7 +50,7 @@ export default fusion.defineComponent({
                 </view>
                 <scroll-view scroll-x enhanced paging-enabled style="white-space: nowrap;" scroll-into-view="middlePage">
                     <view class="w-full" style="display: inline-flex;">上个月</view>
-                    <view class="inline-flex-col w-full">
+                    <view class="inline-flex-col w-full" id="middlePage">
                         <view class="flex-row w-full justify-around">
                             {range(7, i => <CalendarDay date={addDays(startDate, i)} />)}
                         </view>
