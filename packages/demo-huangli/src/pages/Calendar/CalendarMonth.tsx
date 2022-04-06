@@ -47,7 +47,7 @@ export default fusion.defineComponent({
                     {range(7, i => <view class={i === 5 || i === 6 ? 'color-2' : 'color-1'}>
                     {['一', '二', '三', '四', '五', '六', '日'][i]}
                     </view>)}
-                </view>
+                </view> 
                 <scroll-view scroll-x enhanced paging-enabled style="white-space: nowrap;" scroll-into-view="middlePage">
                     <view class="w-full" style="display: inline-flex;">上个月</view>
                     <view class="inline-flex-col w-full" id="middlePage">
