@@ -22,6 +22,7 @@ declare namespace JSX {
             ['scroll-into-view']?: string
             onScrolltoupper?: (e: any) => void
             onScrolltolower?: (e: any) => void
+            onDragend?: (e:any) => void
         }
     }
 }

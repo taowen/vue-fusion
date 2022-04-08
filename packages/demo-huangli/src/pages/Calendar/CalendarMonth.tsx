@@ -27,7 +27,7 @@ export default fusion.defineComponent({
         }
     },
     render() {
-        return <view class="inline-flex-col w-full" id={this.id}>
+        return <view class="inline-flex-col w-full m-2" id={this.id}>
             <view class="flex-row w-full justify-around">
                 {range(7, i => <CalendarDay date={addDays(this.startDate, i)} />)}
             </view>

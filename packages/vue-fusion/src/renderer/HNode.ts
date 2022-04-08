@@ -37,7 +37,7 @@ export class HElement {
   tagName: string = '';
   children: HNode[] = [];
   fragments: HFragment[] | null = null;
-  props: Record<string, any> = { };
+  props: Record<string, any> = { id: `elem${nodeId++}` };
   eventListeners: Record<string, Function | Function[]> | null = null
   pageId?: string;
   __vue_app__?: App<HElement>;

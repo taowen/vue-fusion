@@ -1,4 +1,3 @@
-import * as vdb from 'vue-db';
 import * as fusion from 'vue-fusion';
 import { range } from '../../shared/range';
 import SelectableBox from '../../shared/SelectableBox';
@@ -12,20 +11,14 @@ const CalendarDay = fusion.defineComponent({
             default: new Date()
         }
     },
-    data() {
-        return {
-            selected: useSelectedDate().selectedDate.getTime() === this.date.getTime()
+    computed: {
+        selected() {
+            return useSelectedDate().selectedDate.getTime() === this.date.getTime();
         }
     },
     methods: {
         select() {
             useSelectedDate().select(this.date);
-            for (const day of vdb.query(CalendarDay, { $root: vdb.pageOf(this) })) {
-                if (day.selected) {
-                    day.selected = false;
-                }
-            }
-            this.selected = true;
         }
     },
     render() {

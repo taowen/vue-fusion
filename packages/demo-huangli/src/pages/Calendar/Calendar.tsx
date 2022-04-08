@@ -35,8 +35,12 @@ export default fusion.defineComponent({
         const today = new Date();
         const todayMonth = new Month(today.getFullYear(), today.getMonth());
         return {
-            months: [todayMonth.prev, todayMonth, todayMonth.next],
             currentMonth: todayMonth
+        }
+    },
+    computed: {
+        months(): Month[] {
+            return [this.currentMonth.prev, this.currentMonth, this.currentMonth.next]
         }
     },
     render() {
@@ -54,13 +58,13 @@ export default fusion.defineComponent({
                             return;
                         }
                         lastEventTime = new Date().getTime();
-                        console.log('scroll to lower!', e)
+                        this.currentMonth = this.months[this.months.length - 1];
                     }} onScrolltoupper={e => {
                         if (new Date().getTime() - lastEventTime < 1000) {
                             return;
                         }
                         lastEventTime = new Date().getTime();
-                        console.log('scroll to upper', e);
+                        this.currentMonth = this.months[0];
                     }}>
                         {this.months.map(m => <CalendarMonth id={m.id} year={m.year} month={m.month}/>)}
                     </scroll-view>
