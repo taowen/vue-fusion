@@ -2,18 +2,7 @@
 import * as fusion from 'vue-fusion';
 import { range } from '../../shared/range';
 import RoundBox from '../../shared/RoundBox';
-import CalendarDay from './CalendarDay';
-
-function addDays(date: Date, daysToAdd: number) {
-    const newDate = new Date(date.getTime())
-    newDate.setDate(newDate.getDate() + daysToAdd);
-    return newDate;
-}
-
-export function getMonthCalendarStart(year: number, month: number) {
-    var firstDayWeek = new Date(year, month, 1).getDay();       // 月份第一天星期几
-    return new Date(year, month, 2 - firstDayWeek);
-}
+import CalendarMonth from './CalendarMonth';
 
 export default fusion.defineComponent({
     data() {
@@ -24,7 +13,6 @@ export default fusion.defineComponent({
         }
     },
     render() {
-        const startDate = getMonthCalendarStart(this.year, this.month);
         let lastEventTime = new Date().getTime();
         return <RoundBox>
                 {() => <view class="flex-col gap-2">
@@ -48,26 +36,7 @@ export default fusion.defineComponent({
                         console.log('scroll to upper', e);
                     }}>
                         <view class="w-full" style="display: inline-flex;">上个月</view>
-                        <view class="inline-flex-col w-full" id="middlePage">
-                            <view class="flex-row w-full justify-around">
-                                {range(7, i => <CalendarDay date={addDays(startDate, i)} />)}
-                            </view>
-                            <view class="flex-row w-full justify-around">
-                                {range(7, i => <CalendarDay date={addDays(startDate, 7 + i)} />)}
-                            </view>
-                            <view class="flex-row w-full justify-around">
-                                {range(7, i => <CalendarDay date={addDays(startDate, 14 + i)} />)}
-                            </view>
-                            <view class="flex-row w-full justify-around">
-                                {range(7, i => <CalendarDay date={addDays(startDate, 21 + i)} />)}
-                            </view>
-                            <view class="flex-row w-full justify-around">
-                                {range(7, i => <CalendarDay date={addDays(startDate, 28 + i)} />)}
-                            </view>
-                            <view class="flex-row w-full justify-around">
-                                {range(7, i => <CalendarDay date={addDays(startDate, 35 + i)} />)}
-                            </view>
-                        </view>
+                        <CalendarMonth id="middlePage" year={this.year} month={this.month}/>
                         <view style="display: inline-flex; width: 100%;">下个月</view>
                     </scroll-view>
                 </view>}
