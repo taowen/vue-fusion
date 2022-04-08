@@ -1,7 +1,7 @@
 import * as vdb from 'vue-db';
 import * as fusion from 'vue-fusion';
 import RoundBox from '../../shared/RoundBox';
-import { useSelectedDate } from '../Calendar/CalendarMonth';
+import { useSelectedDate } from '../Calendar/selectedDate';
 
 const DayInfo = vdb.defineResource<{
     day: string

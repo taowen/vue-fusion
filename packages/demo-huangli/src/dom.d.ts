@@ -12,5 +12,16 @@ declare namespace JSX {
             onTap?: Function
             style?: Record<string, string> | string
         };
+        ['scroll-view']: {
+            id?: string
+            class?: string
+            ['scroll-x']?: boolean
+            ['paging-enabled']?: boolean
+            enhanced?: boolean
+            style?: string
+            ['scroll-into-view']?: string
+            onScrolltoupper?: (e: any) => void
+            onScrolltolower?: (e: any) => void
+        }
     }
 }

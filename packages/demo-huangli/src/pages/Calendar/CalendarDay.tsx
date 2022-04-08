@@ -3,7 +3,7 @@ import * as fusion from 'vue-fusion';
 import { range } from '../../shared/range';
 import SelectableBox from '../../shared/SelectableBox';
 import TinyColumn from '../../shared/TinyColumn';
-import { useSelectedDate } from './CalendarMonth';
+import { useSelectedDate } from './selectedDate';
 import { solar2lunar } from './solar2lunar';
 
 const CalendarDay = fusion.defineComponent({
