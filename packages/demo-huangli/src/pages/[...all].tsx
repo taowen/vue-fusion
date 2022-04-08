@@ -1,6 +1,6 @@
 /// <reference types="miniprogram-api-typings/index" />
 import * as fusion from 'vue-fusion';
-import CalendarMonth from './Calendar/CalendarMonth';
+import Calendar from './Calendar/Calendar';
 import Huangli from './Huangli/Huangli';
 
 export default fusion.defineComponent({
@@ -18,7 +18,7 @@ export default fusion.defineComponent({
             <page-meta page-style={pageStyle} />
             <view style="height: var(--navBarHeight)" />
             <view class="flex-col m-2 gap-2">
-                <CalendarMonth />
+                <Calendar />
                 <Huangli />
             </view>
         </>
